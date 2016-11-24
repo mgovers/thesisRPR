@@ -1,0 +1,20 @@
+0.50     0.    431.    23.    111.    11.    59.    17.
+0.50     4.    426.    26.    104.    12.    73.    21.
+0.50     8.    406.    30.    110.    12.    60.    27.
+0.50    13.    332.    37.    135.    19.    67.   111.
+0.38    1.5    410.    22.    131.    10.    89.    14.
+0.38     6.    386.    27.    134.    11.    76.    22.
+0.38    11.    341.    22.    129.    10.    77.    20.
+X
+
+Columns:
+1) Q^2 (GeV^2)
+2) theta_K_lab (deg)
+3) lambda x.sec.
+4) lambda error
+5) Sigma0 x.sec.
+6) Sigma0 error
+7) Sigma- x.sec.
+8) Sigma- error
+
+Results published in table 5.11 of J. Cha's Ph.D. thesis (2000)

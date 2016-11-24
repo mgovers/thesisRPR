@@ -1,0 +1,18 @@
+$vars: / & qsquared (GeV^2) & w (GeV) & costhkcm & epsilon & diff_l (nb)
+
+
+diff_l      1.90    1.91    1.0    .811     65.0    11.60
+diff_l      1.90    1.94    1.0    .800     56.4     6.80
+diff_l      1.90    2.00    1.0    .792     80.5    15.90
+diff_l      1.90    2.14    1.0    .726     36.9    14.30
+diff_l      2.35    1.80    1.0    .807     53.4    10.80
+diff_l      2.35    1.85    1.0    .781     64.1    12.10
+diff_l      2.35    1.98    1.0    .737     50.9    12.50
+diff_l      2.35    2.08    1.0    .696     68.7     6.80
+
+
+# observable  Q^2     W(GeV)  costhk  epsilon  Xsection  error
+
+# Results published in table 1 of Coman et al.
+# Cross sections and Rosenbluth separations in 1H(e,e'K+)Lambda up to Q^2=2.35GeV^2
+# arXiv:0911.3943v1 [nucl-ex]  20 Nov 2009

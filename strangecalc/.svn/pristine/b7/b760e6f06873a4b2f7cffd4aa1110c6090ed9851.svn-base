@@ -1,0 +1,68 @@
+# Lagrangian.test  -*- sh -*-
+# -- Test Lagrangian diagram calculations.
+
+# Adapted from example by Gary V. Vaughan <gvv@techie.com> from 'GNU
+# Autoconf, Automake and Libtool' or `The Goat Book'' by Gary
+# V. Vaughan, Ben Elliston, Tom Tromey and Ian Lance Taylor, 
+# http://sources.redhat.com/autobook/  
+
+# Copyright (C) 2010 Pieter Vancraeyveld <Pieter.Vancraeyveld@UGent.be>
+#  
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software 
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# Common definitions
+if test -z "$srcdir"; then
+    srcdir=`echo "$0" | sed 's,[^/]*$,,'`
+    test "$srcdir" = "$0" && srcdir=.
+    test -z "$srcdir" && srcdir=.
+    test "${VERBOSE+set}" != set && VERBOSE=1
+fi
+. $srcdir/defs
+
+# this is the output we should expect to see
+cp $SETUP/Lagrangian_test_gic_ok .
+
+cat <<\EOF >errok
+EOF
+
+# setup some stuff prior to running test
+RUNTSC="${SETUP}/Lagrangian_test gic"
+
+
+# Run the test saving stderr to a file, and showing stdout if VERBOSE == 1
+$RUNTSC  2> Lagrangian_test_err | tee -i Lagrangian_test_out >&2
+
+# Test against expected output
+if ${CMP} -s Lagrangian_test_out Lagrangian_test_gic_ok; then
+  :
+else
+    echo "ok:" >&2
+    cat Lagrangian_test_gic_ok >&2
+    exit 1
+fi
+
+# Munge error output to remove leading directories, `lt-' or trailing `.exe'
+sed -e "s,^[^:]*[lt-]*sic[.ex]*:,sic:," Lagrangian_test_err >sederr && mv sederr Lagrangian_test_err
+
+# Show stderr if doesn't match expected output if VERBOSE == 1
+if "$CMP" -s Lagrangian_test_err errok; then
+  :
+else
+    echo "err:" >&2
+    cat Lagrangian_test_err >&2
+    echo "errok:" >&2
+    cat errok >&2
+    exit 1
+fi

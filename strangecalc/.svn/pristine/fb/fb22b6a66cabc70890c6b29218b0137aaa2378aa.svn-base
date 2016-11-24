@@ -1,0 +1,57 @@
+Class	NickName	G*	H*	I*	X*	Y*	Z*
+-----	--------	--	--	--	--	--	--
+T	K+	0.000000e+00	-1.063552e+01	0.000000e+00	0.000000e+00	0.000000e+00	0.000000e+00
+B	B1	1.000000e+00	1.081521e+01	-2.906040e+01	0.000000e+00	0.000000e+00	0.000000e+00
+D	N6	1.000000e+00	-2.347719e-01	0.000000e+00	0.000000e+00	0.000000e+00	0.000000e+00
+E	N4	1.000000e+00	-2.250672e-02	0.000000e+00	0.000000e+00	0.000000e+00	0.000000e+00
+H	N7	3.842310e-02	-1.812320e-02	1.000000e+00	1.437042e+02	5.695635e+01	-3.117296e-01
+H	N9	-7.498767e-01	3.377034e-01	1.000000e+00	-1.769587e+01	2.588173e+00	-8.877617e-01
+I	N8	1.115107e+00	5.105338e-01	1.000000e+00	4.030950e+01	-1.399253e+01	-3.968705e-02
+cutoff born:	4000.00
+cutoff res:	1636.53
+
+******************** Important ********************
+This file was generated on Tue Nov 27 14:41:50 2007
+with command:
+convert_coupl_iso top coupl.iso.1_tamara coupl.iso.1 
+***************************************************
+
+
+The FINAL chi squared by temperature   0.01 is: 2.405698
+(only low-energy data, including Graal)
+
+This file contains the coupling constants resulting from a fit to the low- and high-energy data, including the NEW 2005 CLAS dataset, for cos theta > 0.35, and the new 2006 Graal data.  The low-energy data consisted of:
+- diff. cross-sections from CLAS (2005), cos > 0.35
+- diff. cross-sections from LEPS (2003)
+- photon asymm. from LEPS (2003)
+- recoil pol. from CLAS (2003)
+- photon asymm. from GRAAL (2006)
+- recoil pol. from GRAAL (2006)
+A Gaussian strong form factor was used for the resonances. The cutoff is allowed to be between 1000 and  200 MeV. Background couplings were fixed.
+
+This fit started from an input file containing:
+
+1) the background coupling constants for g p -> K^+ L photoproduction, resulting from a fit to the high-energy data at forward angles:
+- diff. cross-sections from Boyarski et al., PRL 22, 1131 (1969)
+- photon asymm. from Quinn et al., PRD 20, 1553 (1979)
+- recoil polarization from Vogel et al., Phys. Lett. B 40, 513 (1972). 
+This fit used a rotating K and K^* traj. phase. The Born couplings were kept within their SU(3) limits, and the signs of the K^* ccs were fixed. The chi-squared when comparing the background to all high-energy datasets (with polariz weight 1) is 2.73.
+
+2) the coupling constants of the "core" resonances as found in Stijn's model A: S11(1650), P11(1710), P13(1720), plus couplings for an extra P13(1900) resonance, with width = 500 MeV, and a missing D13(1895) state, with a width of 200 MeV. 
+
+-----------------
+
+The initial chi-squared when comparing background+core to the high- and low-energy data including the 2006 Graal data (pol weight 3), is 2.69.
+
+The initial chi-squared when comparing background+core to just the low-energy data including the 2006 Graal data (pol weight 3), is 2.41.
+
+The final chi-squared when comparing to the high-energy data is 4.91.
+
+-----------------
+
+When removing the resonances, the chi-squared when comparing to the high-energy data only is still reasonable (i.e lower than 3.5) when the ccs vary between:
+S    P     -3.0e+00 -> -3.45e+00
+T    K+    -3.0e+00 -> -3.45e+00
+B    B1     2.6e-01 -> 3.2e-01 ; -1.0e+00 -> -7.0e-01
+The same limits roughly keep on applying when the resonances are added.
+

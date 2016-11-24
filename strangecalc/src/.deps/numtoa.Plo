@@ -1,0 +1,5 @@
+numtoa.lo: numtoa.cpp /usr/include/stdc-predef.h numtoa.h
+
+/usr/include/stdc-predef.h:
+
+numtoa.h:

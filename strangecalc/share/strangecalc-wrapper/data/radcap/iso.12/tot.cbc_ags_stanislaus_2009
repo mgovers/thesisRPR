@@ -1,0 +1,26 @@
+Measurements for the radiative kaon capture proces 
+
+	     	 K^- p --> gamma Sigma^0
+
+from the Crystal Barrel Collaboration at the AGS in
+Brookhaven.
+Analysis: 2009
+Contact: T.D.S. Stanislaus
+Publication: Phys.Rev. C79 (2009) 015203
+
+Given is kaon momentum with error bar (in MeV/c) and the total
+cross sections (in microbarn) for eight beam momenta.
+
+pK    	 err_pK	   cs	      err_cs
+514	 10	   0	      28
+560	 11	   0	      31
+581	 12	   0	      19
+629	 11	   25	      14
+659	 12	   0	      18
+687	 11	   18	      12
+714	 11	   66	      12
+750	 13	   68	      13
+
+sum
+5094	 91	   728	      131
+

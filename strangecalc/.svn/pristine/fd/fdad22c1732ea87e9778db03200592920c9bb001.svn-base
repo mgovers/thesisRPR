@@ -1,0 +1,26 @@
+Class Nickname	G*		H*       X*     Y*     Z*
+----- --------	--		--       --     --     --
+T	K+	f,l -1.081388e+01 -1.072832e+01
+B	B1	f,l 8.768257e+00 8.893025e+00	f,l 2.454985e+01 2.475451e+01
+D	N11	f,l -2.246562e-01 -2.151879e-01
+E	N3	f,l 2.469450e-01 2.645935e-01
+E	N4	f,l -2.189467e-01 -2.063410e-01
+H	N7	f,l 2.696803e-01 2.821901e-01	f,l -5.123069e-01 -4.631669e-01	x	x	x
+H	N9	f,l 5.458235e-02 5.860627e-02	f,l -1.474196e-02 -3.614844e-03	x	x	x
+I	N8	f,l -5.768739e-01 -5.429528e-01	f,l 5.746927e-01 6.141742e-01	x	x	x
+M	N23	f,l 1.567387e+01 1.642348e+01	f,l -1.552753e+01 -1.473694e+01	x	x	x
+M	N25	f,l 2.982806e-01 3.212267e-01	f,l -1.245423e-01 -9.853077e-02	x	x	x
+cutoff	born:	x
+cutoff	res:	f,l 2.436848e+03 2.512752e+03
+
+
+
+Class NFP Possible free parameters
+----- --- ------------------------
+S 1 H(strong)
+T 1 H(strong)
+U 1 H(strong)
+A 1 H(strong)
+B-C 2 H(g_v)  I(g_t)
+D-G 1 H(strong)
+H-L 5 G(kappa_1) H(kappa_2) X(offshell) Y(offshell) Z(offshell)

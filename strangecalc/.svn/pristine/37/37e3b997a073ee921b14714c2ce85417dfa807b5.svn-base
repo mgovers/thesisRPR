@@ -1,0 +1,66 @@
+# GaugeInvarianceX.test  -*- sh -*-
+# -- Test Gauge Invariance of a certain diagram.
+
+# Adapted from example by Gary V. Vaughan <gvv@techie.com> from 'GNU
+# Autoconf, Automake and Libtool' or `The Goat Book'' by Gary
+# V. Vaughan, Ben Elliston, Tom Tromey and Ian Lance Taylor, 
+# http://sources.redhat.com/autobook/  
+
+# Copyright (C) 2010 Pieter Vancraeyveld <Pieter.Vancraeyveld@UGent.be>
+#		2010 Lesley De Cruz <Lesley.DeCruz@UGent.be>
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software 
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# Common definitions
+if test -z "$srcdir"; then
+    srcdir=`echo "$0" | sed 's,[^/]*$,,'`
+    test "$srcdir" = "$0" && srcdir=.
+    test -z "$srcdir" && srcdir=.
+    test "${VERBOSE+set}" != set && VERBOSE=1
+fi
+. $srcdir/defs
+
+# setup some stuff prior to running test
+RUNTSC="${SETUP}/GaugeInvariance_test"
+cp -r ${SETUP}/GaugeInvariance_test_y_ok .
+cp -r ${SETUP}/GaugeInvariance_test_y_errok .
+
+for k in D E H I M N T B
+do
+    echo "Checking class${k}" | tee -a -i GaugeInvariance_test_out >&2
+     # Run the test saving stderr to a file, and showing stdout if VERBOSE == 1
+     $RUNTSC ${SETUP}/class${k}/fit_specification 1 y 2>> GaugeInvariance_test_err | tail -n138 | tee -a -i GaugeInvariance_test_out >&2
+done
+
+# Test against expected output
+if ${CMP} -s GaugeInvariance_test_out GaugeInvariance_test_y_ok
+then
+    :
+else
+    echo "ok:" >&2
+    cat GaugeInvariance_test_y_ok >&2
+    exit 1
+fi
+
+# Show stderr if doesn't match expected output if VERBOSE == 1
+if "$CMP" -s GaugeInvariance_test_err GaugeInvariance_test_y_errok; 
+then
+  :
+else
+    echo "err:" >&2
+    cat Observable_test_err >&2
+    echo "errok:" >&2
+    cat errok >&2
+    exit 1
+fi

@@ -1,0 +1,258 @@
+NickN	Name            J^pi	Parametrization code followed by appropriate parameters
+-----	----            ----  	-------------------------------------------------------
+							  
+P	p		1/2^+
+N	n		1/2^+
+K+	K^+		0^-	1 1300
+K0	K^0		0^-	1 1300
+P+	Pi^+		0^-	1 707
+P-	Pi^-		0^-	1 707
+P0	Pi^0		0^-	1 707
+L	Lambda		1/2^+
+S0	Sigma^0		1/2^+
+S+	Sigma^+		1/2^+
+S-	Sigma^-		1/2^+
+S0	Sigma^0		1/2^+
+L	Lambda		1/2^+
+B1	K*+(892)	1^-	1 1300
+B2	K*0(892)	1^-	1 1300
+B3	K*0(1410)	1^-	1 1300
+B4	K*+(1410)	1^-	1 1300
+R+	Rho+(770)	1^-	1 707
+R-	Rho-(770)	1^-	1 707
+R0	Rho0(770)	1^-	1 707
+K1	K1+(1270)	1^+	1 1300
+K10	K10(1270)	1^+	1 1300
+C1	K1+(1400)	1^+	1 1300
+C2	K10(1400)	1^+	1 1300
+B_1	B1(1235)	1^+	1 707
+N1	N(1440)		1/2^+	31
+N2	N(1520)		3/2^-	29
+N3	N(1535)		1/2^-	28
+N4	N(1650)		1/2^-	27
+N5	N(1700)		3/2^-	3 840
+N6	N(1710)		1/2^+	25
+N7	N(1720)		3/2^+	26
+N8	N(1895)		3/2^-	3 840
+N9	N(1895)		3/2^+	3 840
+N10	N(1895)		1/2^-
+N11	N(1895)		1/2^+	4 840 840
+N12	S11_Capstick	1/2^-
+N13	P11_Capstick	1/2^+
+N14	D13_Capstick	3/2^-
+N15	P13_Capstick	3/2^+
+N23     N(1680)         5/2^+   32
+N24     N(1675)         5/2^-   33
+N25     N(2000)         5/2^+   34
+N26     N(2200)         5/2^-   35
+N27     N(1690)_2010   	1/2^-   3 840
+N28     N(1920)_2010   	3/2^+   3 840
+N29     N(2100)_2010   	3/2^-   3 840
+L1	Lambda(1405)	1/2^-	1 5
+L2	Lambda(1600)	1/2^+	1 5
+L3	Lambda(1670)	1/2^-	1 5
+L4	Lambda(1800)	1/2^-	1 5
+L5	Lambda(1810)	1/2^+	1 5
+L6	Lambda(1520)	3/2^-	1 5
+L7	Lambda(1690)	3/2^-	1 5
+L8	Lambda(1890)	3/2^+	1 5
+S1	Sigma(1660)	1/2^+	1 5
+S2	Sigma(1750)	1/2^-	1 5
+S3	Sigma(1670)	3/2^-	1 5
+S4	Sigma(1385)	3/2^+	1 5
+S5	Sigma(1880)	1/2^+	1 5
+D1	Delta(1620)	1/2^-
+D2	Delta(1900)	1/2^-	4 840 840
+D3	Delta(1910)	1/2^+	15
+D4	Delta(1232)	3/2^+
+D5	Delta(1600)	3/2^+
+D6	Delta(1700)	3/2^-	23
+D7	Delta(1920)	3/2^+	21
+X
+
+
+CODE	PARAMETERS	PARAMETRIZATION
+----	----------	---------------
+
+1	cutoff		monopole with one parameter being the cutoff (in MeV)
+
+2	cutoff,		monopole with one parameter being the cutoff (in MeV) of the monopole
+	cutoff2		this formfactor forces the Dirac formfactor to be =0 at Q^2=0 by multipliing
+			the monopole with Q^2/(Q^2+cutoff2^2)
+
+3	cutoff		dipole with one parameter being the cutoff (in MeV)
+	
+4	cutoff,		dipole with one parameter being the cutoff (in MeV) of the dipole
+	cutoff2		this formfactor forces the Dirac formfactor to be =0 at Q^2=0 by multipliing
+			the dipole with Q^2/(Q^2+cutoff2^2)
+
+5	13 parameters	Gari-Kruempelmann parametrization for proton (see p.49-50 of Stijn's notes)
+
+6	13 parameters	Gari-Kruempelmann parametrization for neutron (see p.49-50 of Stijn-s notes)
+
+7	1 coupling,	Kaon^+ parametrization by David et al. (see 8.1.3 of Stijn's notes)
+	2 cutoffs	parameters: (a,L1,L2)
+
+8	no parameters	Kaon^0 parametrization by Bennhold et al. (see 8.1.3 of Stijn's notes)
+
+9	no parameters	Kaon*^+ parametrization by Muenz et al.
+
+10	no parameters	Kaon*^0 parametrization by Muenz et al.
+
+11	3 couplings,	Bonn model for lambda (see Tim for info)
+	4 cutoffs	G_E= sum of 3 dipoles, G_M= dipole
+			parameters: (a1,a2,a3,L1,L2,L3,L4)
+
+12	2 couplings,	Bonn model for sigma^0 (see Tim for info)
+	3 cutoffs	G_E= sum of 2 dipoles, G_M= dipole
+			parameters: (a1,a2,L1,L2,L3)
+
+13	no parameters	Bonn model for lambda-sigma^0 transition (see Tim for info)
+			= sum of 3 dipoles
+
+14	no parameters	Bonn model for P_11(1710) resonance (see Tim for info)
+
+15	no parameters	Bonn model for P_31(1910) resonance (see Tim for info)
+
+16	no parameters	Bonn model for S_11(1535) resonance (see Tim for info)
+
+17	no parameters	Bonn model for S_11(1650) resonance (see Tim for info)
+
+18	no parameters	Bonn model for S_31(1900) resonance (see Tim for info)
+			*** Do not trust this parametrization ***
+
+19	no parameters	Bonn model for P_13(1720) resonance (see Tim for info)
+
+20	no parameters	Bonn model for P_13(1900) resonance (see Tim for info)
+			*** Do not trust this parametrization ***
+
+21	no parameters	Bonn model for P_33(1920) resonance (see Tim for info)
+
+22	no parameters	Bonn model for D_13(1700) resonance (see Tim for info)
+
+23	no parameters	Bonn model for D_33(1700) resonance (see Tim for info)
+
+24	no parameters   Bonn model for D_13(1520) resonance (see Tim for info)
+
+25	no parameters	Bonn model for P_11(1710) resonance coupling to neutron
+	   		(see Tim for info)
+
+26	no parameters	Bonn model for P_13(1720) resonance coupling to neutron
+	   		(see Tim for info)
+
+27	no parameters	Bonn model for S_11(1650) resonance coupling to neutron
+	   		(see Tim for info)
+
+28	no parameters	Bonn model for S_11(1535) resonance coupling to neutron
+	   		(see Tim for info)
+
+29	no parameters	Bonn model for D_13(1520) resonance coupling to neutron
+	   		(see Tim for info)
+
+30	no parameters	Bonn model for P_11(1440) resonance (see Tim for info)
+
+31	no parameters	Bonn model for P_11(1440) resonance coupling to neutron
+	   		(see Tim for info)
+
+32	no parameters	Bonn model for F_15(1680) resonance (see Tim for info)
+
+33	no parameters	Bonn model for D_15(1675) resonance (see Tim for info)
+
+34	no parameters	Bonn model for F_15(2000) resonance (see Tim for info!! several exc may correspond to this resonance.)
+
+35	no parameters	Dipole for D_15(2200) resonance
+
+36	no parameters	Dipole for F_35(1905) resonance
+
+37	no parameters	Dipole for D_35(1930) resonance
+
+38	no parameters	Dipole for F_35(2000) resonance
+
+STANDARD CHOICES FOR (EXTENDED) BORN DIAGRAMS
+---------------------------------------------
+
+Proton:
+-------
+
+-> 5 3.706 -0.12 0.631 3.3 0.658 0.4 0.0 0.0 0.0 0.863 1.21 2.1 0.33
+   Parametrization by Gari and Kruempelmann (Phys.Rev.D,45:1817)
+
+-> 5 3.706 -0.12 0.4466 4.3472 0.4713 21.762 -0.8461 11.849 1.1498 0.9006 1.7038 1.1336 0.0312
+   Parametrization by Lomon (Phys.Rev.C,64:035204)
+
+-> 1 1224.0
+   Monopole form factor used by Guidal et al. (Phys.Rev.C,61:025204)
+
+
+
+Neutron:
+--------
+
+-> 6 3.706 -0.12 0.631 3.3 0.658 0.4 0.0 0.0 0.0 0.863 1.21 2.1 0.33
+   Parametrization by Gari and Kruempelmann (Phys.Rev.D,45:1817)
+
+-> 6 3.706 -0.12 0.4466 4.3472 0.4713 21.762 -0.8461 11.849 1.1498 0.9006 1.7038 1.1336 0.0312
+   Parametrization by Lomon (Phys.Rev.C,64:035204)
+
+-> 1 1224.0
+   Monopole form factor used by Guidal et al. (Phys.Rev.C,61:025204)
+
+
+Kaon^+:
+-------
+
+-> 7 0.398 642.0 1386.0
+   Parametrization by David et al. (Phys.Rev.C,53:2613)
+
+-> 1 1224.0
+   Monopole form factor used by Guidal et al. (Phys.Rev.C,61:025204)
+
+
+Kaon^0:
+-------
+
+-> 8
+   Parametrization by Bennhold et al. 
+   (proceedings of the 7th International Conference on the Structure of Baryons,
+    Baryons '95* 323-326)
+
+
+Kaon*^+:
+--------
+
+-> 9
+   Parametrization by Muenz et al. (Phys.Rev.C,52:2110)
+
+-> 1 950.0
+   Monopole suggested in Stijn's notes p.51
+
+
+Kaon*^0:
+--------
+
+-> 10
+   Parametrization by Muenz et al. (Phys.Rev.C,52:2110)
+
+-> 1 775.5
+   Monopole suggested in Stijn's notes p.51 (cutoff = mass of rho meson)
+
+
+Kaon_1:
+-------
+
+-> 1 550.0
+   Parametrization suggested in Stijn's notes p.51
+
+
+Lambda:
+-------
+
+-> 11 1.05834 1.06657 -2.12491 1139.715 1488.983 1327.773 1142.116
+   Bonn model parametrization
+
+
+Sigma^0:
+--------
+
+-> 12 1.37108 -1.37108 1027.526 1180.326 880.0
+   Bonn model parametrization

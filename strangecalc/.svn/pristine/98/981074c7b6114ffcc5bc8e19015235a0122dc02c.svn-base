@@ -1,0 +1,34 @@
+Class  NickName   G*           H*          I*          X*          Y*          Z*
+-----  --------   --           --          --          --          --          --
+T    K+     0.000000e+00  -1.077121e+01   0.000000e+00   0.000000e+00   0.000000e+00   0.000000e+00
+B    B1     1.000000e+00   8.830418e+00   2.465270e+01   0.000000e+00   0.000000e+00   0.000000e+00
+cutoff born:	4000.000000
+cutoff res:	2473.640712
+
+
+---
+No. of parameters:		17
+No. of free parameters:		17
+
+Chisquared 		=	21584.016771 for 6148 d.o.f.
+Reduced Chisquared 	=	3.510738
+
+
+Used data base:
+	iso channel (1):
+	-->	rec.clas-cmu.03
+	-->	diff.clas.05
+	-->	cxz_clas
+	-->	pho.spring8.03
+	-->	diff.spring8.04
+	-->	pho.graal.05
+	-->	rec.graal.05
+	-->	diff.leps.07_cos
+	-->	pho.leps.07
+	-->	tar.graal.08
+	-->	olt.graal.08
+	-->	diff.clas.09
+	-->	rec.clas.09
+
+Weight factor for polarization observables: 1
+Grid size: narrow

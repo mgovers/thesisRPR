@@ -1,0 +1,5 @@
+Class Nickname	G*		H*       X*     Y*     Z*
+----- --------	--		--       --     --     --
+B       B1      f,l -100 100.0  f,l -100 100.0
+cutoff born:    x
+cutoff res:     f,l 1000 2500

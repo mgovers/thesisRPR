@@ -1,0 +1,161 @@
+#! /bin/bash
+#
+# ======================================================================
+#
+#	Script: bootstrap
+#
+#	Description:  Use this script to create generated files from
+#		      the CVS dist, or after adjustment to
+#			  * configure.in  
+#			  * Makefile.am
+#
+#	Author: Dave Ireland, d.ireland@physics.gla.ac.uk (C) 2006
+#
+#	Copying: See COPYING file that comes with the distribution
+#		  
+# ======================================================================
+
+LIBTOOLIZE=libtoolize
+if [[ $OSTYPE == darwin* ]];
+then 
+    LIBTOOLIZE=glibtoolize
+fi
+
+hash $LIBTOOLIZE 2>&- || { echo >&2 "./bootstrap requires '$LIBTOOLIZE'. Aborting."; exit 1; }
+hash aclocal 2>&- || { echo >&2 "./bootstrap requires 'aclocal'. Aborting."; exit 1; }
+hash autoheader 2>&- || { echo >&2 "./bootstrap requires 'autoheader'. Aborting."; exit 1; }
+hash automake 2>&- || { echo >&2 "./bootstrap requires 'automake'. Aborting."; exit 1; }
+hash autoconf 2>&- || { echo >&2 "./bootstrap requires 'autoconf'. Aborting."; exit 1; }
+
+set -x
+$LIBTOOLIZE --copy --force
+aclocal -I config
+autoheader
+automake --foreign --add-missing
+autoconf
+
+
+if [ `hostname -s` == "talvin4" ] || [ `hostname -s` == "talvin10" ] ;
+then
+    if [ "$1" == "-g" ];
+    then	  
+	./configure --prefix=/home/pieter/strangeProd/codeDev CXX=g++ CXXFLAGS="-ggdb -std=c++0x"
+    else
+	./configure --prefix=/home/pieter/strangeProd/codeDev CXX=g++ CXXFLAGS="$1 -O3 -std=c++0x"
+    fi
+
+elif [ `hostname -s` == "gulliver" ] ;
+then
+    if [ "$1" == "-g" ];
+    then	  
+	./configure --prefix=/home/pieter/strangeProd/codeDev CXX=g++ CXXFLAGS="-ggdb -std=c++0x"
+    else
+	./configure --prefix=/home/pieter/strangeProd/codeDev CXX=g++ CXXFLAGS="$1 -O3 -std=c++0x"
+    fi
+    
+    
+elif [ `hostname -s` == "talvin12" ];
+then
+    if [ "$1" == "-g" ];
+    then
+	./configure --prefix=/home/lesley CXX=icpc CXXFLAGS="-ggdb -std=c++0x" AR=xiar LD=xild
+    elif [ "$1" == "-" ]; 
+    then
+	./configure --prefix=/home/lesley CXX=icpc CXXFLAGS="$2 $3 $4 -std=c++0x" AR=xiar LD=xild
+    else
+	./configure --prefix=/home/lesley CXX=icpc CXXFLAGS="$1  -std=c++0x -O3 -xHOST -fp-model source" AR=xiar LD=xild
+#CFLAGS="-O3 -axT -fp-model source" CXXFLAGS="-O3 -axT -fp-model source" AR=xiar LD=xild
+    fi
+
+elif [ `hostname -s` == "kukicha" ];
+then
+    if [ "$1" == "-g" ];
+    then
+	./configure --prefix=/home/lesley CXX=icpc CXXFLAGS=" -std=c++0x -ggdb" AR=xiar LD=xild
+    else
+	./configure --prefix=/home/lesley CXX=icpc CXXFLAGS="$1 -std=c++0x -O3 -xHOST -fp-model source" AR=xiar LD=xild
+#CFLAGS="-O3 -axT -fp-model source" CXXFLAGS="-O3 -axT -fp-model source" AR=xiar LD=xild
+    fi    
+    
+elif [ `hostname -s` == "trillian" ];
+then
+    if [ "$1" == "-g" ];
+    then
+	./configure --prefix=/home/$USER CXX=icpc CXXFLAGS="-ggdb" AR=xiar LD=xild
+    else
+	./configure --prefix=/home/$USER CXX=icpc CXXFLAGS="$1 -O3 -axSSE4.2,SSE4.1,SSSE3 -xSSSE3 -unroll" AR=xiar LD=xild
+    fi
+
+
+elif [ `hostname -s` == "talvin16" ];
+then
+    if [ "$1" == "-g" ];
+    then
+        ./configure --prefix=/home/pieter/strangeProd/codeDev CXX=icpc CXXFLAGS="-ggdb" AR=xiar LD=xild
+    else
+        ./configure --prefix=/home/pieter/strangeProd/codeDev CXX=icpc CXXFLAGS="$1 -O3 -xT -unroll" AR=xiar LD=xild
+    fi
+
+
+elif [ `hostname -s` == "zordon" ];
+then
+    if [ "$1" == "-g" ];
+    then
+	./configure --prefix=/home/tom/Documents/PhD/Code/strangecalc CXX=icpc CXXFLAGS="-ggdb" AR=xiar LD=xild
+    else
+	./configure --prefix=/home/tom/Documents/PhD/Code/strangecalc CXX=icpc CXXFLAGS="$1 -O3 -xT -unroll" AR=xiar LD=xild
+    fi
+
+elif [ `hostname -s` == "gengar1" ]  || [ `hostname -s` == "gengar2" ];
+then
+    if [ "$1" == "-g" ];
+    then
+        ./configure --prefix=${VSC_HOME} CXX=icpc CXXFLAGS="-ggdb" AR=xiar LD=xild
+    else
+        ./configure --prefix=${VSC_HOME} CXX=icpc CXXFLAGS="$1 -O3  -xSSE4.1 -axSSE4.1,SSE4.2 -unroll" AR=xiar LD=xild
+    fi
+elif [ `hostname -s` == "gligar01" ] ||  [ `hostname -s` == "gligar02" ] ||  [ `hostname -s` == "gligar03" ||  [ `hostname -s` == "gligar04" ] ];
+then
+    if [ "$1" == "-g" ];
+    then
+	#./configure --prefix=/user/home/gent/vsc414/vsc41422/strangecalc CXX=g++ CXXFLAGS="-ggdb" AR=xiar LD=xild
+       	./configure --prefix=/user/home/gent/vsc414/vsc41422/strangecalc CXX=g++ CXXFLAGS="-g -std=c++11"    
+    else
+	#./configure --prefix=/user/home/gent/vsc414/vsc41422/strangecalc CXX=icpc CXXFLAGS="$1 -O3 -xT -unroll" AR=xiar LD=xild
+	./configure --prefix=/user/home/gent/vsc414/vsc41422/strangecalc CXX=g++ CXXFLAGS="-O3 -std=c++11"
+    fi
+
+elif [ `hostname -s` == "we05c710" ];
+then
+    if [ "$1" == "-g" ];
+    then	  
+	./configure --prefix=/home/jwnys/Software/strangecalc CXX=g++ CXXFLAGS="-ggdb -std=c++0x"
+    else
+	./configure --prefix=/home/jwnys/Software/strangecalc CXX=g++ CXXFLAGS="$1 -O3 -std=c++0x"
+    fi
+
+elif [ `hostname -s` == "mgovers-X756UX" ];
+then
+    if [ "$1" == "-g" ];
+    then	  
+	./configure --prefix=/home/mgovers/Software/strangecalc CXX=g++ CXXFLAGS="-ggdb -std=c++0x"
+    else
+	./configure --prefix=/home/mgovers/Software/strangecalc CXX=g++ CXXFLAGS="$1 -O3 -std=c++0x"
+    fi
+
+else
+  echo "Unknown hostname: run ./configure yourself."
+fi
+
+
+# $1 \                                        # --prefix=...
+# CC=icc \                                    # C compiler
+# CXX=icpc \                                  # C++ compiler
+# CFLAGS="-O3 -xT -axT -xW -ipo -unroll" \    # C compiler flags
+# CXXFLAGS="-O3 -xT -axT -xW -ipo -unroll" \  # C++ compiler flags
+# AR=xiar \                                   # use Intel linker
+# LD=xild \                                   # idem
+
+
+#	End
+# ======================================================================

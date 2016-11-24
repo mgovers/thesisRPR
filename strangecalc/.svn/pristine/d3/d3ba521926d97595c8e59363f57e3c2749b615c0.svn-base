@@ -1,0 +1,23 @@
+# ::::::::::::::::::::::::::::::::::::::::::
+#        DESY-data (1972)  (K-Lambda)
+# ::::::::::::::::::::::::::::::::::::::::::
+ 
+# G. Vogel et al., Phys. Lett. B40, 513 (1972)
+
+# (Caution: these values were estimated from a graph in the
+# article and are not 100% exact)
+
+
+$vars: -t (GeV^2) & P
+$const: wlab 5 (GeV)
+
+
+# -t(GeV^2)	recpol 		error
+# +++++++++     ++++++          +++++
+0.2		-0.90		0.14
+0.3		-0.80		0.10
+0.4		-0.87		0.09
+0.5		-0.90		0.12
+0.6		-0.76		0.11
+0.8		-0.67		0.11
+1.0		-0.50		0.20

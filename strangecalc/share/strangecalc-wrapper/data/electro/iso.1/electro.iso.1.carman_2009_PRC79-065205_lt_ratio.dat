@@ -1,0 +1,29 @@
+$vars: / & E_beam (GeV) & qsquared (GeV^2) & w (GeV) & costhkcm & diff_r_lt -sysErr
+
+
+diff_r_lt  4.261   1.63   1.72   1.00  0.533  0.270  0.326
+diff_r_lt  4.261   1.58   1.89   1.00  0.870  0.329  0.401
+diff_r_lt  4.261   1.45   2.18   1.00  1.348  0.404  0.515
+diff_r_lt  5.754   2.16   1.75   1.00  0.000  0.092  0.156
+diff_r_lt  5.754   2.56   1.98   1.00  0.176  0.088  0.209
+diff_r_lt  5.754   2.31   2.31   1.00  0.637  0.120  0.445
+
+
+# Columns:
+#  (1) observable
+#  (2) Beam energy (GeV)
+#  (3) Q^2 (GeV^2)
+#  (4) W (GeV)
+#  (5) cos(theta*_K)
+#  (6) ratio
+#  (7) stat. error
+#  (8) sys. error
+
+# Extra info:
+#  - these data were sent to us by D.Carman on Dec,22 2009
+
+# Results published in:
+# Carman et al.
+# Beam-recoil polarization transfer in the nucleon resonance region in
+# the exclusive ep->e'K+L and ep->e'KS0 reactions at the CLAS spectrometer
+# Phys.Rev.C 79, 065205 (2009)

@@ -1,0 +1,120 @@
+ 
+# ======================================================================
+#
+# 	File: configure.in
+#	      ~~~~~~~~~~~~
+#
+#	Description: Process this file with autoconf to produce configure
+#
+#	Author: Dave Ireland, d.ireland@physics.gla.ac.uk (C) 2006
+#
+#	Copying: See COPYING file that comes with the distribution
+#
+# ======================================================================
+
+AC_INIT(strangecalc-wrapper, 10.3)
+AC_CONFIG_SRCDIR(configure.in)
+AC_CONFIG_MACRO_DIR(config)
+AC_CONFIG_AUX_DIR(config)
+AC_SUBST(ac_aux_dir)
+
+AM_CONFIG_HEADER(config.h)
+AM_INIT_AUTOMAKE
+
+AC_PROG_CXX
+
+AC_LANG_CPLUSPLUS
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+#include <iostream>
+]],[[ std::cout << "test" << std::endl; ]])],,	
+      		  [AC_MSG_ERROR(The C++ compiler does not work)])
+
+AC_PROG_LIBTOOL
+
+#	Check the type of C++ compiler
+AX_COMPILER_VENDOR
+AM_CONDITIONAL([USE_INTEL_COMPILER], [test xintel == x"$ax_cv_cxx_compiler_vendor"])
+
+#       We need some ROOT classes as well...
+ROOT_PATH(5.23/05, AC_DEFUN([HAVE_ROOT]),
+        [AC_MSG_ERROR(You do not appear to have ROOT)])
+#       And ROOT needs to have MathMore compiled
+PVC_ROOT_HAS(mathmore, , AC_MSG_ERROR(ROOT doesn't have libMathMore compiled))
+
+#       Check that gsl is installed
+AX_PATH_GSL(, , AC_MSG_ERROR(could not find GSL))
+
+#	Check that rsync is present
+AC_CHECK_PROG([RSYNC], [rsync], [yes],  [no])
+if test "x${RSYNC}x" = "xnox" ; then
+       AC_MSG_ERROR([Cannot find the "rsync" program in your PATH])
+fi
+
+# Store the svn revision number
+AC_PATH_PROG(svnversioncommand, svnversion)
+if test "X$svnversioncommand" = "X";
+then
+	SVNREVISION="NOsvnversion"
+else
+	SVNREVISION=`$svnversioncommand -n`
+fi
+AC_SUBST(SVNREVISION)
+
+# Configure doxygen (doc,html on by default)
+DX_DOT_FEATURE(ON) # off by default
+DX_PDF_FEATURE(OFF) # on by default
+DX_PS_FEATURE(OFF) # on by default
+DX_INIT_DOXYGEN(strangecalc-wrapper,
+		${top_builddir}/doc/Doxyfile,
+		${top_builddir}/htmldoc)
+
+AC_OUTPUT(Makefile \
+	src/Makefile \
+	src/version.h \
+	src/strangecalc_path.h \
+	tests/Makefile \
+	tests/setup_files/Makefile \
+	doc/Makefile \
+	doc/Doxyfile \
+	strangeweb/Makefile \
+	strangeweb/strangeweb.cpp \
+	share/Makefile \
+	share/models/rpr-2007/iso1+4/init/fit_specification \
+	share/models/rpr-2007/iso2+6/init/fit_specification \
+	share/models/rpr-2007/iso3+5/init/fit_specification \
+	share/models/rpr-2007-background/iso1+4/init/fit_specification \
+	share/models/rpr-2007-background/iso2+6/init/fit_specification \
+	share/models/rpr-2007-background/iso3+5/init/fit_specification \
+	share/models/regge-2007/iso1+4/init/fit_specification \
+	share/models/regge-2007/iso2+6/init/fit_specification \
+	share/models/regge-2007/iso3+5/init/fit_specification \
+	share/models/rpr-2011/iso1+4/init/fit_specification \
+	share/models/rpr-2011-background/iso1+4/init/fit_specification \
+	share/models/regge-2011/iso1+4/init/fit_specification \
+	share/models/VR-2014/iso8+10/init/fit_specification \
+	share/models/VR-2014/iso1/init/fit_specification
+	)
+
+# Some nice output from the configuration step
+echo \
+"------------------------------------------------------------------------
+Configuration for $PACKAGE_NAME:
+
+  Version                     ${PACKAGE_VERSION}
+  Subversion Revision Number  ${SVNREVISION}
+ 
+  Source code location:       ${srcdir}
+  C++ Compiler:		      ${CXX}
+  C++ Compiler flags:	      ${CXXFLAGS}
+  Host System Type:           ${host}
+  Install path:               ${prefix}
+ 
+  See config.h for further configuration information.
+
+  type 'make' and 'make install' to build the project
+  type 'make info' to generate html documentation in htmldoc/
+
+------------------------------------------------------------------------"
+ 
+#	End
+# ======================================================================

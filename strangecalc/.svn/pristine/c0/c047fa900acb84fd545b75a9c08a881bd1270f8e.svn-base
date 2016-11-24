@@ -1,0 +1,686 @@
+
+
+	::::::::::::::::::::::::::: 
+
+	 STRANGECALC (version 10.0)
+
+	::::::::::::::::::::::::::: 
+
+---
+Location of the input folder? 			: ../setup_files/
+---
+Location of the output folder? 			: ./
+---
+Location of the data folder? 			: ../../share/data/
+---
+Specific Calculation, Fitting procedure 
+or chi Squared calc.? (c/f/s)			: s
+---
+	(1)   ===>   g + p   ->  K+ + L0 
+	(2)   ===>   g + p   ->  K+ + S0 
+	(3)   ===>   g + p   ->  K0 + S+ 
+	(4)   ===>   g + n   ->  K0 + L0 
+	(5)   ===>   g + n   ->  K0 + S0 
+	(6)   ===>   g + n   ->  K+ + S- 
+	(7)   ===>   g + p   ->  P0 + p  
+	(8)   ===>   g + p   ->  P+ + n  
+	(9)   ===>   g + n   ->  P0 + n  
+	(10)  ===>   g + n   ->  P- + p  
+	(11)  ===>   K- + p  ->  g  + L0 
+	(12)  ===>   K- + p  ->  g  + S0 
+Give the numbers of the processes in the fit
+in increasing order.
+Combined fit only possible for processes derived from same base channel!
+(multiple nrs as one line separated by ",")	: 1
+---
+Give data points to be used in chi^2 calculation for isospin (1):
+Medium-energy photoproduction data
+	(101)	-->	saphir '98	  -- photo --	diff. cross sec.
+	(102)	-->	saphir '98	  -- photo --	tot. cross sec. 
+	(103)	-->	saphir '98	  -- photo --	rec. asym.
+	(104)	-->	saphir '03	  -- photo --	diff. cross sec.
+	(105)	-->	forw. saphir '03
+			(cos > 0.0)	  -- photo --	diff. cross sec.
+	(106)	-->	saphir '03	  -- photo --	rec. asym.
+	(107)	-->	forw. saphir '03
+			(cos > 0.0)	  -- photo --	rec. asym.
+	(108)	-->	clas-cmu '03	  -- photo --	diff. cross sec.
+	(109)	-->	forward clas '03  -- photo --	diff. cross sec.
+	(110)	-->	clas-cmu '03	  -- photo --	rec. asym.
+	(111)	-->	forward clas '03 
+			(cos > -0.15)	  -- photo --	rec. asym.
+	(112)	-->	forward clas '03
+			(cos > 0.35)	  -- photo --	rec. asym.
+	(113)	-->	clas '05	  -- photo --	diff. cross sec.
+	(114)	-->	forward clas '05
+			(cos > -0.15)	  -- photo --	diff. cross sec.
+	(115)	-->	forward clas '05
+			(cos > 0.35)	  -- photo --	diff. cross sec.
+	(116)	-->	clas '07	  -- photo --	beam-rec. asym (c)
+	(117)	-->	spring-8 '03	  -- photo --	pho. asym.
+	(118)	-->	spring-8 '04	  -- photo --	diff.cross sec.
+	(119)	-->	graal '06	  -- photo --	pho. asym.
+	(120)	-->	forward graal '06
+			(cos > 0.0)	  -- photo --	pho. asym.
+	(121)	-->	graal '06	  -- photo --	rec. asym.
+	(122)	-->	forward graal '06
+			(cos > 0.0)	  -- photo --	rec. asym.
+	(123)	-->	bonn '78	  -- photo --	tar. asym. 
+	(124)	-->	LEPS '07	  -- photo --	diff.cross sec. (u)
+	(125)	-->	LEPS '07	  -- photo --	diff.cross sec. (costhkcm)
+	(126)	-->	LEPS '07	  -- photo --	pho. asym. 
+	(127)	-->	GRAAL '08	  -- photo --	tar. asym. 
+	(128)	-->	GRAAL '08	  -- photo --	beam-rec. asym. (o) 
+	(129)	-->	forward clas '03 
+ 			 (cos > 0.0) 	 -- photo -- 	 rec. asym.
+	(130)	-->	forward clas '05 
+ 			 (cos > 0.0) 	 -- photo -- 	 diff. cross sec.
+	(131)	-->	forward clas '07 
+ 			 (cos > 0.0) 	 -- photo -- 	 beam-rec. asym (c)
+	(132)	-->	GRAAL '08 
+ 			 (cos > 0.0) 	 -- photo -- 	 tar. asym.
+	(133)	-->	GRAAL '08 
+ 			 (cos > 0.0) 	 -- photo -- 	 beam-rec. asym. (o)
+	(134)	-->	CLAS '09 
+ 			 	 -- photo -- 	 diff. cross sec.
+	(135)	-->	CLAS '09 
+ 			 	 -- photo -- 	 rec. asym. (o)
+	(136)	-->	forward CLAS '09 
+ 			 (cos > 0.0) 	 -- photo -- 	 diff. cross sec.
+	(137)	-->	forward CLAS '09 
+ 			 (cos > 0.0) 	 -- photo -- 	 rec. asym. (o)
+	(138)	-->	ex fwd CLAS '09 
+ 			 (cos > 0.35) 	 -- photo -- 	 diff. cross sec.
+	(139)	-->	ex fwd CLAS '09 
+ 			 (cos > 0.35) 	 -- photo -- 	 rec. asym. (o)
+Medium-energy electroproduction data
+	(201)	-->	cea '72 	  -- elec -- 	T+L cross sec.
+	(202)	-->	harv.-corn. '74	  -- elec -- 	T+L cross sec.
+	(203)	-->	harv.-corn. '77	  -- elec -- 	T+L cross sec.
+	(204)	-->	jlab '03	  -- elec -- 	T & L cross sec.
+	(205)	-->	jlab '06	  -- elec --
+			T+L, TT, LT cross sec. (2.567 GeV, narrow bins)
+	(206)	-->	jlab '06	  -- elec --
+			T+L, TT, LT cross sec. (2.567 GeV, wide bins)
+	(207)	-->	jlab '06	  -- elec --
+			T+L, TT, LT cross sec. (4.056 GeV)
+	(208)	-->	jlab '06	  -- elec --
+			T, L, TT, LT cross sec.
+	(209)	-->	jlab '07	  -- elec --
+			LT' cross sec.
+	(210)	-->	CLAS '09	  -- elec -- 	T+L cross sec.
+	(211)	-->	CLAS '09	  -- elec -- 	T cross sec.
+	(212)	-->	CLAS '09	  -- elec -- 	L cross sec.
+	(213)	-->	jlab '09	  -- elec --
+			transf. pol (unprimed ref. frame, 4.261 GeV)
+	(214)	-->	jlab '09	  -- elec --
+			transf. pol (unprimed ref. frame, 5.754 GeV)
+	(215)	-->	jlab '09	  -- elec --
+			ratio longitudinal/transverse
+	(216)	-->	jlab '00	  -- elec --
+			T+L cross sec (Ph.D. Cha, unpublished)
+High-energy photoproduction data
+	(401)	-->	slac '69	  -- photo --	diff. cross sec. (t)
+	(402)	-->	slac '69	  -- photo --	diff. cross sec. (u)
+	(403)	-->	slac '79	  -- photo --	pho.asym. (t)
+	(404)	-->	desy '72	  -- photo --	rec.asym. (t)
+Give nr. separated with ","			: 112,115,116,117,207,209
+---
+Weight factor for polarization?			: 1
+---
+Narrow or wide grid to average? (n/w)		: n
+---
+Isobar theory or Regge theory? (i/r)		: r
+---
+T or U channel reggeization, or both? (t/u/b)		: t
+Only T channel reggeization is implemented
+---
+Exact or asymptotic behavior? (x/a)		: a
+Only asymptotoc behaviour is implemented
+---
+'s' or '(s-u)/2' dependence? (s/u)		: s
+---
+Linear or Saturating trajectories? (l/s)	: l
+Only linear trajectories are implemented
+---
+Spin-shift recipe (alpha->alpha-n)
+of Guidal or Janssen? (j/g)	: g
+---
+Pure regge theory, or resonances Superimposed
+on reggeized background? (p/s)		: s
+---
+Hadronic form factors (y/n)			: y
+---
+Dipole or Gaussian hadronic form factors? (d/g)		: g
+---
+Enter model type (for old model choose: (n) offshell  model (y) consistent couplings) 	: n
+
+
+TStrangeCalc::TStrangeCalc: 
+Getting fit specifications...		OK
+Importing data...	
+---
+K+ exchange in t-channel born term: constant (0) or rotating (1) phase? 1
+
+B1 exchange in t-channel: constant (0) or rotating (1) phase? 1
+
+Storing hadronic formfactors in particles[] array...
+
+
+Storing EM formfactors in particles[] array...
+
+OK
+Getting variable info...		OK
+
+###############################################
+
+<coupl.iso>
+Class  NickName   G*           H*          I*          X*          Y*          Z*
+-----  --------   --           --          --          --          --          --
+T    K+     0.000000e+00  -1.063552e+01   0.000000e+00   0.000000e+00   0.000000e+00   0.000000e+00
+B    B1     1.000000e+00   1.081521e+01  -2.906040e+01   0.000000e+00   0.000000e+00   0.000000e+00
+D    N6     1.000000e+00  -2.347719e-01   0.000000e+00   0.000000e+00   0.000000e+00   0.000000e+00
+E    N4     1.000000e+00  -2.250672e-02   0.000000e+00   0.000000e+00   0.000000e+00   0.000000e+00
+H    N7     3.842310e-02  -1.812320e-02   1.000000e+00   1.437042e+02   5.695635e+01  -3.117296e-01
+H    N9    -7.498767e-01   3.377034e-01   1.000000e+00  -1.769587e+01   2.588173e+00  -8.877617e-01
+I    N8     1.115107e+00   5.105338e-01   1.000000e+00   4.030950e+01  -1.399253e+01  -3.968705e-02
+cutoff born:	4000.000000
+cutoff res:	1636.530000
+</coupl.iso>
+
+
+
+###############################################
+
+<varinfo>
+Class Nickname	G*		H*       X*     Y*     Z*
+----- --------	--		--       --     --     --
+T	K+	x
+B	B1	x	x
+D       N6      f,n
+E       N4      f,n
+H       N7      f,n     f,n     f,n     f,n     f,n
+H       N9      f,n     f,n     f,n     f,n     f,n
+I 	N8 	f,n	f,n	f,n	f,n	f,n
+cutoff born:    x
+cutoff res:     f,l 1000 2500
+</varinfo>
+
+##########################################
+
+Making a start vertex...		OK
+
+<limits>
+1	0.000000	0.000000
+2	0.000000	0.000000
+3	0.000000	0.000000
+4	0.000000	0.000000
+5	0.000000	0.000000
+6	0.000000	0.000000
+7	0.000000	0.000000
+8	0.000000	0.000000
+9	0.000000	0.000000
+10	0.000000	0.000000
+11	0.000000	0.000000
+12	0.000000	0.000000
+13	0.000000	0.000000
+14	0.000000	0.000000
+15	0.000000	0.000000
+16	0.000000	0.000000
+17	0.000000	0.000000
+18	1000.000000	2500.000000
+</limits>
+
+##########################################
+
+<vertexdim>
+	18
+</vertexdim>
+Initial chi-squared evaluation...	done
+
+Storing hadronic formfactors in particles[] array...
+
+
+Storing EM formfactors in particles[] array...
+
+
+
+	::::::::::::::::::::::::::: 
+
+	 STRANGECALC (version 10.0)
+
+	::::::::::::::::::::::::::: 
+
+---
+Location of the input folder? 			: ../setup_files/
+---
+Location of the output folder? 			: ./
+---
+Location of the data folder? 			: ../../share/data/
+---
+Specific Calculation, Fitting procedure 
+or chi Squared calc.? (c/f/s)			: s
+---
+	(1)   ===>   g + p   ->  K+ + L0 
+	(2)   ===>   g + p   ->  K+ + S0 
+	(3)   ===>   g + p   ->  K0 + S+ 
+	(4)   ===>   g + n   ->  K0 + L0 
+	(5)   ===>   g + n   ->  K0 + S0 
+	(6)   ===>   g + n   ->  K+ + S- 
+	(7)   ===>   g + p   ->  P0 + p  
+	(8)   ===>   g + p   ->  P+ + n  
+	(9)   ===>   g + n   ->  P0 + n  
+	(10)  ===>   g + n   ->  P- + p  
+	(11)  ===>   K- + p  ->  g  + L0 
+	(12)  ===>   K- + p  ->  g  + S0 
+Give the numbers of the processes in the fit
+in increasing order.
+Combined fit only possible for processes derived from same base channel!
+(multiple nrs as one line separated by ",")	: 2,3
+---
+Give data points to be used in chi^2 calculation for isospin (2):
+Medium-energy photoproduction data
+	(101)	-->	saphir '98	  -- photo --	diff. cross sec.
+	(102)	-->	saphir '98	  -- photo --	tot. cross sec. 
+	(103)	-->	saphir '98	  -- photo --	rec. asym.
+	(104)	-->	saphir '03	  -- photo --	diff. cross sec. 
+	(105)	-->	forw. saphir '03
+			(cos > 0.0)	  -- photo --	diff. cross sec. 
+	(106)	-->	saphir '03	  -- photo --	rec. asym.
+	(107)	-->	forw. saphir '03
+			(cos > 0.0)	  -- photo --	rec. asym.
+	(108)	-->	clas-cmu '03	  -- photo --	diff. cross sec. 
+	(109)	-->	forward clas '03  -- photo --	diff. cross sec.
+	(110)	-->	clas-cmu '03	  -- photo --	rec. asym.
+	(111)	-->	forward clas '03
+			(cos > -0.15)	  -- photo --	rec. asym.
+	(112)	-->	forward clas '03
+			(cos > 0.35)	  -- photo --	rec. asym.
+	(113)	-->	clas '05	  -- photo --	diff. cross sec.
+	(114)	-->	forward clas '05
+			(cos > -0.15)	  -- photo --	diff. cross sec.
+	(115)	-->	forward clas '05
+			(cos > 0.35)	  -- photo --	diff. cross sec.
+	(116)	-->	clas '07	  -- photo --	beam-rec. asym (c)
+	(117)	-->	spring-8 '03	  -- photo --	pho. asym.
+	(118)	-->	spring-8 '04	  -- photo --	diff.cross sec.
+	(119)	-->	graal '06	  -- photo --	pho. asym.
+	(120)	-->	forward graal '06
+			(cos > 0.0)	  -- photo --	pho. asym.
+	(121)	-->	graal '06	  -- photo --	rec. asym.
+	(122)	-->	forward graal '06
+			(cos > 0.0)	  -- photo --	rec. asym.
+	(123)	-->	leps '06	  -- photo --	diff.cross sec.
+	(124)	-->	leps '06	  -- photo --	pho. asym.
+	(129)	-->	forward clas '03 
+ 			 (cos > 0.0) 	  -- photo -- 	rec. asym.
+	(130)	-->	forward clas '05 
+ 			 (cos > 0.0) 	  -- photo -- 	diff. cross sec.
+	(131)	-->	forward clas '07 
+ 			 (cos > 0.0) 	  -- photo -- 	beam-rec. asym (c)
+	(132)	-->	clas '10	  -- photo --	diff.cross sec.
+	(133)	-->	forward clas '10 
+ 			 (cos > 0.0) 	  -- photo -- 	diff.cross sec.
+	(134)	-->	clas '10	  -- photo --	rec. asym.
+	(135)	-->	forward clas '10 
+ 			 (cos > 0.0) 	  -- photo -- 	rec. asym.
+Medium-energy electroproduction data
+	(201)	-->	cea '72   	  -- elec -- 	T+L cross sec. 
+	(202)	-->	harv.-corn. '74	  -- elec -- 	T+L cross sec.
+	(203)	-->	harv.-corn. '77	  -- elec -- 	T+L cross sec.
+	(204)	-->	jlab '03	  -- elec -- 	T & L cross sec.
+	(205)	-->	jlab '06	  -- elec --
+			T+L, TT, LT cross sec. (2.567 GeV, narrow bins)
+	(206)	-->	jlab '06	  -- elec --
+			T+L, TT, LT cross sec. (2.567 GeV, wide bins)
+	(207)	-->	jlab '06	  -- elec --
+			T+L, TT, LT cross sec. (4.056 GeV)
+	(208)	-->	jlab '06	  -- elec --
+			T, L, TT, LT cross sec.
+	(209)	-->	jlab '09	  -- elec --
+			transf. pol (unprimed ref. frame)
+	(210)	-->	jlab '00	  -- elec --
+			T+L cross sec (Ph.D. Cha, unpublished)
+High-energy data
+	(401)	-->	slac '69	  -- photo --	diff. cross sec. (t)
+	(402)	-->	slac '69	  -- photo --	diff. cross sec. (u)
+	(403)	-->	slac '79	  -- photo --	pho. asym. (t)
+Give nr. separated with ","			: 112,115,116,117,119,121
+---
+Give data points to be used in chi^2 calculation for isospin (3):
+Medium-energy photoproduction data
+	(101)	-->	saphir '99	  -- photo --	diff. cross sec.
+	(102)	-->	saphir '99	  -- photo --	tot. cross sec. 	!! Not for fitting !!
+	(103)	-->	saphir '99	  -- photo --	rec. asym. 		!! Not for fitting !!
+	(104)	-->	saphir '05	  -- photo --	diff. cross sec.
+	(105)	-->	forw. saphir '05
+			(cos > 0.0)	  -- photo --	diff. cross sec.
+	(106)	-->	saphir '05	  -- photo --	rec. asym. 		!! Not for fitting !!
+	(107)	-->	forw. saphir '05
+			(cos > 0.2)	  -- photo --	rec. asym.		!! Not for fitting !!
+	(108)	-->	saphir '05	  -- photo --	tot. cross sec. 	!! Not for fitting !!
+	(109)	-->	CLAS '03	  -- photo --	diff. cross sec.
+	(110)	-->	CB-ELSA/TAPS '07  -- photo --	diff. cross sec.
+	(111)	-->	CB-ELSA/TAPS '07  -- photo --	tot. cross sec.
+	(112)	-->	CB-ELSA/TAPS '07  -- photo --	rec. asym.
+Give nr. separated with ","			: 105,107
+---
+Weight factor for iso-channel 2?			: 1
+---
+Weight factor for iso-channel 3?			: 1
+---
+Weight factor for polarization?			: 1
+---
+Narrow or wide grid to average? (n/w)		: n
+---
+Isobar theory or Regge theory? (i/r)		: r
+---
+T or U channel reggeization, or both? (t/u/b)		: t
+Only T channel reggeization is implemented
+---
+Exact or asymptotic behavior? (x/a)		: a
+Only asymptotoc behaviour is implemented
+---
+'s' or '(s-u)/2' dependence? (s/u)		: s
+---
+Linear or Saturating trajectories? (l/s)	: l
+Only linear trajectories are implemented
+---
+Spin-shift recipe (alpha->alpha-n)
+of Guidal or Janssen? (j/g)	: g
+---
+Pure regge theory, or resonances Superimposed
+on reggeized background? (p/s)		: s
+---
+Hadronic form factors (y/n)			: y
+---
+Dipole or Gaussian hadronic form factors? (d/g)		: g
+---
+Enter model type (for old model choose: (n) offshell  model (y) consistent couplings) 	: n
+
+
+TStrangeCalc::TStrangeCalc: 
+Getting fit specifications...		OK
+Importing data...	
+---
+K+ exchange in t-channel born term: constant (0) or rotating (1) phase? 1
+
+B1 exchange in t-channel: constant (0) or rotating (1) phase? 1
+
+Storing hadronic formfactors in particles[] array...
+
+
+Storing hadronic formfactors in particles[] array...
+
+OK
+Getting variable info...		OK
+
+###############################################
+
+<coupl.iso>
+Class  NickName   G*           H*          I*          X*          Y*          Z*
+-----  --------   --           --          --          --          --          --
+T    K+     0.000000e+00   4.606111e+00   0.000000e+00   0.000000e+00   0.000000e+00   0.000000e+00
+B    B1     1.000000e+00  -1.454090e+01   2.724904e+01   0.000000e+00   0.000000e+00   0.000000e+00
+D    N6     1.000000e+00   1.743531e-01   0.000000e+00   0.000000e+00   0.000000e+00   0.000000e+00
+D    D3     1.000000e+00  -2.596847e-01   0.000000e+00   0.000000e+00   0.000000e+00   0.000000e+00
+E    N4     1.000000e+00  -1.390944e-01   0.000000e+00   0.000000e+00   0.000000e+00   0.000000e+00
+E    D2     1.000000e+00   3.236061e-01   0.000000e+00   0.000000e+00   0.000000e+00   0.000000e+00
+H    N7     1.838669e-01   5.688843e-02   1.000000e+00  -6.113530e+00  -4.489810e-01   3.276210e+00
+H    N9     9.810789e-01   1.890451e+00   1.000000e+00   4.464600e+00  -3.495070e+00  -2.442500e-01
+H    D7     4.708598e-01   4.589158e-01   1.000000e+00   8.030880e+00   2.416260e+00  -5.271510e-01
+I    D6    -2.463452e+00  -2.057054e+00   1.000000e+00  -4.998770e+00  -4.520940e+00  -1.577270e-01
+cutoff born:	4000.000000
+cutoff res:	1593.370000
+</coupl.iso>
+
+
+
+###############################################
+
+<varinfo>
+Class Nickname	G*		H*       X*     Y*     Z*
+----- --------	--		--       --     --     --
+T	K+	x
+B	B1	x	x
+D	N6	x
+D	D3	x
+E	N4	x
+E	D2	x
+H	N7	x	x	x	x	x
+H	N9	x	f,n	x	x	x
+H	D7	x	x	x	x	x
+I	D6	x	x	x	x	x
+cutoff born:    x
+cutoff res:     f,l 1000 3000
+</varinfo>
+
+##########################################
+
+Making a start vertex...		OK
+
+<limits>
+1	0.000000	0.000000
+2	1000.000000	3000.000000
+</limits>
+
+##########################################
+
+<vertexdim>
+	2
+</vertexdim>
+Initial chi-squared evaluation...	done
+
+Storing EM formfactors in particles[] array...
+
+
+Storing hadronic formfactors in particles[] array...
+
+
+Storing EM formfactors in particles[] array...
+
+
+Storing hadronic formfactors in particles[] array...
+
+
+Storing EM formfactors in particles[] array...
+
+
+
+	::::::::::::::::::::::::::: 
+
+	 STRANGECALC (version 10.0)
+
+	::::::::::::::::::::::::::: 
+
+---
+Location of the input folder? 			: ../setup_files/iso11/
+---
+Location of the output folder? 			: ./
+---
+Location of the data folder? 			: ../../share/data/
+---
+Specific Calculation, Fitting procedure 
+or chi Squared calc.? (c/f/s)			: s
+---
+	(1)   ===>   g + p   ->  K+ + L0 
+	(2)   ===>   g + p   ->  K+ + S0 
+	(3)   ===>   g + p   ->  K0 + S+ 
+	(4)   ===>   g + n   ->  K0 + L0 
+	(5)   ===>   g + n   ->  K0 + S0 
+	(6)   ===>   g + n   ->  K+ + S- 
+	(7)   ===>   g + p   ->  P0 + p  
+	(8)   ===>   g + p   ->  P+ + n  
+	(9)   ===>   g + n   ->  P0 + n  
+	(10)  ===>   g + n   ->  P- + p  
+	(11)  ===>   K- + p  ->  g  + L0 
+	(12)  ===>   K- + p  ->  g  + S0 
+Give the numbers of the processes in the fit
+in increasing order.
+Combined fit only possible for processes derived from same base channel!
+(multiple nrs as one line separated by ",")	: 11
+---
+Give data points to be used in chi^2 calculation for isospin (11):
+Medium-energy kaon capture data
+	(301)	-->	brookhaven '89	  -- radcap -- 	ratio
+	(302)	-->	crystal ball 2001 -- radcap -- 	diff. cross sec.
+	(303)	-->	crystal ball 2001 -- radcap -- 	tot. cross sec.
+	(304)	-->	crystal ball 2009 -- radcap -- 	diff. cross sec.
+	(305)	-->	crystal ball 2009 -- radcap -- 	tot. cross sec.
+Give nr. separated with ","			: 304
+---
+Isobar theory or Regge theory? (i/r)		: r
+---
+T or U channel reggeization, or both? (t/u/b)		: t
+Only T channel reggeization is implemented
+---
+Exact or asymptotic behavior? (x/a)		: a
+Only asymptotoc behaviour is implemented
+---
+'s' or '(s-u)/2' dependence? (s/u)		: s
+---
+Linear or Saturating trajectories? (l/s)	: l
+Only linear trajectories are implemented
+---
+Spin-shift recipe (alpha->alpha-n)
+of Guidal or Janssen? (j/g)	: j
+---
+Pure regge theory, or resonances Superimposed
+on reggeized background? (p/s)		: s
+---
+Hadronic form factors (y/n)			: y
+---
+Dipole or Gaussian hadronic form factors? (d/g)		: g
+---
+Enter model type (for old model choose: (n) offshell  model (y) consistent couplings) 	: n
+
+
+TStrangeCalc::TStrangeCalc: 
+Getting fit specifications...		OK
+Importing data...	
+---
+K+ exchange in t-channel born term: constant (0) or rotating (1) phase? 1
+
+B1 exchange in t-channel: constant (0) or rotating (1) phase? 1
+
+Storing hadronic formfactors in particles[] array...
+
+INFO in magnetic_transition_ratio(Class*,Observable*): we assume the hyperon's EM coupling constants to be isospin independent.
+
+Storing hadronic formfactors in particles[] array...
+
+OK
+Getting variable info...		OK
+
+###############################################
+
+<coupl.iso>
+Class  NickName   G*           H*          I*          X*          Y*          Z*
+-----  --------   --           --          --          --          --          --
+T    K+     0.000000e+00  -1.063552e+01   0.000000e+00   0.000000e+00   0.000000e+00   0.000000e+00
+B    B1     1.000000e+00   1.081521e+01  -2.906040e+01   0.000000e+00   0.000000e+00   0.000000e+00
+F    L2     1.000000e+00  -5.840450e+00   0.000000e+00   0.000000e+00   0.000000e+00   0.000000e+00
+cutoff born:	4000.000000
+cutoff res:	2487.370000
+</coupl.iso>
+
+
+
+###############################################
+
+<varinfo>
+Class Nickname	G*		H*       X*     Y*     Z*
+----- --------	--		--       --     --     --
+T	K+	x
+B	B1	x	x
+F       L2      f,n
+cutoff born:    x
+cutoff res:     f,l 1000 3000
+</varinfo>
+
+##########################################
+
+Making a start vertex...		OK
+
+<limits>
+1	0.000000	0.000000
+2	1000.000000	3000.000000
+</limits>
+
+##########################################
+
+<vertexdim>
+	2
+</vertexdim>
+Initial chi-squared evaluation...	done
+INFO in magnetic_transition_ratio(Class*,Observable*): we assume the hyperon's EM coupling constants to be isospin independent.
+
+Storing hadronic formfactors in particles[] array...
+
+
+Storing EM formfactors in particles[] array...
+
+-0.412455 ?= -0.412455
+-0.600611 ?= -0.600611
+-0.603799 ?= -0.603799
+-0.582923 ?= -0.582923
+-0.470135 ?= -0.470135
+-0.623253 ?= -0.623253
+-0.618397 ?= -0.618397
+-0.569281 ?= -0.569281
+-0.487787 ?= -0.487787
+-0.650422 ?= -0.650422
+-0.641097 ?= -0.641097
+-0.546935 ?= -0.546935
+-0.554227 ?= -0.554227
+-0.699003 ?= -0.699003
+-0.707646 ?= -0.707646
+-0.610613 ?= -0.610613
+-0.552201 ?= -0.552201
+-0.740845 ?= -0.740845
+-0.71743 ?= -0.71743
+-0.575753 ?= -0.575753
+-1.02587e-07 ?= -1.02587e-07
+-1.72352e-08 ?= -1.72352e-08
+-1.47967e-07 ?= -1.47967e-07
+-0.0594159 ?= -0.0594159
+-0.00818655 ?= -0.00818655
+-0.00100589 ?= -0.00100589
+-0.037736 ?= -0.037736
+-0.120883 ?= -0.120883
+-0.0318657 ?= -0.0318657
+0.00280228 ?= 0.00280228
+-0.0444979 ?= -0.0444979
+-0.170889 ?= -0.170889
+-0.0650631 ?= -0.0650631
+0.00453186 ?= 0.00453186
+-0.0402806 ?= -0.0402806
+-0.205676 ?= -0.205676
+-0.100639 ?= -0.100639
+0.00198821 ?= 0.00198821
+-0.0308299 ?= -0.0308299
+12.9691 ?= 12.9691
+12.6004 ?= 12.6004
+12.9017 ?= 12.9017
+14.1045 ?= 14.1045
+16.8032 ?= 16.8032
+7.5704 ?= 7.5704
+7.29119 ?= 7.29119
+7.7718 ?= 7.7718
+9.29083 ?= 9.29083
+13.0385 ?= 13.0385
+4.27766 ?= 4.27766
+4.41438 ?= 4.41438
+5.39666 ?= 5.39666
+7.4196 ?= 7.4196
+12.1707 ?= 12.1707
+1.77045 ?= 1.77045
+2.72987 ?= 2.72987
+4.58275 ?= 4.58275
+7.24355 ?= 7.24355
+12.386 ?= 12.386
+0.258464 ?= 0.258464
+2.34904 ?= 2.34904
+4.9403 ?= 4.9403
+7.36006 ?= 7.36006
+10.1791 ?= 10.1791

@@ -1,0 +1,47 @@
+# These data are from the JLab/CLAS analysis detailed in:
+
+#   > P. Ambrozewicz et al. (CLAS Collaboration), Phys. Rev. C 75, 045203 (2007).
+
+# The data are contained in the CLAS database at:
+
+#   > http://clasweb.jlab.org/physicsdb
+
+# The data contained in this file are for the reaction:
+#   > e + p --> e' + K+ + Sigma0
+
+# The data was acquired at beam energies of 2.567 and 4.056 GeV and the columns 
+# are labeled as below.  The data enclosed here are for Q2=1.00 GeV2.  The
+# eps-Phi fit technique (see PRC for details) was employed to extract these
+# data.
+
+# The structure functions are given in units of nb/sr.  The errors list are
+# statistical only.  Systematic errors are given in the paper.  Data points
+# labeled with * indicate that the data could not be extracted in this
+# measurement.
+
+# All questions should be directed to Daniel S. Carman (carman@jlab.org).
+# -------------------------------------------------------------------------------
+
+
+$vars: qsquared (GeV^2) & w (GeV) & costhkcm & diff_l (nb) & diff_t (nb) & diff_tt_unpol (nb) & diff_tl_unpol (nb)
+
+
+# Q2        W     cthk      sigL     dsigL     sigT     dsigT     sigTT    dsigTT     sigLT    dsigLT 
+1.00    1.750   -0.600    -0.400    13.579   12.620     8.347     4.764     5.737     2.823     3.903 
+1.00    1.750   -0.250   -20.750    13.740   32.803     8.235    -4.181     5.698     4.271     3.562 
+1.00    1.750    0.050    -2.039    14.368   23.914     9.064    -9.377     5.798     2.331     3.932 
+1.00    1.750    0.350   -37.782    15.290   47.046     9.666    -3.605     6.381    -0.037     4.426 
+1.00    1.750    0.650   -12.333    18.063   29.943    11.090     0.067     7.072    -0.560     4.948 
+1.00    1.750    0.900   -17.415    21.217   26.140    13.365     4.811     7.882    -1.063     5.056 
+1.00    1.850   -0.600    -2.876    13.779   36.356     7.016    -6.888     7.089    -6.116     4.091 
+1.00    1.850   -0.250    10.271    14.101   51.193     7.119   -28.569     7.227     5.873     3.982 
+1.00    1.850    0.050     1.151    15.381   68.764     7.907   -34.650     8.351     0.298     5.138 
+1.00    1.850    0.350   -31.176    16.057   83.518     8.778   -22.113     8.959    -6.247     5.886 
+1.00    1.850    0.650   -24.243    18.656   61.598    10.052   -19.941    12.007   -13.845     7.913 
+1.00    1.850    0.900   -12.980    22.507   42.712    13.288    -0.972    11.621    -4.929     6.935 
+1.00    1.950   -0.600    -9.528    11.373   25.311     4.778   -14.205    10.486     4.477     7.010 
+1.00    1.950   -0.250    13.625    10.139   41.777     4.740   -23.302     7.512     3.800     4.231 
+1.00    1.950    0.050     8.196    10.714   60.412     5.082   -20.759     7.877    -2.219     4.394 
+1.00    1.950    0.350    12.251    12.766   48.961     5.647   -31.551     9.146   -12.205     6.060 
+1.00    1.950    0.650     2.201    14.373   42.344     6.929    -4.940    13.226   -17.669     8.760 
+1.00    1.950    0.900    -1.751    23.151   33.772    11.445    17.050    16.959    -2.724    10.351 
