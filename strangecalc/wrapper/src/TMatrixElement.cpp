@@ -134,8 +134,7 @@ TMatrixElement::TMatrixElement ( double w, double k, double costhkcm, double pK,
  * \param label (optional) data label for caching of <|M_i|> cgln 
  */
 TMatrixElement* TMatrixElement::GetMatrixElement(double w, double k, double costhkcm, double pK, Class* particlesPtr, Observable* observPtr, int label) 
-{
-//  cout << "TMatrixElement* TMatrixElement::GetMatrixElement(double w, double k, double costhkcm, double pK, Class* particlesPtr, Observable* observPtr, int label)\n"; //DEBUG 
+{ 
   if(observPtr->cgln)
   {
     return TMatrixElementCGLN::GetMatrixElement(w,k,costhkcm,pK,particlesPtr,observPtr,label);
@@ -160,7 +159,6 @@ TMatrixElement* TMatrixElement::GetMatrixElement(double w, double k, double cost
  */
 TMatrixElement* TMatrixElement::GetMatrixElement(double w, double k, double costhkcm, double pK, Class* particlesPtr, Observable* observPtr,double kin_mN, double kin_mK, double kin_mY, int label) 
 {
-  //  cout << "TMatrixElement* TMatrixElement::GetMatrixElement(double w, double k, double costhkcm, double pK, Class* particlesPtr, Observable* observPtr, int label)\n"; //DEBUG 
   if(observPtr->cgln)
   {
     return TMatrixElementCGLN::GetMatrixElement(w,k,costhkcm,pK,particlesPtr,observPtr,kin_mN, kin_mK, kin_mY, label);
