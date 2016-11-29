@@ -192,26 +192,27 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
       //----------------------------------------------------------------------------------------
       //Diagram T
     case 1: {
-      if (observ.mint==0){ // If not new model with Mint: use old model :::ADDED BY MARTIJN:::
+      if (observ.mint==0)
+      { // If not new model with Mint: use old model :::ADDED BY MARTIJN:::
 	cout << "In TCalculateConsistentCoeff: " 
 	     << "Old model selected\n"; cout.flush(); //:::ADDED BY MARTIJN:::DEBUG:::DELETE:::
-      double nucleoncharge_ = fNucleon_charge;
-      double hyperoncharge_ = fHyperon_charge;
-      if (particle.formfactorE!=NULL)
-      {
-	nucleoncharge_ = (*particle.formfactorE).value(fNucleon_charge,-1.0*fkk);
-	hyperoncharge_ = (*particle.formfactorE).value(fHyperon_charge,-1.0*fkk);
-      }
-      if (particle.formfactorG==NULL)
-	kappa_ = particle.G;
-      else
-	kappa_ = (*particle.formfactorG).value(particle.G,-1.0*fkk);
-      if (particle.formfactorH==NULL)
-	g_ = particle.H ;
-      else
-	g_ = (*particle.formfactorH).value(particle.H,fT);
-      coefficient = 0.0;
-      if(observ.regge)
+        double nucleoncharge_ = fNucleon_charge;
+        double hyperoncharge_ = fHyperon_charge;
+        if (particle.formfactorE!=NULL)
+        {
+	  nucleoncharge_ = (*particle.formfactorE).value(fNucleon_charge,-1.0*fkk);
+	  hyperoncharge_ = (*particle.formfactorE).value(fHyperon_charge,-1.0*fkk);
+        }
+        if (particle.formfactorG==NULL)
+	  kappa_ = particle.G;
+        else
+	  kappa_ = (*particle.formfactorG).value(particle.G,-1.0*fkk);
+        if (particle.formfactorH==NULL)
+	  g_ = particle.H ;
+        else
+	  g_ = (*particle.formfactorH).value(particle.H,fT);
+        coefficient = 0.0;
+        if(observ.regge)
       	{
       	  ReggePropagator = propagatorRegge(particle, fS, fU, fT, 0., 0., &observ);
       	  if (particle.E!=0.0)
@@ -236,13 +237,73 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
       		}
       	    }
         }
+        else
+	  ReggePropagator = 1;
+        return ReggePropagator*coefficient;
+      }
       else
-	ReggePropagator = 1;
-      return ReggePropagator*coefficient;
-      }else{ // New model selected :::ADDED BY MARTIJN
+      { // New model selected :::ADDED BY MARTIJN:::
 	cout << "In TCalculateConsistentCoeff: "  // New model selected :::ADDED BY MARTIJN:::DEBUG:::DELETE:::
-	     << "New model selected; not implemented yet.\n "; cout.flush();
-	exit(1);
+	     << "New model selected.\n "; cout.flush();
+	double nucleoncharge_ = fNucleon_charge;
+        double hyperoncharge_ = fHyperon_charge;
+	Properties particletwo = observ.mintmanager.particletwo; // properties of the second particle involved
+								 // in gauge restoration :::ADDED BY MARTIJN:::
+	double g2_; // (s or u) channel strong coupling constant div by sqrt(4PI) :::ADDED BY MARTIJN:::
+        if (particle.formfactorE==NULL)
+	  e_ = particle.E;
+        else
+	  e_ = (*particle.formfactorE).value(particle.E,-1.0*fkk);
+	if (particletwo.formfactorE!=NULL)
+	{
+	  // Get EM-form factors of s- and/or u-channel particles from the mintmanager field in observable
+	  // :::ADJUSTED BY MARTIJN:::
+	  nucleoncharge_ = (*particletwo.formfactorE).value(fNucleon_charge,-1.0*fkk);
+	  hyperoncharge_ = (*particletwo.formfactorE).value(fHyperon_charge,-1.0*fkk);
+        }
+        if (particle.formfactorG==NULL)
+	  kappa_ = particle.G;
+        else
+	  kappa_ = (*particle.formfactorG).value(particle.G,-1.0*fkk);
+        if (particle.formfactorH==NULL) // include t-channel hadronic form factor if necessary
+	  g_ = particle.H ;
+        else
+	  g_ = (*particle.formfactorH).value(particle.H,fT);
+	if (particletwo.formfactorH==NULL) // include the second particle's hadronic form factor if necessary
+	  g2_ = particletwo.H ;
+	else
+	  g2_ = (*particletwo.formfactorH).value(particletwo.H,fS);
+	coefficient = 0.0;
+	// is there t-channel Reggeization? :::ADDED BY MARTIJN:::
+	if(observ.regge)
+	  ReggePropagator = propagatorRegge(particle, fS, fU, fT, 0., 0., &observ);
+	else
+	  ReggePropagator = 1;
+
+	// actual summation :::ADDED BY MARTIJN:::
+	if (particle.E!=0.0)
+	  {
+	  // :::ADDED BY MARTIJN:::
+	  if (fNucleon_charge!=0.0)
+	  {
+	    // s-channel electric Born term
+	    coefficient += (-1.0*nucleoncharge_*g2_) / (fS-fmN*fmN); // :::DEBUG:::IN MIJN BEREKENINGEN STAAT
+								     // DIT MINTEKEN ER, MAAR IN RPR-2011 NIET.
+								     // GEEN INVLOED OP G.I. WANT ~M_1':::
+	    // :::ADDED BY MARTIJN:::DEBUG:::ADD A(s,t,Q2) and a, d and f terms of Mint:::
+	  }
+	  else
+	    // (other gauge restoration procedures not yet implemented)
+	    // Add electric part of s-channel
+	  {
+	    cerr << "ERROR in TCalculateConsistentCoeff::CalcA1(...): "
+	         << "Problem restoring gauge invariance for "
+	         << particle.nickname
+	         << " exchange: Not implemented or charge not conserved.\n";
+	    exit(1);
+	  }
+        }
+        return ELEC*g_*coefficient/fkpY;
       }
     }
 
@@ -621,23 +682,23 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
       if (observ.mint==0){ // If not new model with Mint: use old model :::ADDED BY MARTIJN:::
 	cout << "In TCalculateConsistentCoeff: " 
 	     << "Old model selected\n"; cout.flush(); //:::ADDED BY MARTIJN:::DEBUG:::DELETE:::
-      double nucleoncharge_ = fNucleon_charge;
-      double hyperoncharge_ = fHyperon_charge;
-      if (particle.formfactorE==NULL)
-	e_ = particle.E;
-      else
-      {
-	e_ = (*particle.formfactorE).value(particle.E,-1.0*fkk);
-	nucleoncharge_ = (*particle.formfactorE).value(fNucleon_charge,-1.0*fkk);
-	hyperoncharge_ = (*particle.formfactorE).value(fHyperon_charge,-1.0*fkk);
-      }
-      if (particle.formfactorH==NULL)
-	g_ = particle.H ;
-      else
-	g_ = (*particle.formfactorH).value(particle.H,fT);
-      coefficient = (e_*ELEC*g_)/(fkpY*fDenominator_t);
-      if(observ.regge)
-	{
+        double nucleoncharge_ = fNucleon_charge;
+        double hyperoncharge_ = fHyperon_charge;
+        if (particle.formfactorE==NULL)
+	  e_ = particle.E;
+        else
+        {
+	  e_ = (*particle.formfactorE).value(particle.E,-1.0*fkk);
+	  nucleoncharge_ = (*particle.formfactorE).value(fNucleon_charge,-1.0*fkk);
+	  hyperoncharge_ = (*particle.formfactorE).value(fHyperon_charge,-1.0*fkk);
+        }
+        if (particle.formfactorH==NULL)
+	  g_ = particle.H ;
+        else
+	  g_ = (*particle.formfactorH).value(particle.H,fT);
+        coefficient = (e_*ELEC*g_)/(fkpY*fDenominator_t);
+        if(observ.regge)
+	  {
 	  ReggePropagator = propagatorRegge(particle, fS, fU, fT, 0., 0., &observ);
 	  if (particle.E!=0.0)
 	    {
@@ -655,14 +716,72 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
 		  exit(1);
 		}
 	    }
-	}
+	  }
+        else
+	  ReggePropagator = 1;
+        return ReggePropagator*coefficient;
+      }
       else
-	ReggePropagator = 1;
-      return ReggePropagator*coefficient;
-      }else{ // New model selected :::ADDED BY MARTIJN
-	cout << "In TCalculateConsistentCoeff: "  // New model selected :::ADDED BY MARTIJN:::DEBUG:::DELETE:::
-	     << "New model selected; not implemented yet.\n "; cout.flush();
-	exit(1);
+      { // New model selected :::ADDED BY MARTIJN:::
+	cout << "In TCalculateConsistentCoeff: " // New model selected :::ADDED BY MARTIJN:::DEBUG:::DELETE:::
+	     << "New model selected.\n "; cout.flush();
+        double nucleoncharge_ = fNucleon_charge;
+        double hyperoncharge_ = fHyperon_charge;
+	Properties particletwo = observ.mintmanager.particletwo; // properties of the second particle involved
+								 // in gauge restoration :::ADDED BY MARTIJN:::
+	double g2_; // (s or u) channel strong coupling constant div by sqrt(4PI) :::ADDED BY MARTIJN:::
+        if (particle.formfactorE==NULL)
+	  e_ = particle.E;
+        else
+        {
+	  e_ = (*particle.formfactorE).value(particle.E,-1.0*fkk);
+	  // Get EM-form factors of s- and/or u-channel particles from the mintmanager field in observable
+	  // :::ADJUSTED BY MARTIJN:::
+	  nucleoncharge_ = (*particletwo.formfactorE).value(fNucleon_charge,-1.0*fkk);
+	  hyperoncharge_ = (*particletwo.formfactorE).value(fHyperon_charge,-1.0*fkk);
+        }
+        if (particle.formfactorH==NULL) // include t-channel hadronic form factor if necessary
+	  g_ = particle.H ;
+        else
+	  g_ = (*particle.formfactorH).value(particle.H,fT);
+	if (particletwo.formfactorH==NULL) // include the second particle's hadronic form factor if necessary
+	  g2_ = particletwo.H ;
+	else
+	  g2_ = (*particletwo.formfactorH).value(particletwo.H,fS);
+
+	// is there t-channel Reggeization? :::ADDED BY MARTIJN:::
+	if(observ.regge)
+	  ReggePropagator = propagatorRegge(particle, fS, fU, fT, 0., 0., &observ);
+	else
+	  ReggePropagator = 1;
+
+	// actual summation :::ADDED BY MARTIJN:::
+	coefficient = e_*g_*ReggePropagator/fDenominator_t; // t-channel contribution
+        
+	if (particle.E!=0.0)
+	  {
+	  // :::ADDED BY MARTIJN:::
+	  if (fNucleon_charge!=0.0)
+	  {
+	    // s-channel electric Born term
+	    coefficient += nucleoncharge_*g2_ / (fS-fmN*fmN);
+	    // interaction term
+	    coefficient += (ReggePropagator*g_*(g2_-1.0)/fDenominator_t )
+			   + (g2_*((ReggePropagator*g_)-1.0)/ (fS-fmN*fmN) );
+	    // :::ADDED BY MARTIJN:::DEBUG:::ADD A(s,t,Q2):::
+	  }
+	  else
+	    // (other gauge restoration procedures not yet implemented)
+	    // Add electric part of s-channel
+	  {
+	    cerr << "ERROR in TCalculateConsistentCoeff::CalcA1(...): "
+	         << "Problem restoring gauge invariance for "
+	         << particle.nickname
+	         << " exchange.\n";
+	    exit(1);
+	  }
+        }
+        return ELEC*g_*coefficient/fkpY;
       }
     }
       
@@ -1585,23 +1704,23 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
       if (observ.mint==0){ // If not new model with Mint: use old model :::ADDED BY MARTIJN:::
 	cout << "In TCalculateConsistentCoeff: " 
 	     << "Old model selected\n"; cout.flush(); //:::ADDED BY MARTIJN:::DEBUG:::DELETE:::
-      double nucleoncharge_ = fNucleon_charge;
-      double hyperoncharge_ = fHyperon_charge;
-      if (particle.formfactorE==NULL)
-	e_ = particle.E;
-      else
-      {
-	e_ = (*particle.formfactorE).value(particle.E,-1.0*fkk);
-	nucleoncharge_ = (*particle.formfactorE).value(fNucleon_charge,-1.0*fkk);
-	hyperoncharge_ = (*particle.formfactorE).value(fHyperon_charge,-1.0*fkk);
-      }
-      if (particle.formfactorH==NULL)
-	g_ = particle.H ;
-      else
-	g_ = (*particle.formfactorH).value(particle.H,fT);
-      coefficient = (-2.0*e_*ELEC*g_*(fkpY-fkp))/(fkpY*fDenominator_t);
-      if(observ.regge)
-	{
+        double nucleoncharge_ = fNucleon_charge;
+        double hyperoncharge_ = fHyperon_charge;
+        if (particle.formfactorE==NULL)
+	  e_ = particle.E;
+        else
+        {
+	  e_ = (*particle.formfactorE).value(particle.E,-1.0*fkk);
+	  nucleoncharge_ = (*particle.formfactorE).value(fNucleon_charge,-1.0*fkk);
+	  hyperoncharge_ = (*particle.formfactorE).value(fHyperon_charge,-1.0*fkk);
+        }
+        if (particle.formfactorH==NULL)
+	  g_ = particle.H ;
+        else
+	  g_ = (*particle.formfactorH).value(particle.H,fT);
+        coefficient = (-2.0*e_*ELEC*g_*(fkpY-fkp))/(fkpY*fDenominator_t);
+        if(observ.regge)
+	  {
 	  ReggePropagator = propagatorRegge(particle, fS, fU, fT, 0., 0., &observ);
 	  if (particle.E!=0.0)
 	    {
@@ -1624,13 +1743,15 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
 		  exit(1);
 		}
 	    }
-	}
+	  }
+        else
+	  ReggePropagator = 1;
+        return ReggePropagator*coefficient;
+      }
       else
-	ReggePropagator = 1;
-      return ReggePropagator*coefficient;
-      }else{ // New model selected :::ADDED BY MARTIJN
+      { // New model selected :::ADDED BY MARTIJN:::
 	cout << "In TCalculateConsistentCoeff: "  // New model selected :::ADDED BY MARTIJN:::DEBUG:::DELETE:::
-	     << "New model selected; not implemented yet.\n "; cout.flush();
+	     << "New model selected; not yet implemented.\n "; cout.flush();
 	exit(1);
       }
     }

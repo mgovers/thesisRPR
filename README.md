@@ -17,3 +17,12 @@
 	contains the information about the additional channel exchange), and information about possible
 	Reggeization procedures of this particle.
        -in struct Observable: added field mintmanager instance of MintManager
+
+29/11/2016:
+   TCalculatedConsistendCoeff.cpp:
+       -in CalcA1(...) and CalcA2(...): -implemented version with Mint. Debug: inconsistency with old
+		 			model in CalcA1(...): in old model, no minus sign appeared for
+	 				s-channel Born exchange, but in own calculations one did appear.
+	NOTE: CalcA5(...) NOT YET IMPLEMENTED!!!!! => not yet tested
+	ALSO: no implementation of observ.mintmanager (part of args of CalcAi(...) ) was made yet
+	 	=> must be fixed before testing...
