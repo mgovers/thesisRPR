@@ -509,7 +509,8 @@ typedef struct
   short pvcoupling;
   short cgln; /* Calculation method: 0 use TCalculateDiagram method, 
 		1 use CGLN decomposition method */
-  short mint; /* use Mint in the calculation? 1 or 0 */ //:::ADDED BY MARTIJN:::
+  short mint; /* use Mint in the calculation? 0 use old model (RPR-2007 / RPR-2011) 
+		1 use new method with Mint */ //:::ADDED BY MARTIJN:::
   short quant_axis_thesis; /* choice of quant. axis in comp. of asymmetries 
 			    * with definite baryon spins */
   short quant_axis_drechsel; /* " */

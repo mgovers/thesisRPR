@@ -29,6 +29,7 @@
  * 
  * \author Tom Vrancx <Tom.Vrancx@UGent.be>
  * \author Lesley De Cruz <Lesley.DeCruz@UGent.be>
+ * \author Martijn Govers <Martinus.Govers@UGent.be>
  */ 
 
 #include "TCalculateConsistentCoeff.h"
@@ -191,6 +192,9 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
       //----------------------------------------------------------------------------------------
       //Diagram T
     case 1: {
+      if (observ.mint==0){ // If not new model with Mint: use old model :::ADDED BY MARTIJN:::
+	cout << "In TCalculateConsistentCoeff: " 
+	     << "Old model selected\n"; cout.flush(); //:::ADDED BY MARTIJN:::DEBUG:::DELETE:::
       double nucleoncharge_ = fNucleon_charge;
       double hyperoncharge_ = fHyperon_charge;
       if (particle.formfactorE!=NULL)
@@ -235,6 +239,11 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
       else
 	ReggePropagator = 1;
       return ReggePropagator*coefficient;
+      }else{ // New model selected :::ADDED BY MARTIJN
+	cout << "In TCalculateConsistentCoeff: "  // New model selected :::ADDED BY MARTIJN:::DEBUG:::DELETE:::
+	     << "New model selected; not implemented yet.\n "; cout.flush();
+	exit(1);
+      }
     }
 
       //----------------------------------------------------------------------------------------
@@ -609,6 +618,9 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
       //----------------------------------------------------------------------------------------
       //Diagram T
     case 1: {
+      if (observ.mint==0){ // If not new model with Mint: use old model :::ADDED BY MARTIJN:::
+	cout << "In TCalculateConsistentCoeff: " 
+	     << "Old model selected\n"; cout.flush(); //:::ADDED BY MARTIJN:::DEBUG:::DELETE:::
       double nucleoncharge_ = fNucleon_charge;
       double hyperoncharge_ = fHyperon_charge;
       if (particle.formfactorE==NULL)
@@ -647,6 +659,11 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
       else
 	ReggePropagator = 1;
       return ReggePropagator*coefficient;
+      }else{ // New model selected :::ADDED BY MARTIJN
+	cout << "In TCalculateConsistentCoeff: "  // New model selected :::ADDED BY MARTIJN:::DEBUG:::DELETE:::
+	     << "New model selected; not implemented yet.\n "; cout.flush();
+	exit(1);
+      }
     }
       
       //----------------------------------------------------------------------------------------
@@ -1565,6 +1582,9 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
       //----------------------------------------------------------------------------------------
       //Diagram T
     case 1: {
+      if (observ.mint==0){ // If not new model with Mint: use old model :::ADDED BY MARTIJN:::
+	cout << "In TCalculateConsistentCoeff: " 
+	     << "Old model selected\n"; cout.flush(); //:::ADDED BY MARTIJN:::DEBUG:::DELETE:::
       double nucleoncharge_ = fNucleon_charge;
       double hyperoncharge_ = fHyperon_charge;
       if (particle.formfactorE==NULL)
@@ -1608,6 +1628,11 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
       else
 	ReggePropagator = 1;
       return ReggePropagator*coefficient;
+      }else{ // New model selected :::ADDED BY MARTIJN
+	cout << "In TCalculateConsistentCoeff: "  // New model selected :::ADDED BY MARTIJN:::DEBUG:::DELETE:::
+	     << "New model selected; not implemented yet.\n "; cout.flush();
+	exit(1);
+      }
     }
       //----------------------------------------------------------------------------------------
       //Diagram U
