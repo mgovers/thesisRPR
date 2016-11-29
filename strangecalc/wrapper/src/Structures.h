@@ -488,6 +488,18 @@ typedef struct
 } Regge;
 
 
+/*! Specifications of additional information necessary when including Mint :::ADDED BY MARTIJN::: */
+typedef struct
+{
+  short hadronformfacschannel; /* use a different hadronic form factor for the s-channel than for the t-channel?
+                                  1 or 0 */
+  Formfac ffac;
+  Properties particletwo; /* the s-channel particle in *only* s-channel and interaction Gauge restoration */
+  short reggeparticletwo; /* is the s-channel also reggeized with it's own reggeization procedure? 1 or 0 */
+  Regge regparticletwo;
+} MintManager;
+
+
 /*! Complete description of the kind of observable to be computed, as chosen by the user */
 typedef struct
 {
@@ -511,6 +523,7 @@ typedef struct
 		1 use CGLN decomposition method */
   short mint; /* use Mint in the calculation? 0 use old model (RPR-2007 / RPR-2011) 
 		1 use new method with Mint */ //:::ADDED BY MARTIJN:::
+  MintManager mintmanager;
   short quant_axis_thesis; /* choice of quant. axis in comp. of asymmetries 
 			    * with definite baryon spins */
   short quant_axis_drechsel; /* " */
