@@ -10,6 +10,7 @@
  * \author Stijn Janssen
  * \author Pieter Vancraeyveld <pieter.vancraeyveld@ugent.be>
  * \author Tom Vrancx <tom.vrancx@ugent.be>
+ * \author Martijn Govers <martinus.govers@ugent.be>
  
  * \copyright
  * This program is free software; you can redistribute it and/or
@@ -508,6 +509,7 @@ typedef struct
   short pvcoupling;
   short cgln; /* Calculation method: 0 use TCalculateDiagram method, 
 		1 use CGLN decomposition method */
+  short mint; /* use Mint in the calculation? 1 or 0 */ //:::ADDED BY MARTIJN:::
   short quant_axis_thesis; /* choice of quant. axis in comp. of asymmetries 
 			    * with definite baryon spins */
   short quant_axis_drechsel; /* " */
