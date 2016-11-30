@@ -300,9 +300,7 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
 	  if (fNucleon_charge!=0.0)
 	  {
 	    // s-channel electric Born term
-	    coefficient += (-1.0*nucleonchargeFF_*g2_) / (fS-fmN*fmN); // :::DEBUG:::IN MIJN BEREKENINGEN STAAT
-								     // DIT MINTEKEN ER, MAAR IN RPR-2011 NIET.
-								     // GEEN INVLOED OP G.I. WANT ~M_1':::
+	    coefficient += (nucleonchargeFF_*g2_) / (fS-fmN*fmN); // :::DEBUG:::
 	    // :::ADDED BY MARTIJN:::DEBUG:::ADD A(s,t,Q2) and a, d and f terms of Mint:::
 	  }
 	  else
@@ -1823,8 +1821,8 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
 	else
 	  ReggePropagator = 1;
 
-	// actual summation :::ADDED BY MARTIJN:::DEBUG:::IN OLD MODEL THE (fkpY+fkp) IS (fkpY-fkp) => CHECK!!!
-	coefficient = (-2.0*eFF_*g_*(fkpY + fkp)*ReggePropagator)/fDenominator_t; // t-channel contribution
+	// actual summation :::ADDED BY MARTIJN:::
+	coefficient = (-2.0*eFF_*g_*(fkpY - fkp)*ReggePropagator)/fDenominator_t; // t-channel contribution
         
 	if (particle.E!=0.0)
 	{
@@ -1832,10 +1830,7 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
 	  if (fNucleon_charge!=0.0)
 	  {
 	    // s-channel electric Born term
-	    coefficient += (-2.0*nucleonchargeFF_*g2_*fkp) / (fS-fmN*fmN); // :::ADDED BY 
-										    // MARTIJN:::DEBUG:::
-									 // IN THE OLD MODEL THIS TERM HAS
-									 // POSITIVE SIGN => CHECK!!!
+	    coefficient += (2.0*nucleonchargeFF_*g2_*fkp) / (fS-fmN*fmN); // :::ADDED BY MARTIJN:::
 	    // interaction term
 	    coefficient += (2.0*e_*ReggePropagator*g_*(1.0-g2_)*(fkpY-fkp)) / fDenominator_t 
 			   + (2.0*nucleoncharge_*g2_*(1.0-(ReggePropagator*g_))*fkp) / (fS-fmN*fmN) ;

@@ -31,7 +31,14 @@
    TCalculateConsistentCoeff.cpp:
 	-in CalcA1(...) and CalcA2(...): made some major adjustments to Mint implem. concerning EM charge and FF
 	-in CalcA5(...): implemented Mint and included the adjustments like in the above line.
-	NOTE: no implementation of observ.mintmanager (part of args of CalcAi(...) ) was made yet
+	NOTE: no implementation of observ.mintmanager (part of arg of CalcAi(...) ) was made yet
+	 	=> must be fixed before testing...
+	-implemented default (observ.mintmanager not implemented => particletwo==NULL), not sure if work yet
+	 	=> TEST!!!!
+
+30/11/2016:
+   TCalculateConsistentCoeff.cpp: Fixed some very important sign errors.
+	NOTE: no implementation of observ.mintmanager (part of arg of CalcAi(...) ) was made yet
 	 	=> must be fixed before testing...
 	-implemented default (observ.mintmanager not implemented => particletwo==NULL), not sure if work yet
 	 	=> TEST!!!!
