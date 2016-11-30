@@ -19,10 +19,20 @@
        -in struct Observable: added field mintmanager instance of MintManager
 
 29/11/2016:
-   TCalculatedConsistendCoeff.cpp:
+   TCalculateConsistentCoeff.cpp:
        -in CalcA1(...) and CalcA2(...): -implemented version with Mint. Debug: inconsistency with old
 		 			model in CalcA1(...): in old model, no minus sign appeared for
 	 				s-channel Born exchange, but in own calculations one did appear.
 	NOTE: CalcA5(...) NOT YET IMPLEMENTED!!!!! => not yet tested
 	ALSO: no implementation of observ.mintmanager (part of args of CalcAi(...) ) was made yet
 	 	=> must be fixed before testing...
+
+30/11/2016:
+   TCalculateConsistentCoeff.cpp:
+	-in CalcA1(...) and CalcA2(...): made some major adjustments to Mint implem. concerning EM charge and FF
+	-in CalcA5(...): implemented Mint and included the adjustments like in the above line.
+	NOTE: no implementation of observ.mintmanager (part of args of CalcAi(...) ) was made yet
+	 	=> must be fixed before testing...
+	-implemented default (observ.mintmanager not implemented => particletwo==NULL), not sure if work yet
+	 	=> TEST!!!!
+
