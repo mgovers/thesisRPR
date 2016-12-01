@@ -239,6 +239,7 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
         }
         else
 	  ReggePropagator = 1;
+	cout << ReggePropagator*coefficient; //:::DEBUG:::DELETE:::
         return ReggePropagator*coefficient;
       }
       else
@@ -279,13 +280,15 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
         else
 	  kappa_ = (*particle.formfactorG).value(particle.G,-1.0*fkk);
         if (particle.formfactorH==NULL) // include t-channel hadronic form factor if necessary
-	  g_ = particle.H ;
+	  g_ = particle.H;
         else
 	  g_ = (*particle.formfactorH).value(particle.H,fT);
 	if (particletwo.formfactorH==NULL) // include the second particle's hadronic form factor if necessary
-	  g2_ = particletwo.H ;
+					   // :::ADDED BY MARTIJN:::
+	  g2_ = g_; // :::DEBUG:::particle.H = particletwo.H = g_pkY/sqrt(4PI), but 
+		     // particletwo.H might not be initialized => Assume F_s=F_t approx. was made
 	else
-	  g2_ = (*particletwo.formfactorH).value(particletwo.H,fS);
+	  g2_ = (*particletwo.formfactorH).value(particle.H,fS); //:::DEBUG:::DELETE::: from arguments above
 	coefficient = 0.0;
 	// is there t-channel Reggeization? :::ADDED BY MARTIJN:::
 	if(observ.regge)
@@ -300,7 +303,7 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
 	  if (fNucleon_charge!=0.0)
 	  {
 	    // s-channel electric Born term
-	    coefficient += (nucleonchargeFF_*g2_) / (fS-fmN*fmN); // :::DEBUG:::
+	    coefficient += (nucleonchargeFF_*g2_) / (fS-fmN*fmN);
 	    // :::ADDED BY MARTIJN:::DEBUG:::ADD A(s,t,Q2) and a, d and f terms of Mint:::
 	  }
 	  else
@@ -314,7 +317,7 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
 	    exit(1);
 	  }
         }
-        return ELEC*g_*coefficient;
+        return ELEC*coefficient;
       }
     }
 
@@ -730,13 +733,13 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
 	  }
         else
 	  ReggePropagator = 1;
+	cout << ReggePropagator*coefficient; //:::DEBUG:::DELETE:::
         return ReggePropagator*coefficient;
       }
       else
       { // New model selected :::ADDED BY MARTIJN:::
 	cout << "In TCalculateConsistentCoeff: " // New model selected :::ADDED BY MARTIJN:::DEBUG:::DELETE:::
 	     << "New model selected.\n "; cout.flush();
-	e_ = particle.E; // particle charges
         double nucleoncharge_ = fNucleon_charge;
         double hyperoncharge_ = fHyperon_charge;
 	double eFF_ = e_; // particle charge multiplied by it's EM FF :::ADDED BY MARTIJN:::
@@ -765,15 +768,21 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
 	  nucleonchargeFF_ = (*particletwo.formfactorE).value(fNucleon_charge,-1.0*fkk);
 	  hyperonchargeFF_ = (*particletwo.formfactorE).value(fHyperon_charge,-1.0*fkk);
 	}
+        if (particle.formfactorG==NULL)
+	  kappa_ = particle.G;
+        else
+	  kappa_ = (*particle.formfactorG).value(particle.G,-1.0*fkk);
         if (particle.formfactorH==NULL) // include t-channel hadronic form factor if necessary
-	  g_ = particle.H ;
+	  g_ = particle.H;
         else
 	  g_ = (*particle.formfactorH).value(particle.H,fT);
 	if (particletwo.formfactorH==NULL) // include the second particle's hadronic form factor if necessary
-	  g2_ = particletwo.H ;
+					   // :::ADDED BY MARTIJN:::
+	  g2_ = g_; // :::DEBUG:::particle.H = particletwo.H = g_pkY/sqrt(4PI), but 
+		     // particletwo.H might not be initialized => Assume F_s=F_t approx. was made
 	else
-	  g2_ = (*particletwo.formfactorH).value(particletwo.H,fS);
-
+	  g2_ = (*particletwo.formfactorH).value(particle.H,fS); //:::DEBUG:::DELETE::: from arguments above
+	coefficient = 0.0;
 	// is there t-channel Reggeization? :::ADDED BY MARTIJN:::
 	if(observ.regge)
 	  ReggePropagator = propagatorRegge(particle, fS, fU, fT, 0., 0., &observ);
@@ -806,7 +815,7 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
 	    exit(1);
 	  }
         }
-        return ELEC*g_*coefficient/fkpY;
+        return ELEC*coefficient/fkpY;
       }
     }
       
@@ -1777,7 +1786,6 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
       { // New model selected :::ADDED BY MARTIJN:::
 	cout << "In TCalculateConsistentCoeff: " // New model selected :::ADDED BY MARTIJN:::DEBUG:::DELETE:::
 	     << "New model selected.\n "; cout.flush();
-	e_ = particle.E; // particle charges
         double nucleoncharge_ = fNucleon_charge;
         double hyperoncharge_ = fHyperon_charge;
 	double eFF_ = e_; // particle charge multiplied by it's EM FF :::ADDED BY MARTIJN:::
@@ -1806,15 +1814,21 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
 	  nucleonchargeFF_ = (*particletwo.formfactorE).value(fNucleon_charge,-1.0*fkk);
 	  hyperonchargeFF_ = (*particletwo.formfactorE).value(fHyperon_charge,-1.0*fkk);
 	}
+        if (particle.formfactorG==NULL)
+	  kappa_ = particle.G;
+        else
+	  kappa_ = (*particle.formfactorG).value(particle.G,-1.0*fkk);
         if (particle.formfactorH==NULL) // include t-channel hadronic form factor if necessary
-	  g_ = particle.H ;
+	  g_ = particle.H;
         else
 	  g_ = (*particle.formfactorH).value(particle.H,fT);
 	if (particletwo.formfactorH==NULL) // include the second particle's hadronic form factor if necessary
-	  g2_ = particletwo.H ;
+					   // :::ADDED BY MARTIJN:::
+	  g2_ = g_; // :::DEBUG:::particle.H = particletwo.H = g_pkY/sqrt(4PI), but 
+		     // particletwo.H might not be initialized => Assume F_s=F_t approx. was made
 	else
-	  g2_ = (*particletwo.formfactorH).value(particletwo.H,fS);
-
+	  g2_ = (*particletwo.formfactorH).value(particle.H,fS); //:::DEBUG:::DELETE::: from arguments above
+	coefficient = 0.0;
 	// is there t-channel Reggeization? :::ADDED BY MARTIJN:::
 	if(observ.regge)
 	  ReggePropagator = propagatorRegge(particle, fS, fU, fT, 0., 0., &observ);
@@ -1847,7 +1861,7 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
 	    exit(1);
 	  }
         }
-        return ELEC*g_*coefficient/fkpY;
+        return ELEC*coefficient/fkpY;
       }
     }
       //----------------------------------------------------------------------------------------
