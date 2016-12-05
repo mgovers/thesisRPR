@@ -194,8 +194,6 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
     case 1: {
       if (observ.mint==0)
       { // If not new model with Mint: use old model :::ADDED BY MARTIJN:::
-	cout << "In TCalculateConsistentCoeff: " 
-	     << "Old model selected\n"; cout.flush(); //:::ADDED BY MARTIJN:::DEBUG:::DELETE:::
         double nucleoncharge_ = fNucleon_charge;
         double hyperoncharge_ = fHyperon_charge;
         if (particle.formfactorE!=NULL)
@@ -239,13 +237,10 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
         }
         else
 	  ReggePropagator = 1;
-	cout << ReggePropagator*coefficient; //:::DEBUG:::DELETE:::
         return ReggePropagator*coefficient;
       }
       else
       { // New model selected :::ADDED BY MARTIJN:::
-	cout << "In TCalculateConsistentCoeff: "  // New model selected :::ADDED BY MARTIJN:::DEBUG:::DELETE:::
-	     << "New model selected.\n "; cout.flush();
 	e_ = particle.E; // particle charges
         double nucleoncharge_ = fNucleon_charge;
         double hyperoncharge_ = fHyperon_charge;
@@ -304,7 +299,15 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
 	  {
 	    // s-channel electric Born term
 	    coefficient += (nucleonchargeFF_*g2_) / (fS-fmN*fmN);
-	    // :::ADDED BY MARTIJN:::DEBUG:::ADD A(s,t,Q2) and a, d and f terms of Mint:::
+	    // a-term in Mint
+	    if (observ.electroprod)
+	      coefficient += ( observ.mintmanager.a*(g_*(eFF_-1.) 
+				- ReggePropagator*g2_*(nucleonchargeFF_-1.) ) ) /(-1.0*fkk*fkk);
+	    // d-term in Mint
+	    coefficient += ( observ.mintmanager.d*g2_*(1.-g_*ReggePropagator) ) / (fS-fmN*fmN);
+	    // f-term in Mint
+	    coefficient += ( observ.mintmanager.f*ReggePropagator*g_*(1.-g2_) ) / (fDenominator_t);
+	    // :::ADDED BY MARTIJN:::DEBUG:::ADD A(s,t,Q2) terms of Mint:::
 	  }
 	  else
 	    // (other gauge restoration procedures not yet implemented)
@@ -694,8 +697,6 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
       //Diagram T
     case 1: {
       if (observ.mint==0){ // If not new model with Mint: use old model :::ADDED BY MARTIJN:::
-	cout << "In TCalculateConsistentCoeff: " 
-	     << "Old model selected\n"; cout.flush(); //:::ADDED BY MARTIJN:::DEBUG:::DELETE:::
         double nucleoncharge_ = fNucleon_charge;
         double hyperoncharge_ = fHyperon_charge;
         if (particle.formfactorE==NULL)
@@ -733,13 +734,10 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
 	  }
         else
 	  ReggePropagator = 1;
-	cout << ReggePropagator*coefficient; //:::DEBUG:::DELETE:::
         return ReggePropagator*coefficient;
       }
       else
       { // New model selected :::ADDED BY MARTIJN:::
-	cout << "In TCalculateConsistentCoeff: " // New model selected :::ADDED BY MARTIJN:::DEBUG:::DELETE:::
-	     << "New model selected.\n "; cout.flush();
         double nucleoncharge_ = fNucleon_charge;
         double hyperoncharge_ = fHyperon_charge;
 	double eFF_ = e_; // particle charge multiplied by it's EM FF :::ADDED BY MARTIJN:::
@@ -1736,8 +1734,6 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
       //Diagram T
     case 1: {
       if (observ.mint==0){ // If not new model with Mint: use old model :::ADDED BY MARTIJN:::
-	cout << "In TCalculateConsistentCoeff: " 
-	     << "Old model selected\n"; cout.flush(); //:::ADDED BY MARTIJN:::DEBUG:::DELETE:::
         double nucleoncharge_ = fNucleon_charge;
         double hyperoncharge_ = fHyperon_charge;
         if (particle.formfactorE==NULL)
@@ -1784,8 +1780,6 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
       }
       else
       { // New model selected :::ADDED BY MARTIJN:::
-	cout << "In TCalculateConsistentCoeff: " // New model selected :::ADDED BY MARTIJN:::DEBUG:::DELETE:::
-	     << "New model selected.\n "; cout.flush();
         double nucleoncharge_ = fNucleon_charge;
         double hyperoncharge_ = fHyperon_charge;
 	double eFF_ = e_; // particle charge multiplied by it's EM FF :::ADDED BY MARTIJN:::

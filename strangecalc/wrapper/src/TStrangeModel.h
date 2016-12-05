@@ -97,7 +97,8 @@ class TStrangeModel : public TNamed
 
   ClassDef(TStrangeModel,kVersion);    // strangecalc model
 
-
+ public: //:::ADDED BY MARTIJN:::DEBUG:::DELETE:::
+  Observable* GetObserv(){return (*fCalc).GetObserv();} //:::ADDED BY MARTIJN:::DEBUG:::DELETE:::
 };
 
 

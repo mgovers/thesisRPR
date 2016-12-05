@@ -1,5 +1,22 @@
 # thesisRPR
 
+05/12/2016:
+   Structures.h:
+	-in MintManager:
+	 	-added .a , .d , .f
+   TCalculateConsistentCoeff.cpp:
+	-in CalcA1(...): added a-term, d-term, f-term in New model
+   TStrangeModel.h:
+	 	-added *Observable GetObserv() to make it possible to easily switch between models
+		 	=> :::DEBUG:::MUST BE DELETED BEFORE PUBLISHING:::
+
+   	NOTE: -First real results suggest an enery dependend hadronic cut-off parameter for s-channel Born:
+	      		-For low energies: low cut-off parameter
+		 	-For high energies: large cut-off parameter
+	       Can change by means of adding d and f => TEST!!!!
+	      -First results suggest f=0. So far, no real predictions can be made about d, but probably negative
+	       Both can still change by means of changing the cut-off parameter => TEST!!!!
+
 01/12/2016:
    TCalculateConsistentCoeff.cpp:
 	-Fixed a few minor errors
