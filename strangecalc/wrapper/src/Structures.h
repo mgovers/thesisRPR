@@ -501,6 +501,10 @@ typedef struct
   double d; /* paramater describing the strength of the 'd'-term in Mint */
   double f; /* paramater describing the strength of the 'f'-term in Mint */
   //:::DEBUG:::ADD A(s,t,Q^2) and B(s,t,Q^2) terms
+
+  short noTchannelBornContribution; /* turn off the t-channel Born term */
+  short noSchannelBornContribution; /* turn off the s-channel Born term */
+  short noInteractionBornContribution; /* turn off Mint in the Born term */
 } MintManager;
 
 

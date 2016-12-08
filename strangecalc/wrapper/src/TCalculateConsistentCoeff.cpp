@@ -297,17 +297,21 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
 	  // :::ADDED BY MARTIJN:::
 	  if (fNucleon_charge!=0.0)
 	  {
-	    // s-channel electric Born term
-	    coefficient += (nucleonchargeFF_*g2_) / (fS-fmN*fmN);
-	    // a-term in Mint
-	    if (observ.electroprod)
-	      coefficient += ( observ.mintmanager.a*(g_*(eFF_-1.) 
+	    if (!observ.mintmanager.noSchannelBornContribution){ // allows turning off contribution
+	      // s-channel electric Born term
+	      coefficient += (nucleonchargeFF_*g2_) / (fS-fmN*fmN);
+	    }
+	    if (!observ.mintmanager.noInteractionBornContribution){ // allows turning off contribution
+	      // a-term in Mint
+	      if (observ.electroprod)
+	        coefficient += ( observ.mintmanager.a*(g_*(eFF_-1.) 
 				- ReggePropagator*g2_*(nucleonchargeFF_-1.) ) ) /(-1.0*fkk*fkk);
-	    // d-term in Mint
-	    coefficient += ( observ.mintmanager.d*g2_*(1.-g_*ReggePropagator) ) / (fS-fmN*fmN);
-	    // f-term in Mint
-	    coefficient += ( observ.mintmanager.f*ReggePropagator*g_*(1.-g2_) ) / (fDenominator_t);
-	    // :::ADDED BY MARTIJN:::DEBUG:::ADD A(s,t,Q2) terms of Mint:::
+	      // d-term in Mint
+	      coefficient += ( observ.mintmanager.d*g2_*(1.-g_*ReggePropagator) ) / (fS-fmN*fmN);
+	      // f-term in Mint
+	      coefficient += ( observ.mintmanager.f*ReggePropagator*g_*(1.-g2_) ) / (fDenominator_t);
+	      // :::ADDED BY MARTIJN:::DEBUG:::ADD A(s,t,Q2) terms of Mint:::
+	    }
 	  }
 	  else
 	    // (other gauge restoration procedures not yet implemented)
@@ -788,19 +792,24 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
 	  ReggePropagator = 1;
 
 	// actual summation :::ADDED BY MARTIJN:::
-	coefficient = (eFF_*g_*ReggePropagator) / fDenominator_t; // t-channel contribution
+	if (!observ.mintmanager.noTchannelBornContribution)  // allows turning off contribution
+	  coefficient = (eFF_*g_*ReggePropagator) / fDenominator_t; // t-channel contribution
         
 	if (particle.E!=0.0)
 	  {
 	  // :::ADDED BY MARTIJN:::
 	  if (fNucleon_charge!=0.0)
 	  {
-	    // s-channel electric Born term
-	    coefficient += (nucleonchargeFF_*g2_) / (fS-fmN*fmN);
-	    // interaction term
-	    coefficient += (e_*ReggePropagator*g_*(g2_-1.0)) / fDenominator_t 
+	    if (!observ.mintmanager.noSchannelBornContribution){  // allows turning off contribution
+	      // s-channel electric Born term
+	      coefficient += (nucleonchargeFF_*g2_) / (fS-fmN*fmN);
+	    }
+	    if (!observ.mintmanager.noInteractionBornContribution){  // allows turning off contribution
+	      // interaction term
+	      coefficient += (e_*ReggePropagator*g_*(g2_-1.0)) / fDenominator_t 
 			   + (nucleoncharge_*g2_*((ReggePropagator*g_)-1.0)) / (fS-fmN*fmN) ;
-	    // :::ADDED BY MARTIJN:::DEBUG:::ADD A(s,t,Q2):::
+	      // :::ADDED BY MARTIJN:::DEBUG:::ADD A(s,t,Q2):::
+	    }
 	  }
 	  else
 	    // (other gauge restoration procedures not yet implemented)
@@ -1830,19 +1839,24 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
 	  ReggePropagator = 1;
 
 	// actual summation :::ADDED BY MARTIJN:::
-	coefficient = (-2.0*eFF_*g_*(fkpY - fkp)*ReggePropagator)/fDenominator_t; // t-channel contribution
+	if (!observ.mintmanager.noTchannelBornContribution) // allows turning off contribution
+	  coefficient = (-2.0*eFF_*g_*(fkpY - fkp)*ReggePropagator)/fDenominator_t; // t-channel contribution
         
 	if (particle.E!=0.0)
 	{
 	  // :::ADDED BY MARTIJN:::
 	  if (fNucleon_charge!=0.0)
 	  {
-	    // s-channel electric Born term
-	    coefficient += (2.0*nucleonchargeFF_*g2_*fkp) / (fS-fmN*fmN); // :::ADDED BY MARTIJN:::
-	    // interaction term
-	    coefficient += (2.0*e_*ReggePropagator*g_*(1.0-g2_)*(fkpY-fkp)) / fDenominator_t 
+	    if (!observ.mintmanager.noSchannelBornContribution){ // allows turning off contribution
+	      // s-channel electric Born term
+	      coefficient += (2.0*nucleonchargeFF_*g2_*fkp) / (fS-fmN*fmN); // :::ADDED BY MARTIJN:::
+	    }
+	    if (!observ.mintmanager.noInteractionBornContribution){  // allows turning off contribution
+	      // interaction term
+	      coefficient += (2.0*e_*ReggePropagator*g_*(1.0-g2_)*(fkpY-fkp)) / fDenominator_t 
 			   + (2.0*nucleoncharge_*g2_*(1.0-(ReggePropagator*g_))*fkp) / (fS-fmN*fmN) ;
-	    // :::ADDED BY MARTIJN:::DEBUG:::ADD A(s,t,Q2):::
+	      // :::ADDED BY MARTIJN:::DEBUG:::ADD A(s,t,Q2):::
+	    }
 	  }
 	  else
 	    // (other gauge restoration procedures not yet implemented)

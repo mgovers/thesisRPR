@@ -1,6 +1,12 @@
 # thesisRPR
 
 08/12/2016:
+   structures.h:
+	-In struct Mintmanager:
+	 	-added NoTchannelBornContribution, NoSchannelBornContribution, NoInteractionBornContribution
+		 	to allow turning off those contributions
+
+08/12/2016:
    strangecalc_path.h:
 	 	-changed path from 'old' installation file to new one (old one created bugg in chisquared(..) 
 	 	 	in TStrangeModel.h)
