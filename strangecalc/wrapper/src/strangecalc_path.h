@@ -24,7 +24,7 @@
  */
 
 // Installation directory for strangecalc data
-#define DATA_PATH "/home/mgovers/Software/strangecalc/share/strangecalc-wrapper/data/"
+#define DATA_PATH "/home/mgovers/Software/strangecalc/wrapper/share/data/"
 
 // Installation directory for strangecalc models
-#define MODELS_PATH "/home/mgovers/Software/strangecalc/share/strangecalc-wrapper/models"
+#define MODELS_PATH "/home/mgovers/Software/strangecalc/wrapper/share/models"

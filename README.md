@@ -1,5 +1,10 @@
 # thesisRPR
 
+08/12/2016:
+   strangecalc_path.h:
+	 	-changed path from 'old' installation file to new one (old one created bugg in chisquared(..) 
+	 	 	in TStrangeModel.h)
+
 05/12/2016:
    Structures.h:
 	-in MintManager:
