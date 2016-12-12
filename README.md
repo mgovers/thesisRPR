@@ -1,5 +1,9 @@
 # thesisRPR
 
+12/12/2016:
+   strangecalc_path.h:
+	-Changed default path to actual path (strangecalcWorkDir instead of strangecalc)
+
 08/12/2016:
    structures.h:
 	-In struct Mintmanager:
