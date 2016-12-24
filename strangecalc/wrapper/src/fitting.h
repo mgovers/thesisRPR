@@ -26,6 +26,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <TKinematics.h>
 
 #include <iostream>
 
@@ -51,6 +52,7 @@ struct Photo
   double error;
   int label;		/* unique label of this datapoint */
   short tch;           /* ampli as function of t (tch=1) or cos(theta) (tch=0) */
+  char experimentname[100]; /* name of the experiment the datapoint was measured in */ // :::ADDED BY MARTIJN:::
 };
 
 
@@ -83,7 +85,8 @@ typedef struct
   double phi;
   double phiMin;
   short cs_convention;   // cross section convention (->output_format)
-  
+
+  char experimentname[100]; /* name of the experiment the datapoint was measured in */ // :::ADDED BY MARTIJN:::
 } Electro;
 
 
@@ -169,6 +172,7 @@ int import_exp_tot_cb2009_kaoncap_11(Data[], int*, char*, Observable*);
 int import_exp_diff_cb2009_kaoncap_12(Data[], int*, char*, Observable*);
 int import_exp_tot_cb2009_kaoncap_12(Data[], int*, char*, Observable*);
 int line_count(FILE*, long);
+void printkinematics(TKinematics*,char*,double,double,std::string,char*,short,short); // :::ADDED BY MARTIJN:::
 
 #endif
 

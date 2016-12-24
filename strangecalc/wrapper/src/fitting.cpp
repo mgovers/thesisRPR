@@ -33,6 +33,7 @@
 #include <TMatrixElement.h>
 #include <TDataset.h>
 #include "strange_func.h"
+#include "strangecalc_path.h" //:::ADDED BY MARTIJN:::
 #include "fitting.h"
 #include "calcMatrixElement.h"
 #include "FormFactorSpecification.h"
@@ -563,7 +564,6 @@ double chifunc(double* vertex,Class** particles,
 
   for(j = 0; j < observ->iso.nr_iso_channels; j++)
     {
-
       /* Determine the isospin channel under investigation */
 
       iso = observ->iso.iso_channel[j];
@@ -1147,11 +1147,12 @@ double photo_chi(Photo datapoint, Class* workparticles, Class* workparticles_2,
 		 Observable* observ, int* modifdatacount)
 {
   int weight;
-  double energy, w, pk;
+  double energy, w, pk, wmin; // :::MODIFIED BY MARTIJN:::
   double ampli=0.0, tmpampli=0.0, sumampli=0.0, chisquared=0.0;
   double gridnum, realgridnum=0.0, e_delta;
   double mp, mk, my;
   double costhkcm;
+  double costhkcmrange;
 
   /* Allocate the Born masses */
   allocate_born_masses(&mp,&mk,&my,observ->iso.isospin);
@@ -1166,7 +1167,6 @@ double photo_chi(Photo datapoint, Class* workparticles, Class* workparticles_2,
   else {  // no averaging will be done!
     e_delta = 10.;
   }
-
   // Loop over energy inside bin
   for(energy = datapoint.emin;
       energy < datapoint.emax + 2.0; energy += e_delta)
@@ -1176,6 +1176,7 @@ double photo_chi(Photo datapoint, Class* workparticles, Class* workparticles_2,
         w = (energy*energy - mp*mp)/(2.*energy);
       else
         lorentztrans_photo(energy, &w, mp);
+      if(energy == datapoint.emin) wmin = w; // :::ADDED BY MARTIJN:::
 
       // Calculation of the (three vector) momentum of the kaon.
       pk = construct_pk(w, w, mp, mk, my);
@@ -1264,6 +1265,21 @@ double photo_chi(Photo datapoint, Class* workparticles, Class* workparticles_2,
   (*modifdatacount) += weight - 1;
 
   observ->photoprod = 0;
+
+  if (observ->printkinematics) // :::ADDED BY MARTIJN:::DEBUG:::DELETE
+  {
+    // Calculate all kinematics and print to file.
+    if (w!=wmin) w = (wmin+w)/2.; // average over the bin if energy bins were used
+    TKinematics kinematics("", "", datapoint.iso, "qsquared:wcm:costhkcm",0.,w,costhkcm);
+    std::string filename = DATA_PATH;
+    filename += "photo/iso.";
+    filename += std::to_string(datapoint.iso);
+    filename += "/Expanded/data";
+    char* experimentname = datapoint.experimentname;
+    short ds_dt = datapoint.ds_dt + 2*datapoint.ds_du;
+    printkinematics(&kinematics,datapoint.observable,datapoint.ampli
+		    ,datapoint.error,filename,experimentname,0,ds_dt);
+  }
 
   return chisquared;
 }
@@ -3214,6 +3230,20 @@ double electro_chi(Electro datapoint, Class* workparticles, Class* workparticles
 
   // reset observ
   observ->electroprod = 0;
+
+  if (observ->printkinematics) // :::ADDED BY MARTIJN:::DEBUG:::DELETE
+  {
+    // Calculate all kinematics and print to file.
+    TKinematics kinematics("", "", datapoint.iso, "qsquared:s:costhkcm",qsquared,s,costheta_k);
+    std::string filename = DATA_PATH;
+    filename += "electro/iso.";
+    filename += std::to_string(datapoint.iso);
+    filename += "/Expanded/data";
+    char* experimentname = datapoint.experimentname;
+    short ds_dt = datapoint.ds_dt;
+    printkinematics(&kinematics,datapoint.observable,datapoint.ampli,datapoint.error,filename,
+                     experimentname,datapoint.cs_convention,ds_dt);
+  }
 
   return chisquared;
 }
@@ -5578,4 +5608,138 @@ int setlabels(Data** datapoints, int* datacount, Observable* observ)
   }
   set_datasize(ilabel);
   return ilabel;
+}
+
+/*
+ * Method to write experiments to one large file
+ * :::ADDED BY MARTIJN:::DEBUG:::THIS IS HARDCODED
+ */
+void printkinematics(TKinematics* kinematics,char* observable,double ampli,double error,
+		     std::string filename,char* experimentname,short cs_convention,short ds_dt_conversion){
+  std::cerr << "Warning: you are adding data to the expanded data files.";
+
+  std::ofstream outfile;
+
+  outfile.open(filename,std::ofstream::app);
+  //:::ADDED BY MARTIJN:::DEBUG:::ADD CHECK TO AVOID DOUBLY WRITING?
+
+  if(string(observable).substr(0, 4).compare("diff")) // not a differential cross section
+  {
+  outfile << experimentname << "\t"
+	  << std::setprecision(5) << kinematics->GetWlab() << "\t"	// w_lab (MeV)
+	  << std::setprecision(5) << kinematics->GetWcm() << "\t"	// w_cm (MeV)
+	  << std::setprecision(5) << kinematics->GetKlab() << "\t"	// k_lab (MeV)
+	  << std::setprecision(5) << kinematics->GetKcm() << "\t"	// k_cm (MeV)
+	  << std::setprecision(5) << kinematics->GetPkcm() << "\t"	// |p_K,cm| (MeV)
+	  << std::setprecision(5) << kinematics->GetPklab() << "\t"	// |p_K,lab| (MeV)
+	  << std::setprecision(7) << kinematics->GetCosthkcm() << "\t" 	// costheta_kcm
+	  << std::setprecision(7) << kinematics->GetQsquared() << "\t"	// Q^2 (MeV^2)
+	  << std::setprecision(7) << kinematics->GetW() << "\t"		// W (MeV)
+	  << std::setprecision(7) << kinematics->GetS() << "\t"		// s (MeV^2)
+	  << std::setprecision(7) << kinematics->GetT() << "\t"		// t (MeV^2)
+	  << std::setprecision(7) << kinematics->GetU() << "\t"		// u (MeV^2)
+	  << std::setprecision(5) << kinematics->GetPhi() << "\t"	// phi
+	  << std::setprecision(5) << kinematics->GetPhiMin() << "\t"	// phi_min
+	  << "$" << observable << "\t" << std::setprecision(7) << ampli << "\t" // measured observable
+	  << std::setprecision(5) << error				// error on measured observable
+	  << "\n";
+  }
+  else // create two data items: one in terms of dcs/dt and one in terms of dcs/domega
+  {
+    if (kinematics->GetQsquared()!=0.) {
+      // Electroproduction => epsilon convention
+      double e_L, e_el_conv_fac,TL_2;
+      double qsquared = kinematics->GetQsquared();
+      switch(cs_convention) {
+      case 0:
+        e_L = 0;
+        e_el_conv_fac = kinematics->GetKlab() * kinematics->GetKlab() / qsquared;
+        TL_2 = 0;
+        break;
+      case 1:
+        e_L = 0;
+        e_el_conv_fac = kinematics->GetKlab() * kinematics->GetKlab() / qsquared;
+        TL_2 = 1;
+        break;
+      case 2:
+        e_L = 1;
+        e_el_conv_fac = kinematics->GetWlab() * kinematics->GetWlab() / qsquared;
+        TL_2 = 1;
+        break;
+      case 3:
+        e_L = 1;
+        e_el_conv_fac = kinematics->GetW() * kinematics->GetW() / qsquared;
+        TL_2 = 1;
+        break;
+      default:
+        break;
+      }
+      // Choose correct convention
+      if (string(observable).compare("diff_l") 
+				      || string(observable).compare("diff_tl_unpol") 
+				      || string(observable).compare("diff_tl_epol") )
+      {
+        if(e_L) { // inverse operations to the one in calculate_electro_observable
+       	  ampli /= sqrt(e_el_conv_fac);
+          error /= sqrt(e_el_conv_fac);
+        }
+        if(TL_2 && (!string(observable).compare("diff_l") ) ) 
+        { // inverse operations to the one in calculate_electro_observable
+          ampli *= sqrt(2);
+          error *= sqrt(2);
+        }
+      }
+    } 
+    double ampl1 = ampli;
+    double err1 = error;
+    double ampl2 = ampli;
+    double err2 = error;
+    if (ds_dt_conversion == 1 || ds_dt_conversion == 2) { 
+      // ds/dt or ds/du (same functional dependency) is given => calculate ds/domega
+      ampl2 *= PI * 1e6 / ( kinematics->GetPk() * kinematics->GetKcm());
+      err2 *= PI * 1e6 / ( kinematics->GetPk() * kinematics->GetKcm());
+    } else { 
+      // ds/domega is given => calculate ds/dt
+      ampl1 /= PI * 1e6 / ( kinematics->GetPk() * kinematics->GetKcm());
+      err1 /= PI * 1e6 / ( kinematics->GetPk() * kinematics->GetKcm());
+    }
+  outfile << experimentname << "\t"
+	  << std::setprecision(5) << kinematics->GetWlab() << "\t"	// w_lab (MeV)
+	  << std::setprecision(5) << kinematics->GetWcm() << "\t"	// w_cm (MeV)
+	  << std::setprecision(5) << kinematics->GetKlab() << "\t"	// k_lab (MeV)
+	  << std::setprecision(5) << kinematics->GetKcm() << "\t"	// k_cm (MeV)
+	  << std::setprecision(5) << kinematics->GetPkcm() << "\t"	// |p_K,cm| (MeV)
+	  << std::setprecision(5) << kinematics->GetPklab() << "\t"	// |p_K,lab| (MeV)
+	  << std::setprecision(7) << kinematics->GetCosthkcm() << "\t" 	// costheta_kcm
+	  << std::setprecision(7) << kinematics->GetQsquared() << "\t"	// Q^2 (MeV^2)
+	  << std::setprecision(7) << kinematics->GetW() << "\t"		// W (MeV)
+	  << std::setprecision(7) << kinematics->GetS() << "\t"		// s (MeV^2)
+	  << std::setprecision(7) << kinematics->GetT() << "\t"		// t (MeV^2)
+	  << std::setprecision(7) << kinematics->GetU() << "\t"		// u (MeV^2)
+	  << std::setprecision(5) << kinematics->GetPhi() << "\t"	// phi
+	  << std::setprecision(5) << kinematics->GetPhiMin() << "\t"	// phi_min
+	  << "$" << observable << "dt" << "\t" << std::setprecision(7) << ampl1 << "\t" // measured observable
+	  << std::setprecision(5) << err1				// error on measured observable
+	  << "\n";
+  outfile << experimentname << "\t"
+	  << std::setprecision(5) << kinematics->GetWlab() << "\t"	// w_lab (MeV)
+	  << std::setprecision(5) << kinematics->GetWcm() << "\t"	// w_cm (MeV)
+	  << std::setprecision(5) << kinematics->GetKlab() << "\t"	// k_lab (MeV)
+	  << std::setprecision(5) << kinematics->GetKcm() << "\t"	// k_cm (MeV)
+	  << std::setprecision(5) << kinematics->GetPkcm() << "\t"	// |p_K,cm| (MeV)
+	  << std::setprecision(5) << kinematics->GetPklab() << "\t"	// |p_K,lab| (MeV)
+	  << std::setprecision(7) << kinematics->GetCosthkcm() << "\t" 	// costheta_kcm
+	  << std::setprecision(7) << kinematics->GetQsquared() << "\t"	// Q^2 (MeV^2)
+	  << std::setprecision(7) << kinematics->GetW() << "\t"		// W (MeV)
+	  << std::setprecision(7) << kinematics->GetS() << "\t"		// s (MeV^2)
+	  << std::setprecision(7) << kinematics->GetT() << "\t"		// t (MeV^2)
+	  << std::setprecision(7) << kinematics->GetU() << "\t"		// u (MeV^2)
+	  << std::setprecision(5) << kinematics->GetPhi() << "\t"	// phi
+	  << std::setprecision(5) << kinematics->GetPhiMin() << "\t"	// phi_min
+	  << "$" << observable << "domega" << "\t" << std::setprecision(7) << ampl2 << "\t" // measured observable
+	  << std::setprecision(5) << err2				// error on measured observable
+	  << "\n";
+  }
+  outfile.close();
+  std::cout << "At " << experimentname << ": " << ampli << "\n"; std::cout.flush();
 }

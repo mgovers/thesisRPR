@@ -1,6 +1,12 @@
 # thesisRPR
 
 24/12/2016:
+   -Added forgotten files from last commit
+   -TStrangeModel.cpp:
+	-In ChiSquared(...):
+	 	-Deleted some debug statements
+
+24/12/2016:
    Added all changes that allow printing all inputted experiments to a single file with default format. Doing so
    is done by changing short printkinematics to 1 in struct Observable in Structures.h. NOTE: It is not checked
    whether the file already contains all data. It therefore is important to put observable.printkinematics to 0 
@@ -9,10 +15,10 @@
    Structures.h:
 	-In struct Observable:
 	 	-added short printkinematics
-   Fitting.h:
+   fitting.h:
 	-In struct Photo and Elec:
 	 	-added char[] experimentname
-   Fitting.cpp:
+   fitting.cpp:
 	-In photo_chi(...) and electro_chi(...):
 	 	-added some preparations and a call to printkinematics(...) in the if (observ->printkinematics)
 	 	 statements
@@ -21,7 +27,7 @@
    DataHandler.cpp:
 	-In readData(...):
 	 	-added a reading of the experiment name and saving it to the char[] experimentname in Photo and
-	 	 Elec structs in Fitting.h
+	 	 Elec structs in fitting.h
    TStrangeModel.cpp:
 	-In ChiSquared(...):
 	 	-added statements that allow calling printkinematics(...)

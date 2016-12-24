@@ -531,9 +531,15 @@ void DataHandler::readData(Data dataPoints[], int* dataCount, const string& data
             *obsError = m_ObsEntry->m_Error;
 
             if(m_IsPhoto)
+	    {
               copyPhotoStruct(dataPoints[*dataCount].photo);
+	      strcpy(dataPoints[*dataCount].photo.experimentname,dataFile.c_str()); // :::ADDED BY MARTIJN:::
+	    }
             else
+	    {
               copyElectroStruct(dataPoints[*dataCount].elec);
+	      strcpy(dataPoints[*dataCount].elec.experimentname,dataFile.c_str()); // :::ADDED BY MARTIJN:::
+	    }
 
             ++(*dataCount);
           }
