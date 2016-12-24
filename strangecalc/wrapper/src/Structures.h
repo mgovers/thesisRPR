@@ -532,6 +532,7 @@ typedef struct
   short mint; /* use Mint in the calculation? 0 use old model (RPR-2007 / RPR-2011) 
 		1 use new method with Mint */ //:::ADDED BY MARTIJN:::
   MintManager mintmanager;
+  short printkinematics; /* if calculating chisquared, print data to file? 0 or 1 */ //:::ADDED BY MARTIJN:::DEBUG:::DELETE
   short quant_axis_thesis; /* choice of quant. axis in comp. of asymmetries 
 			    * with definite baryon spins */
   short quant_axis_drechsel; /* " */

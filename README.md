@@ -1,11 +1,37 @@
 # thesisRPR
 
+24/12/2016:
+   Added all changes that allow printing all inputted experiments to a single file with default format. Doing so
+   is done by changing short printkinematics to 1 in struct Observable in Structures.h. NOTE: It is not checked
+   whether the file already contains all data. It therefore is important to put observable.printkinematics to 0 
+   whenever one is not sure that the data be written out to the file.
+
+   Structures.h:
+	-In struct Observable:
+	 	-added short printkinematics
+   Fitting.h:
+	-In struct Photo and Elec:
+	 	-added char[] experimentname
+   Fitting.cpp:
+	-In photo_chi(...) and electro_chi(...):
+	 	-added some preparations and a call to printkinematics(...) in the if (observ->printkinematics)
+	 	 statements
+	-added printkinematics(...):
+	 	-hardcoded!!! :::DEBUG:::FIX OR REMOVE BEFORE PUBLISHING?:::
+   DataHandler.cpp:
+	-In readData(...):
+	 	-added a reading of the experiment name and saving it to the char[] experimentname in Photo and
+	 	 Elec structs in Fitting.h
+   TStrangeModel.cpp:
+	-In ChiSquared(...):
+	 	-added statements that allow calling printkinematics(...)
+
 12/12/2016:
    strangecalc_path.h:
 	-Changed default path to actual path (strangecalcWorkDir instead of strangecalc)
 
 08/12/2016:
-   structures.h:
+   Structures.h:
 	-In struct Mintmanager:
 	 	-added NoTchannelBornContribution, NoSchannelBornContribution, NoInteractionBornContribution
 		 	to allow turning off those contributions
@@ -23,7 +49,7 @@
 	-in CalcA1(...): added a-term, d-term, f-term in New model
    TStrangeModel.h:
 	 	-added *Observable GetObserv() to make it possible to easily switch between models
-		 	=> :::DEBUG:::MUST BE DELETED BEFORE PUBLISHING:::
+		 	=> :::DEBUG:::DELETED BEFORE PUBLISHING?:::
 
    	NOTE: -First real results suggest an enery dependend hadronic cut-off parameter for s-channel Born:
 	      		-For low energies: low cut-off parameter

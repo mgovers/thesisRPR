@@ -1497,7 +1497,7 @@ double TStrangeModel::ChiSquared(const TString& isospins, const TString& dataset
   observ.iso.nr_iso_channels = isoList->GetEntries();
   for(int i=0; i<observ.iso.nr_iso_channels; ++i)
     observ.iso.iso_channel[i] = atoi( dynamic_cast<TObjString*>(isoList->At(i))->GetName() );
-  
+
   // Determine whether we will work interactively
   FILE* input; // input we feed to databasespecification
   FILE* output; // stream where output of databasespecification will be directed
@@ -1528,7 +1528,7 @@ double TStrangeModel::ChiSquared(const TString& isospins, const TString& dataset
 
   // Read the datasets
   databasespecification(&observ,&dummy,&dummy,&dummy,input,output,output);
-  
+
   // Close the input & output stream when it's a temporary one
   if(!datasets.IsNull()) {
     fclose(input);
@@ -1550,8 +1550,7 @@ double TStrangeModel::ChiSquared(const TString& isospins, const TString& dataset
       datapoints[i][j].kaoncap.label = -1;
     }
   }
-  int nrOfDatapoints=0;
-
+std::cout << " Voor getdatastructure\n"; std::cout.flush();// :::ADDED BY MARTIJN:::DEBUG:::DELETE
   // We recycle getdatastructure() defined in fitting.c, to do the conversion.
   for(int i=0; i<observ.iso.nr_iso_channels; ++i) {
     int iso = observ.iso.iso_channel[i];
@@ -1559,10 +1558,12 @@ double TStrangeModel::ChiSquared(const TString& isospins, const TString& dataset
     getdatastructure(datapoints[iso],&datacount[iso],&observ,0);
   }
 
+std::cout << " Na getdatastructure\n"; std::cout.flush();// :::ADDED BY MARTIJN:::DEBUG:::DELETE
   // Calculate the total chi-squared (for each isospin channel separate)
   double chisquared = 0.;
   double weightModifiedDatacountTotal=0.;
   for(int i=0; i<observ.iso.nr_iso_channels; ++i) {
+std::cout << " in for loop\n"; std::cout.flush();// :::ADDED BY MARTIJN:::DEBUG:::DELETE
     int iso = observ.iso.iso_channel[i];
 
     // Create a temporary TStrangeCalc and init it correctly
@@ -1571,6 +1572,7 @@ double TStrangeModel::ChiSquared(const TString& isospins, const TString& dataset
     calc.observ.iso.iso_channel[0] = iso;
     calc.observ.fit.polweight = polarizationWeight;
     calc.datacount[iso] = datacount[iso];
+    calc.observ.printkinematics = (*fCalc).GetObserv()->printkinematics; // :::ADDED BY MARTIJN:::DEBUG:::DELETE IF PRINTKINEMATICS DELETED
 
     for(int j=0; j<datacount[iso]; ++j) // copy all the data
       calc.datapoints[iso][j] = datapoints[iso][j];
