@@ -1,8 +1,28 @@
 # thesisRPR
 
+27/12/2016:
+   Structures.h:
+	-In struct MintManager:
+	 	-Added a field short OnlyBornContributions to allow showing only those contributions
+   TCalculateCGLNCoeff.cpp:
+	-In CalcA(...):
+	 	-Added an if statement to allow calculating only the contributions by the Born terms
+
+26/12/2016:
+   Structures.h:
+	-In struct Particle:
+	 	-Added a DEBUG comment about particle.H and particle.G => interchanged in implementation in old
+	 		model (TCalculateConsistentCoeff.cpp -> CalcA1(...),...,CalcA6(...)) => copied in new
+		 	implementation.
+   fitting.cpp:
+	-In printkinematics(...):
+	 	-Added a comment when calculating diffcs/dt: diffcs/dt is given in units mub/GeV^2 instead of
+		 	mub/MeV^2 !!!
+
 24/12/2016:
-   -Added forgotten files from last commit
-   -TStrangeModel.cpp:
+   Added forgotten files from last commit
+
+   TStrangeModel.cpp:
 	-In ChiSquared(...):
 	 	-Deleted some debug statements
 

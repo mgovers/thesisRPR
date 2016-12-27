@@ -178,7 +178,7 @@ typedef struct
   double spin;
   double E; //!< electric charge divided by |e_electron|
   double G; //!< g_KYN, mult. by factor
-  double H; //!< kappa, mult. by factor
+  double H; //!< kappa, mult. by factor //:::DEBUG:::I THINK G AND H ARE SWITCHED IN OLD IMPLEMENTATION (copied in new):::
   double I;
   double J;
   double X;
@@ -505,6 +505,7 @@ typedef struct
   short noTchannelBornContribution; /* turn off the t-channel Born term */
   short noSchannelBornContribution; /* turn off the s-channel Born term */
   short noInteractionBornContribution; /* turn off Mint in the Born term */
+  short onlyBornContributions; /* turn off all contributions except Born term */
 } MintManager;
 
 
