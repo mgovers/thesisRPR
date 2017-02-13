@@ -1,9 +1,13 @@
 # thesisRPR
 
+13/02/2017:
+   TCalculateConsistentCoeff.cpp:
+	-In CalcA1(...), CalcA2(...), ... , CalcA6(...):
+	 	-Added a statement implementing onlyBornContributions because it didn't work properly
 27/12/2016:
    Structures.h:
 	-In struct MintManager:
-	 	-Added a field short OnlyBornContributions to allow showing only those contributions
+	 	-Added a field short onlyBornContributions to allow showing only those contributions
    TCalculateCGLNCoeff.cpp:
 	-In CalcA(...):
 	 	-Added an if statement to allow calculating only the contributions by the Born terms

@@ -166,6 +166,7 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
                                     const Properties& particle,
                                     const Observable& observ) const
 {
+  if ( (observ.mintmanager.onlyBornContributions != 0) && (classindex != 1) ) return 0; // used to calculate contributions only //:::ADDED BY MARTIJN:::DEBUG:::delete?
   switch ( classindex )
     {
       //----------------------------------------------------------------------------------------
@@ -303,9 +304,10 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
 	    }
 	    if (!observ.mintmanager.noInteractionBornContribution){ // allows turning off contribution
 	      // a-term in Mint
-	      if (observ.electroprod)
+	      if (observ.electroprod) //:::DEBUG:::REMOVE STATEMENT (SEE BELOW):::
 	        coefficient += ( observ.mintmanager.a*(g_*(eFF_-1.) 
 				- ReggePropagator*g2_*(nucleonchargeFF_-1.) ) ) /(-1.0*fkk*fkk);
+				//:::DEBUG:::PHOTOPRODUCTION: ~derivatives of F_EM (Q^2) due to de l'Hopital:::
 	      // d-term in Mint
 	      coefficient += ( observ.mintmanager.d*g2_*(1.-g_*ReggePropagator) ) / (fS-fmN*fmN);
 	      // f-term in Mint
@@ -674,6 +676,7 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
                                     const Properties& particle,
                                     const Observable& observ) const
 {
+  if ( (observ.mintmanager.onlyBornContributions != 0) && (classindex != 1) ) return 0; // used to calculate contributions only //:::ADDED BY MARTIJN:::DEBUG:::delete?
   switch ( classindex )
     {
       //----------------------------------------------------------------------------------------
@@ -1095,6 +1098,7 @@ TCalculateConsistentCoeff::CalcA3 ( int classindex,
                                     const Properties& particle,
                                     const Observable& observ) const
 {
+  if ( (observ.mintmanager.onlyBornContributions != 0) && (classindex != 1) ) return 0; // used to calculate contributions only //:::ADDED BY MARTIJN:::DEBUG:::delete?
   switch ( classindex )
     {
       //----------------------------------------------------------------------------------------
@@ -1396,6 +1400,7 @@ TCalculateConsistentCoeff::CalcA4 ( int classindex,
                                     const Properties& particle,
                                     const Observable& observ) const
 {
+  if ( (observ.mintmanager.onlyBornContributions != 0) && (classindex != 1) ) return 0; // used to calculate contributions only //:::ADDED BY MARTIJN:::DEBUG:::delete?
   switch ( classindex )
     {
       //----------------------------------------------------------------------------------------
@@ -1716,6 +1721,7 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
                                     const Properties& particle,
                                     const Observable& observ) const
 {
+  if ( (observ.mintmanager.onlyBornContributions != 0) && (classindex != 1) ) return 0; // used to calculate contributions only //:::ADDED BY MARTIJN:::DEBUG:::delete?
   switch ( classindex )
     {
       //----------------------------------------------------------------------------------------
@@ -1853,7 +1859,7 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
 	    }
 	    if (!observ.mintmanager.noInteractionBornContribution){  // allows turning off contribution
 	      // interaction term
-	      coefficient += (2.0*e_*ReggePropagator*g_*(1.0-g2_)*(fkpY-fkp)) / fDenominator_t 
+	      coefficient += (2.0*e_*ReggePropagator*g_*(1.0-g2_)*(fkpY-fkp)) / fDenominator_t
 			   + (2.0*nucleoncharge_*g2_*(1.0-(ReggePropagator*g_))*fkp) / (fS-fmN*fmN) ;
 	      // :::ADDED BY MARTIJN:::DEBUG:::ADD A(s,t,Q2):::
 	    }
@@ -2139,6 +2145,7 @@ TCalculateConsistentCoeff::CalcA6 ( int classindex,
                                     const Properties& particle,
                                     const Observable& observ) const
 {
+  if ( (observ.mintmanager.onlyBornContributions != 0) && (classindex != 1) ) return 0; // used to calculate contributions only //:::ADDED BY MARTIJN:::DEBUG:::delete?
   switch ( classindex )
     {
       //----------------------------------------------------------------------------------------
