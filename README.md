@@ -1,5 +1,16 @@
 # thesisRPR
 
+15/02/2017:
+   Structures.h:
+	-In mintmanager:
+	 	-Added a double field xi, implementing the xi freedom
+   TCalculateConsistentCoeff.cpp:
+	-In CalcA1(...), CalcA2(...), CalcA5(...):
+	 	-Added a way to calculate the case that F_s = \mathcal{F}_t
+	 	-Implemented the xi freedom
+	NOTE:	Tested if the old RPR-2011 model is obtained from the new oneby putting F_s = \mathcal{F}_t and
+	 	putting xi to xi=1/2, OK!
+
 13/02/2017:
    TCalculateConsistentCoeff.cpp:
 	-In CalcA1(...), CalcA2(...), ... , CalcA6(...):

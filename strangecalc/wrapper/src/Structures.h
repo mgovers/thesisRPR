@@ -501,6 +501,7 @@ typedef struct
   double d; /* paramater describing the strength of the 'd'-term in Mint */
   double f; /* paramater describing the strength of the 'f'-term in Mint */
   //:::DEBUG:::ADD A(s,t,Q^2) and B(s,t,Q^2) terms
+  double xi; /*parameter describing the strength of the '\xi'-term in Mint. Can be a function => :::DEBUG:::MODIFY? */
 
   short noTchannelBornContribution; /* turn off the t-channel Born term */
   short noSchannelBornContribution; /* turn off the s-channel Born term */
