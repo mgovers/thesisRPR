@@ -508,6 +508,7 @@ typedef struct
   short noSchannelBornContribution; /* turn off the s-channel Born term */
   short noInteractionBornContribution; /* turn off Mint in the Born term */
   short onlyBornContributions; /* turn off all contributions except Born term */
+  short onlyBackgroundContributions; /* turn off all contributions except background contributions: K and K* */
 } MintManager;
 
 

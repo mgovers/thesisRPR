@@ -1,5 +1,16 @@
 # thesisRPR
 
+20/02/2017:
+   Structures.h:
+	-In mintmanager:
+	 	-Added fields short FsEqReggeFt, short FsEqFt and short reggeasinTchannel to make various
+	 		degrees of difference from origional RPR-2011 model possible
+	 	-Added field short onlyBackgroundContributions to calculate only the background contributions
+   TCalculateConsistentCoeff.cpp:
+	-In CalcA1(...), CalcA2(...), CalcA5(...):
+	 	-Implemented FsEqReggeFt, FsEqFt and reggeasinTchannel (see Structures.h (above) )
+	 	-Implemented calculating only background contributions (ONLY classindex 1 and classindex 4!!!)
+
 15/02/2017:
    Structures.h:
 	-In mintmanager:

@@ -167,6 +167,8 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
                                     const Observable& observ) const
 {
   if ( (observ.mintmanager.onlyBornContributions != 0) && (classindex != 1) ) return 0; // used to calculate contributions only //:::ADDED BY MARTIJN:::DEBUG:::delete?
+  if ( (observ.mintmanager.onlyBackgroundContributions !=0 ) && 
+	!(classindex == 0 || classindex == 1 || classindex == 4) ) return 0; // used to calculate background contributions only //:::ADDED BY MARTIJN:::DEBUG:::DELETE?:::
   switch ( classindex )
     {
       //----------------------------------------------------------------------------------------
@@ -723,6 +725,8 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
                                     const Observable& observ) const
 {
   if ( (observ.mintmanager.onlyBornContributions != 0) && (classindex != 1) ) return 0; // used to calculate contributions only //:::ADDED BY MARTIJN:::DEBUG:::delete?
+  if ( (observ.mintmanager.onlyBackgroundContributions !=0 ) &&
+	!(classindex == 0 || classindex == 1 || classindex == 4) ) return 0; // used to calculate background contributions only //:::ADDED BY MARTIJN:::DEBUG:::DELETE?:::
   switch ( classindex )
     {
       //----------------------------------------------------------------------------------------
@@ -1185,6 +1189,8 @@ TCalculateConsistentCoeff::CalcA3 ( int classindex,
                                     const Observable& observ) const
 {
   if ( (observ.mintmanager.onlyBornContributions != 0) && (classindex != 1) ) return 0; // used to calculate contributions only //:::ADDED BY MARTIJN:::DEBUG:::delete?
+  if ( (observ.mintmanager.onlyBackgroundContributions !=0 ) &&
+	!(classindex == 0 || classindex == 1 || classindex == 4) ) return 0; // used to calculate background contributions only //:::ADDED BY MARTIJN:::DEBUG:::DELETE?:::
   switch ( classindex )
     {
       //----------------------------------------------------------------------------------------
@@ -1487,6 +1493,8 @@ TCalculateConsistentCoeff::CalcA4 ( int classindex,
                                     const Observable& observ) const
 {
   if ( (observ.mintmanager.onlyBornContributions != 0) && (classindex != 1) ) return 0; // used to calculate contributions only //:::ADDED BY MARTIJN:::DEBUG:::delete?
+  if ( (observ.mintmanager.onlyBackgroundContributions !=0 ) && 
+	!(classindex == 0 || classindex == 1 || classindex == 4) ) return 0; // used to calculate background contributions only //:::ADDED BY MARTIJN:::DEBUG:::DELETE?:::
   switch ( classindex )
     {
       //----------------------------------------------------------------------------------------
@@ -1808,6 +1816,8 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
                                     const Observable& observ) const
 {
   if ( (observ.mintmanager.onlyBornContributions != 0) && (classindex != 1) ) return 0; // used to calculate contributions only //:::ADDED BY MARTIJN:::DEBUG:::delete?
+  if ( (observ.mintmanager.onlyBackgroundContributions !=0 ) &&
+	!(classindex == 0 || classindex == 1 || classindex == 4) ) return 0; // used to calculate background contributions only //:::ADDED BY MARTIJN:::DEBUG:::DELETE?:::
   switch ( classindex )
     {
       //----------------------------------------------------------------------------------------
@@ -2275,6 +2285,8 @@ TCalculateConsistentCoeff::CalcA6 ( int classindex,
                                     const Observable& observ) const
 {
   if ( (observ.mintmanager.onlyBornContributions != 0) && (classindex != 1) ) return 0; // used to calculate contributions only //:::ADDED BY MARTIJN:::DEBUG:::delete?
+  if ( (observ.mintmanager.onlyBackgroundContributions !=0 ) &&
+	!(classindex == 0 || classindex == 1 || classindex == 4) ) return 0; // used to calculate background contributions only //:::ADDED BY MARTIJN:::DEBUG:::DELETE?:::
   switch ( classindex )
     {
       //----------------------------------------------------------------------------------------
