@@ -491,12 +491,13 @@ typedef struct
 /*! Specifications of additional information necessary when including Mint :::ADDED BY MARTIJN::: */
 typedef struct
 {
-  short hadronformfacschannel; /* use a different hadronic form factor for the s-channel than for the t-channel?
-                                  1 or 0 */
+  short FsEqReggeFt; /* use the implementation that Fs is equal to the reggeized Ft? 1 or 0 */
+  short FsEqFt; /* use the same hadronic form factor for the s-channel as for the t-channel? 1 or 0 */
   Formfac ffac; //:::DEBUG:::DELETE?:::
   Properties particletwo; /* the s-channel particle in *only* s-channel and interaction Gauge restoration */
   short reggeparticletwo; /* is the s-channel also reggeized with it's own reggeization procedure? 1 or 0 */
   Regge regparticletwo;
+  short reggeasinTchannel; /* reggeize the s-channel particle with the same procedure as the t-channel particle? 1 or 0*/
   double a; /* paramater describing the strength of the 'a'-term in Mint */
   double d; /* paramater describing the strength of the 'd'-term in Mint */
   double f; /* paramater describing the strength of the 'f'-term in Mint */

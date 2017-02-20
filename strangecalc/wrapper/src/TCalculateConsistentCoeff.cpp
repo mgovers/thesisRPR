@@ -255,6 +255,7 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
 								 // involved in gauge restoration
 								 // :::ADDED BY MARTIJN:::
 	double g2_; // (s or u) channel strong coupling constant div by sqrt(4PI) :::ADDED BY MARTIJN:::
+	complex<double> ReggePropagator2; // Regge Propagator of (s or u) channel Born exchange
 	// :::ADJUSTED BY MARTIJN:::
         if (particle.formfactorE==NULL)
 	  eFF_ = particle.E;
@@ -284,8 +285,10 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
 	  g_ = (*particle.formfactorH).value(particle.H,fT);
 	if (particletwo.formfactorH==NULL) // include the second particle's hadronic form factor if necessary
 					   // :::ADDED BY MARTIJN:::
-	  g2_ = g_; // :::DEBUG:::particle.H = particletwo.H = g_pkY/sqrt(4PI), but 
-		     // particletwo.H might not be initialized => Assume F_s=F_t approx. was made
+	  if (observ.mintmanager.FsEqReggeFt!=0 || observ.mintmanager.FsEqFt!=0)
+	    g2_ = g_; // The two form factors are the same :::ADDED BY MARTIJN:::
+	  else
+	    g2_ = particle.H; // :::DEBUG:::particle.H = particletwo.H = g_pkY/sqrt(4PI) 
 	else
 	  g2_ = (*particletwo.formfactorH).value(particle.H,fS); //:::DEBUG:::DELETE::: from arguments above
 	coefficient = 0.0;
@@ -294,6 +297,12 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
 	  ReggePropagator = propagatorRegge(particle, fS, fU, fT, 0., 0., &observ);
 	else
 	  ReggePropagator = 1;
+	if(observ.mintmanager.reggeasinTchannel || observ.mintmanager.FsEqReggeFt){
+	  ReggePropagator2 = ReggePropagator;}
+	else if(observ.mintmanager.reggeparticletwo)
+	  ReggePropagator2 = propagatorRegge(particletwo, fS, fU, fT, 0., 0., &observ);
+	else 
+	  ReggePropagator2 = 0.0;
 
 	// actual summation :::ADDED BY MARTIJN:::
 	if (particle.E!=0.0)
@@ -303,9 +312,9 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
 	  {
 	    if (!observ.mintmanager.noSchannelBornContribution){ // allows turning off contribution
 	      // s-channel electric Born term
-	      if (particletwo.formfactorH==NULL)
+	      if (ReggePropagator2!=0.0)
 	      {
-	      	coefficient += (nucleonchargeFF_*ReggePropagator*g2_) / (fS-fmN*fmN);
+	      	coefficient += (nucleonchargeFF_*ReggePropagator2*g2_) / (fS-fmN*fmN);
 	      }
 	      else
 	      {
@@ -313,22 +322,22 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
 	      }
 	    }
 	    if (!observ.mintmanager.noInteractionBornContribution){ // allows turning off contribution
-	      // a-term in Mint
-	      if (particletwo.formfactorH==NULL)
+	      if (ReggePropagator2!=0.0)
 	      {
+	        // a-term in Mint
 		if (observ.electroprod) //:::DEBUG:::REMOVE STATEMENT (SEE BELOW):::
-	          coefficient += ( observ.mintmanager.a*(ReggePropagator*g2_*(eFF_-1.) 
+	          coefficient += ( observ.mintmanager.a*(ReggePropagator2*g2_*(eFF_-1.) 
 				  - ReggePropagator*g_*(nucleonchargeFF_-1.) ) ) /(-1.0*fkk*fkk);
 				//:::DEBUG:::PHOTOPRODUCTION: ~derivatives of F_EM (Q^2) due to de l'Hopital:::
 	        // d-term in Mint
 	        coefficient += -1.0*observ.mintmanager.d*(
-				( (1.0-observ.mintmanager.xi)*ReggePropagator*g2_*(1.-g_*ReggePropagator) )
-				-( observ.mintmanager.xi*ReggePropagator*g_*(1.-g2_*ReggePropagator) )
+				( (1.0-observ.mintmanager.xi)*ReggePropagator2*g2_*(1.-g_*ReggePropagator) )
+				-( observ.mintmanager.xi*ReggePropagator*g_*(1.-g2_*ReggePropagator2) )
 				) / (fS-fmN*fmN);
 	        // f-term in Mint
 	        coefficient += observ.mintmanager.f*( 
 				((1.0-observ.mintmanager.xi)*ReggePropagator*g_*(1.-ReggePropagator*g2_) )
-				-(observ.mintmanager.xi*ReggePropagator*g2_*(1.-ReggePropagator*g_) )
+				-(observ.mintmanager.xi*ReggePropagator2*g2_*(1.-ReggePropagator*g_) )
 				) / (fDenominator_t);
 	        // :::ADDED BY MARTIJN:::DEBUG:::ADD A(s,t,Q2) terms of Mint:::
 	      }
@@ -797,6 +806,7 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
 								 // involved in gauge restoration
 								 // :::ADDED BY MARTIJN:::
 	double g2_; // (s or u) channel strong coupling constant div by sqrt(4PI) :::ADDED BY MARTIJN:::
+	complex<double> ReggePropagator2; // Regge Propagator of (s or u) channel Born exchange
 	// :::ADJUSTED BY MARTIJN:::
         if (particle.formfactorE==NULL)
 	  eFF_ = particle.E;
@@ -826,8 +836,10 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
 	  g_ = (*particle.formfactorH).value(particle.H,fT);
 	if (particletwo.formfactorH==NULL) // include the second particle's hadronic form factor if necessary
 					   // :::ADDED BY MARTIJN:::
-	  g2_ = g_; // :::DEBUG:::particle.H = particletwo.H = g_pkY/sqrt(4PI), but 
-		     // particletwo.H might not be initialized => Assume F_s=F_t approx. was made
+	  if (observ.mintmanager.FsEqReggeFt!=0 || observ.mintmanager.FsEqFt!=0)
+	    g2_ = g_; // The two form factors are the same :::ADDED BY MARTIJN:::
+	  else
+	    g2_ = particle.H; // :::DEBUG:::particle.H = particletwo.H = g_pkY/sqrt(4PI) 
 	else
 	  g2_ = (*particletwo.formfactorH).value(particle.H,fS); //:::DEBUG:::DELETE::: from arguments above
 	coefficient = 0.0;
@@ -836,6 +848,12 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
 	  ReggePropagator = propagatorRegge(particle, fS, fU, fT, 0., 0., &observ);
 	else
 	  ReggePropagator = 1;
+	if(observ.mintmanager.reggeasinTchannel || observ.mintmanager.FsEqReggeFt)
+	  ReggePropagator2 = ReggePropagator;
+	else if(observ.mintmanager.reggeparticletwo)
+	  ReggePropagator2 = propagatorRegge(particletwo, fS, fU, fT, 0., 0., &observ);
+	else 
+	  ReggePropagator2 = 0.0;
 
 	// actual summation :::ADDED BY MARTIJN:::
 	if (!observ.mintmanager.noTchannelBornContribution)  // allows turning off contribution
@@ -848,9 +866,9 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
 	  {
 	    if (!observ.mintmanager.noSchannelBornContribution){  // allows turning off contribution
 	      // s-channel electric Born term
-	      if (particletwo.formfactorH==NULL)
+	      if (ReggePropagator2 != 0.0)
 	      {
-		coefficient += (nucleonchargeFF_*ReggePropagator*g2_) / (fS-fmN*fmN);
+		coefficient += (nucleonchargeFF_*ReggePropagator2*g2_) / (fS-fmN*fmN);
 	      }
 	      else
 	      {
@@ -859,15 +877,15 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
 	    }
 	    if (!observ.mintmanager.noInteractionBornContribution){  // allows turning off contribution
 	      // interaction term
-	      if (particletwo.formfactorH==NULL)
+	      if (ReggePropagator2 != 0.0)
 	      {
-		coefficient += (((1.0-observ.mintmanager.xi)*e_*ReggePropagator*g_*((ReggePropagator*g2_)-1.0))
-				 - (observ.mintmanager.xi*e_*ReggePropagator*g2_*((ReggePropagator*g_)-1.0) ) )
+		coefficient += (((1.0-observ.mintmanager.xi)*e_*ReggePropagator*g_*((ReggePropagator2*g2_)-1.0))
+				 - (observ.mintmanager.xi*e_*ReggePropagator2*g2_*((ReggePropagator*g_)-1.0) ) )
 				/ fDenominator_t 
-			     + ( ((1.0-observ.mintmanager.xi)*nucleoncharge_*ReggePropagator*g2_
+			     + ( ((1.0-observ.mintmanager.xi)*nucleoncharge_*ReggePropagator2*g2_
 					*((ReggePropagator*g_)-1.0))
 				 -(observ.mintmanager.xi*nucleoncharge_*ReggePropagator*g_
-					*((ReggePropagator*g2_)-1.0)) )
+					*((ReggePropagator2*g2_)-1.0)) )
 				/ (fS-fmN*fmN) ;
 	      }
 	      else
@@ -1878,6 +1896,7 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
 								 // involved in gauge restoration
 								 // :::ADDED BY MARTIJN:::
 	double g2_; // (s or u) channel strong coupling constant div by sqrt(4PI) :::ADDED BY MARTIJN:::
+	complex<double> ReggePropagator2;
 	// :::ADJUSTED BY MARTIJN:::
         if (particle.formfactorE==NULL)
 	  eFF_ = particle.E;
@@ -1907,8 +1926,10 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
 	  g_ = (*particle.formfactorH).value(particle.H,fT);
 	if (particletwo.formfactorH==NULL) // include the second particle's hadronic form factor if necessary
 					   // :::ADDED BY MARTIJN:::
-	  g2_ = g_; // :::DEBUG:::particle.H = particletwo.H = g_pkY/sqrt(4PI), but 
-		     // particletwo.H might not be initialized => Assume F_s=F_t approx. was made
+	  if (observ.mintmanager.FsEqReggeFt!=0 || observ.mintmanager.FsEqFt!=0)
+	    g2_ = g_; // The two form factors are the same :::ADDED BY MARTIJN:::
+	  else
+	    g2_ = particle.H; // :::DEBUG:::particle.H = particletwo.H = g_pkY/sqrt(4PI) 
 	else
 	  g2_ = (*particletwo.formfactorH).value(particle.H,fS); //:::DEBUG:::DELETE::: from arguments above
 	coefficient = 0.0;
@@ -1917,6 +1938,12 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
 	  ReggePropagator = propagatorRegge(particle, fS, fU, fT, 0., 0., &observ);
 	else
 	  ReggePropagator = 1;
+	if(observ.mintmanager.reggeasinTchannel || observ.mintmanager.FsEqReggeFt)
+	  ReggePropagator2 = ReggePropagator;
+	else if(observ.mintmanager.reggeparticletwo)
+	  ReggePropagator2 = propagatorRegge(particletwo, fS, fU, fT, 0., 0., &observ);
+	else 
+	  ReggePropagator2 = 0.0;
 
 	// actual summation :::ADDED BY MARTIJN:::
 	if (!observ.mintmanager.noTchannelBornContribution) // allows turning off contribution
@@ -1927,21 +1954,21 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
 	  // :::ADDED BY MARTIJN:::
 	  if (fNucleon_charge!=0.0)
 	  {
-	    if (particletwo.formfactorH==NULL)
+	    if (ReggePropagator2 != 0.0)
 	    {
 	      if (!observ.mintmanager.noSchannelBornContribution){ // allows turning off contribution
 	        // s-channel electric Born term
-	        coefficient += (2.0*nucleonchargeFF_*ReggePropagator*g2_*fkp) / (fS-fmN*fmN); // :::ADDED BY MARTIJN:::
+	        coefficient += (2.0*nucleonchargeFF_*ReggePropagator2*g2_*fkp) / (fS-fmN*fmN); // :::ADDED BY MARTIJN:::
 	      }
 	      if (!observ.mintmanager.noInteractionBornContribution){  // allows turning off contribution
 	        // interaction term
 	        coefficient += (2.0*e_*(
-				((1.0-observ.mintmanager.xi)*ReggePropagator*g_*(1.0-ReggePropagator*g2_))
-				- (observ.mintmanager.xi*ReggePropagator*g2_*(1.0-ReggePropagator*g_))
+				((1.0-observ.mintmanager.xi)*ReggePropagator*g_*(1.0-ReggePropagator2*g2_))
+				- (observ.mintmanager.xi*ReggePropagator2*g2_*(1.0-ReggePropagator*g_))
 				)*(fkpY-fkp)) / fDenominator_t
 		  	   + (2.0*nucleoncharge_*(
-			((1.0-observ.mintmanager.xi)*ReggePropagator*g2_*(1.0-(ReggePropagator*g_)))
-			-(observ.mintmanager.xi*ReggePropagator*g_*(1.0-(ReggePropagator*g2_)) )
+			((1.0-observ.mintmanager.xi)*ReggePropagator2*g2_*(1.0-(ReggePropagator*g_)))
+			-(observ.mintmanager.xi*ReggePropagator*g_*(1.0-(ReggePropagator2*g2_)) )
 				)*fkp) / (fS-fmN*fmN) ;
 	        // :::ADDED BY MARTIJN:::DEBUG:::ADD A(s,t,Q2):::
 	      }
