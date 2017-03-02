@@ -295,16 +295,21 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
 	  g2_ = (*particletwo.formfactorH).value(particle.H,fS); //:::DEBUG:::DELETE::: from arguments above
 	coefficient = 0.0;
 	// is there t-channel Reggeization? :::ADDED BY MARTIJN:::
-	if(observ.regge)
-	  ReggePropagator = propagatorRegge(particle, fS, fU, fT, 0., 0., &observ);
-	else
-	  ReggePropagator = 1;
-	if(observ.mintmanager.reggeasinTchannel || observ.mintmanager.FsEqReggeFt){
-	  ReggePropagator2 = ReggePropagator;}
-	else if(observ.mintmanager.reggeparticletwo)
-	  ReggePropagator2 = propagatorRegge(particletwo, fS, fU, fT, 0., 0., &observ);
-	else 
-	  ReggePropagator2 = 0.0;
+	if(observ.mintmanager.alternativeReggeizationScheme==0){ //:::ADDED BY MARTIJN:::DEBUG:::DELETE
+  	  if(observ.regge)
+	    ReggePropagator = propagatorRegge(particle, fS, fU, fT, 0., 0., &observ);
+	  else
+	    ReggePropagator = 1;
+	  if(observ.mintmanager.reggeasinTchannel || observ.mintmanager.FsEqReggeFt)
+	    ReggePropagator2 = ReggePropagator;
+	  else if(observ.mintmanager.reggeparticletwo)
+	    ReggePropagator2 = propagatorRegge(particletwo, fS, fU, fT, 0., 0., &observ);
+	  else 
+	    ReggePropagator2 = -1.0;
+	} else{ //:::ADDED BY MARTIJN:::DEBUG:::DELETE
+	  ReggePropagator = 1.0;
+	  ReggePropagator2 = -1.0;
+        }
 
 	// actual summation :::ADDED BY MARTIJN:::
 	if (particle.E!=0.0)
@@ -314,7 +319,7 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
 	  {
 	    if (!observ.mintmanager.noSchannelBornContribution){ // allows turning off contribution
 	      // s-channel electric Born term
-	      if (ReggePropagator2!=0.0)
+	      if (ReggePropagator2!=-1.0)
 	      {
 	      	coefficient += (nucleonchargeFF_*ReggePropagator2*g2_) / (fS-fmN*fmN);
 	      }
@@ -324,7 +329,7 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
 	      }
 	    }
 	    if (!observ.mintmanager.noInteractionBornContribution){ // allows turning off contribution
-	      if (ReggePropagator2!=0.0)
+	      if (ReggePropagator2!=-1.0)
 	      {
 	        // a-term in Mint
 		if (observ.electroprod) //:::DEBUG:::REMOVE STATEMENT (SEE BELOW):::
@@ -374,6 +379,12 @@ TCalculateConsistentCoeff::CalcA1 ( int classindex,
 	    exit(1);
 	  }
         }
+
+	if(observ.mintmanager.alternativeReggeizationScheme!=0){ //:::ADDED BY MARTIJN:::DEBUG:::DELETE
+  	  if(observ.regge)
+	    coefficient *= propagatorRegge(particle, fS, fU, fT, 0., 0., &observ);
+	}
+
         return ELEC*coefficient;
       }
     }
@@ -848,16 +859,21 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
 	  g2_ = (*particletwo.formfactorH).value(particle.H,fS); //:::DEBUG:::DELETE::: from arguments above
 	coefficient = 0.0;
 	// is there t-channel Reggeization? :::ADDED BY MARTIJN:::
-	if(observ.regge)
-	  ReggePropagator = propagatorRegge(particle, fS, fU, fT, 0., 0., &observ);
-	else
-	  ReggePropagator = 1;
-	if(observ.mintmanager.reggeasinTchannel || observ.mintmanager.FsEqReggeFt)
-	  ReggePropagator2 = ReggePropagator;
-	else if(observ.mintmanager.reggeparticletwo)
-	  ReggePropagator2 = propagatorRegge(particletwo, fS, fU, fT, 0., 0., &observ);
-	else 
-	  ReggePropagator2 = 0.0;
+	if(observ.mintmanager.alternativeReggeizationScheme==0){ //:::ADDED BY MARTIJN:::DEBUG:::DELETE
+  	  if(observ.regge)
+	    ReggePropagator = propagatorRegge(particle, fS, fU, fT, 0., 0., &observ);
+	  else
+	    ReggePropagator = 1;
+	  if(observ.mintmanager.reggeasinTchannel || observ.mintmanager.FsEqReggeFt)
+	    ReggePropagator2 = ReggePropagator;
+	  else if(observ.mintmanager.reggeparticletwo)
+	    ReggePropagator2 = propagatorRegge(particletwo, fS, fU, fT, 0., 0., &observ);
+	  else 
+	    ReggePropagator2 = -1.0;
+	} else{ //:::ADDED BY MARTIJN:::DEBUG:::DELETE
+	  ReggePropagator = 1.0;
+	  ReggePropagator2 = -1.0;
+        }
 
 	// actual summation :::ADDED BY MARTIJN:::
 	if (!observ.mintmanager.noTchannelBornContribution)  // allows turning off contribution
@@ -870,7 +886,7 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
 	  {
 	    if (!observ.mintmanager.noSchannelBornContribution){  // allows turning off contribution
 	      // s-channel electric Born term
-	      if (ReggePropagator2 != 0.0)
+	      if (ReggePropagator2 != -1.0)
 	      {
 		coefficient += (nucleonchargeFF_*ReggePropagator2*g2_) / (fS-fmN*fmN);
 	      }
@@ -881,7 +897,7 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
 	    }
 	    if (!observ.mintmanager.noInteractionBornContribution){  // allows turning off contribution
 	      // interaction term
-	      if (ReggePropagator2 != 0.0)
+	      if (ReggePropagator2 != -1.0)
 	      {
 		coefficient += (((1.0-observ.mintmanager.xi)*e_*ReggePropagator*g_*((ReggePropagator2*g2_)-1.0))
 				 - (observ.mintmanager.xi*e_*ReggePropagator2*g2_*((ReggePropagator*g_)-1.0) ) )
@@ -915,6 +931,12 @@ TCalculateConsistentCoeff::CalcA2 ( int classindex,
 	    exit(1);
 	  }
         }
+
+	if(observ.mintmanager.alternativeReggeizationScheme!=0){ //:::ADDED BY MARTIJN:::DEBUG:::DELETE
+  	  if(observ.regge)
+	    coefficient *= propagatorRegge(particle, fS, fU, fT, 0., 0., &observ);
+	}
+
         return ELEC*coefficient/fkpY;
       }
     }
@@ -1944,16 +1966,21 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
 	  g2_ = (*particletwo.formfactorH).value(particle.H,fS); //:::DEBUG:::DELETE::: from arguments above
 	coefficient = 0.0;
 	// is there t-channel Reggeization? :::ADDED BY MARTIJN:::
-	if(observ.regge)
-	  ReggePropagator = propagatorRegge(particle, fS, fU, fT, 0., 0., &observ);
-	else
-	  ReggePropagator = 1;
-	if(observ.mintmanager.reggeasinTchannel || observ.mintmanager.FsEqReggeFt)
-	  ReggePropagator2 = ReggePropagator;
-	else if(observ.mintmanager.reggeparticletwo)
-	  ReggePropagator2 = propagatorRegge(particletwo, fS, fU, fT, 0., 0., &observ);
-	else 
-	  ReggePropagator2 = 0.0;
+	if(observ.mintmanager.alternativeReggeizationScheme==0){ //:::ADDED BY MARTIJN:::DEBUG:::DELETE
+  	  if(observ.regge)
+	    ReggePropagator = propagatorRegge(particle, fS, fU, fT, 0., 0., &observ);
+	  else
+	    ReggePropagator = 1;
+	  if(observ.mintmanager.reggeasinTchannel || observ.mintmanager.FsEqReggeFt)
+	    ReggePropagator2 = ReggePropagator;
+	  else if(observ.mintmanager.reggeparticletwo)
+	    ReggePropagator2 = propagatorRegge(particletwo, fS, fU, fT, 0., 0., &observ);
+	  else 
+	    ReggePropagator2 = -1.0;
+	} else{ //:::ADDED BY MARTIJN:::DEBUG:::DELETE
+	  ReggePropagator = 1.0;
+	  ReggePropagator2 = -1.0;
+        }
 
 	// actual summation :::ADDED BY MARTIJN:::
 	if (!observ.mintmanager.noTchannelBornContribution) // allows turning off contribution
@@ -1964,7 +1991,7 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
 	  // :::ADDED BY MARTIJN:::
 	  if (fNucleon_charge!=0.0)
 	  {
-	    if (ReggePropagator2 != 0.0)
+	    if (ReggePropagator2 != -1.0)
 	    {
 	      if (!observ.mintmanager.noSchannelBornContribution){ // allows turning off contribution
 	        // s-channel electric Born term
@@ -2014,6 +2041,11 @@ TCalculateConsistentCoeff::CalcA5 ( int classindex,
 	    exit(1);
 	  }
         }
+	if(observ.mintmanager.alternativeReggeizationScheme!=0){ //:::ADDED BY MARTIJN:::DEBUG:::DELETE
+  	  if(observ.regge)
+	    coefficient *= propagatorRegge(particle, fS, fU, fT, 0., 0., &observ);
+	}
+
         return ELEC*coefficient/fkpY;
       }
     }

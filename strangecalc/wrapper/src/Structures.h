@@ -491,7 +491,7 @@ typedef struct
 /*! Specifications of additional information necessary when including Mint :::ADDED BY MARTIJN::: */
 typedef struct
 {
-  short FsEqReggeFt; /* use the implementation that Fs is equal to the reggeized Ft? 1 or 0 */
+  short FsEqReggeFt; /* use the implementation that Fs is equal to the reggeized Ft? 1 or 0. NB: duplicate of (FsEqReggeFt && reggeasinTchannel) :::DEBUG:::ADDED BY MARTIJN:::REMOVE BECAUSE DULICATE? ALSO IN TCalculateConsistentCoeff.cpp */
   short FsEqFt; /* use the same hadronic form factor for the s-channel as for the t-channel? 1 or 0 */
   Formfac ffac; //:::DEBUG:::DELETE?:::
   Properties particletwo; /* the s-channel particle in *only* s-channel and interaction Gauge restoration */
@@ -509,6 +509,7 @@ typedef struct
   short noInteractionBornContribution; /* turn off Mint in the Born term */
   short onlyBornContributions; /* turn off all contributions except Born term */
   short onlyBackgroundContributions; /* turn off all contributions except background contributions: K and K* */
+  short alternativeReggeizationScheme; /* use the alternative Reggeization scheme of {eq:Haberzettl:AlternativeReggeizationScheme} in {sec:GaugeRestoration:Reggeization} */
 } MintManager;
 
 

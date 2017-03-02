@@ -1,5 +1,14 @@
 # thesisRPR
 
+02/03/2017:
+   Structures.h:
+	-In mintmanager:
+	 	-Added a field that allows for the alternative Reggeization scheme (multiply all Born terms
+	 		by (t-M_K^2)*ReggePropagator(t) )
+   TCalculateConsistentCoeff.cpp:
+	 	-Fixed bug concerning ReggePropagator2 when it went through 0
+	 	-Implemented the alternative Reggeization scheme (tested)
+
 20/02/2017:
    Structures.h:
 	-In mintmanager:
