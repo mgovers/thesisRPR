@@ -1,6 +1,10 @@
 # thesisRPR
 
 08/03/2017:
+   MERGE: RPR2011MintImplementation and RPR2011WorkDir1 merged together
+	@END OF PHOTOPRODUCTION
+
+08/03/2017:
    TCalculateCGLNCoeff.cpp:
 	-Just a commit (forgotten earlier)
 
