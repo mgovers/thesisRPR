@@ -1,5 +1,9 @@
 # thesisRPR
 
+08/03/2017:
+   TCalculateCGLNCoeff.cpp:
+	-Just a commit (forgotten earlier)
+
 02/03/2017:
    Structures.h:
 	-In mintmanager:

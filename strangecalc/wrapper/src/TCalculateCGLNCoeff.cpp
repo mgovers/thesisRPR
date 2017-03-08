@@ -188,11 +188,7 @@ TCalculateCGLNCoeff::CalcA ( int index, int classindex,
     
   fNucleon_charge= nucleon_charge;
   fHyperon_charge= hyperon_charge;
-  if ( (observ.mintmanager.onlyBornContributions != 0) && (classindex != 1) ) // used to calculate contributions only //:::ADDED BY MARTIJN:::DEBUG:::delete?
-  {
-    cout << "returning: class index = " << classindex << "\n";
-    return 0;
-  }else cout << "not returning: " << "class index = "<< classindex << "\n";
+  if ( (observ.mintmanager.onlyBornContributions != 0) && (classindex != 1) ) return 0; // used to calculate contributions only //:::ADDED BY MARTIJN:::DEBUG:::delete?
   switch ( index )
     {
     case 0:
