@@ -434,7 +434,6 @@ int em_formfactor_specification(Observable* observ, Class particles[])
 		} // end of switch(diagram)
 		
 		// if external_ff exists and wanted: change formfactorE to external one :::ADDED BY MARTIJN:::
-		  cout << "Diagram: " << diagram << ", Particle: " << particle << ": using external_ff_value: " << external_ff_value << " and use_external_emff = " << observ->mintmanager.use_external_emff << endl;
 		if (external_ff_value != -1 && observ->mintmanager.use_external_emff)
 		{
 		  FormFactor* tempFF;
