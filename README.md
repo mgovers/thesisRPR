@@ -4,7 +4,18 @@
    ecoupl_reson.f:
 	-Added file to directory
    Makefile.am:
-	-Added a way to build Fortran code of ecoupl_reson.f
+	-Added a way to build Fortran code of ecoupl_reson.f (also in wrapper/strangeweb/Makefile.am)
+   FormFactorParametrization.h/.cpp:
+	-Now includes all form factors obtained from helicity amplitudes and necessary code to include it (cfr. 
+	 	ECoupl_ResonWrapper.h
+	TESTED VERSION
+   FormFactorSpecification.h/.cpp:
+	-Now includes all specifications to include form factors obtained from helicity amplitudes (cfr. 
+	 	ECoupl_ResonWrapper.h)
+   	TESTED VERSION
+   TStrangeModel.h/.cpp:
+	-Now contains a (public) method UpdateEMFF() to update the EMFF after observ has been changed (which
+	 	can only be done after the first initialization in which all FF are specified)
 
 17/03/2017:
    wrapper/share/models/ :

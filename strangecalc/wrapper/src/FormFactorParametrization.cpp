@@ -2390,3 +2390,475 @@ double strong_lorentz_gaussian(double mandel,double mass,double cutoff,double sp
   //return strong_lorentz( mandel, mass, cutoff, spin, exponent, width, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15)
     //  * strong_gaussian( mandel, mass, cutoff, spin, exponent, width, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15);
 }
+
+/************************************************************************/
+
+// :::DEBUG:::EVERYTHING AFTER THIS IS :::ADDED BY MARTIJN:::
+
+/************************************************************************/
+
+/*! Wrapper for ecoupl_(...)
+ */
+double ecoupling(int i,int j, double Q2)
+{
+  float Q2f = (float) (Q2/1000000.); // unit of energy is GeV instead of MeV in implementation of Fortran code
+  return ((double) external::ecoupl_(i,j,Q2f))*sqrt(1000); // helicity amplitudes in Fortran code are in units of GeV^(-1/2)
+}
+
+/* Spin-1/2 Nucleon Resonance Parametrizations
+ * ------------------------------------------- */
+
+/*! Parametrization using measured helicity amplitudes for S11(1535) 1/2^- resonance
+ * Dirac form factor
+ *
+ * = 0 in p(e,eK)Y, because transitioning (can be calculated if this is not the case)
+ *
+ */
+
+double measured_S11_1535_dirac(double Q2,double cutoff,double p2,double p3,
+		double p4,double p5,double p6,double p7,
+		double p8,double p9,double p10,double p11,
+		double p12,double p13,double p14,double p15) {return NULL;} // not implemented
+
+/*! Parametrization using measured helicity amplitudes for S11(1535) 1/2^- resonance
+ * cfr. Van Cauteren et al. Eur. Phys. J. A (2004) 20: 283. doi:10.1140/epja/i2003-10158-3
+ * Dirac form factor
+ *
+ * \verbatim
+ 
+           1        / Q^2 |\  /|0               Mres - Mp |\  /|+              \
+   ________________ | ___ | \/ |        (Q^2) + _________ | \/ |         (Q^2) |
+          2         |     |    |1/2,1/2                   |    |1/2,-1/2       |
+   Qm(Q^2)  Qp(Q^2) \ |p|                           2                          /
+ = _____________________________________________________________________________
+
+                              Mres - Mp     |\  /|+ 
+                          _________________ | \/ |          (0)
+                                   2        |    |1/2,-1/2
+                          2 ( Qm(0)  Qp(0) )
+
+ where
+          ____________________
+   Qp = \/ Q^2 + (Mres + Mp)^2  ,
+          ____________________
+   Qm = \/ Q^2 + (Mres - Mp)^2  , 
+
+        / / Mp^2+Mres^2+Q^2 \2         \(1/2)
+  |p| = | | ______________  |   - Mp^2 |
+        \ \      2Mres      /          /
+
+ \endverbatim
+ *
+ * -> no parameters
+ */
+
+double measured_S11_1535_pauli(double Q2,double cutoff,double p2,double p3,
+		double p4,double p5,double p6,double p7,
+		double p8,double p9,double p10,double p11,
+		double p12,double p13,double p14,double p15)
+{
+  int j=18;
+  double Mp = 938.272;
+  double Mres = 1535.;
+  double Qplus = sqrt(Q2+(Mres+Mp)*(Mres+Mp));
+  double Qmin2 = Q2+(Mres-Mp)*(Mres-Mp);
+  double absp = sqrt(((Mp*Mp+Mres*Mres+Q2)*(Mp*Mp+Mres*Mres+Q2)/(4.*Mres*Mres))-Mp*Mp);
+
+  double result = ((2.*Q2*ecoupling(3,j,Q2)) + ((Mres-Mp)*absp*ecoupling(1,j,Q2)))/(Qmin2*Qplus*absp);
+  return (result*(Mres-Mp)*(Mres-Mp)*(Mres+Mp)/((Mres-Mp)*ecoupling(1,j,0.)));
+}
+
+/************************************************************************/
+
+/*! Parametrization using measured helicity amplitudes for S11(1650) 1/2^- resonance
+ * Dirac form factor
+ *
+ * = 0 in p(e,eK)Y, because transitioning (can be calculated if this is not the case)
+ *
+ */
+
+double measured_S11_1650_dirac(double Q2,double cutoff,double p2,double p3,
+		double p4,double p5,double p6,double p7,
+		double p8,double p9,double p10,double p11,
+		double p12,double p13,double p14,double p15) {return NULL;} // not implemented
+
+/*! Parametrization using measured helicity amplitudes for S11(1650) 1/2^- resonance
+ * cfr. Van Cauteren et al. Eur. Phys. J. A (2004) 20: 283. doi:10.1140/epja/i2003-10158-3
+ * Dirac form factor
+ *
+ * \verbatim
+ 
+           1        / Q^2 |\  /|0               Mres - Mp |\  /|+              \
+   ________________ | ___ | \/ |        (Q^2) + _________ | \/ |         (Q^2) |
+          2         |     |    |1/2,1/2                   |    |1/2,-1/2       |
+   Qm(Q^2)  Qp(Q^2) \ |p|                           2                          /
+ = _____________________________________________________________________________
+
+                              Mres - Mp     |\  /|+ 
+                          _________________ | \/ |          (0)
+                                   2        |    |1/2,-1/2
+                          2 ( Qm(0)  Qp(0) )
+
+ where
+          ____________________
+   Qp = \/ Q^2 + (Mres + Mp)^2  ,
+          ____________________
+   Qm = \/ Q^2 + (Mres - Mp)^2  , 
+
+        / / Mp^2+Mres^2+Q^2 \2         \(1/2)
+  |p| = | | ______________  |   - Mp^2 |
+        \ \      2Mres      /          /
+
+ \endverbatim
+ *
+ * -> no parameters
+ */
+
+double measured_S11_1650_pauli(double Q2,double cutoff,double p2,double p3,
+		double p4,double p5,double p6,double p7,
+		double p8,double p9,double p10,double p11,
+		double p12,double p13,double p14,double p15)
+{
+  int j=19;
+  double Mp = 938.272;  
+  double Mres = 1650.; 
+  double Qplus = sqrt(Q2+(Mres+Mp)*(Mres+Mp));
+  double Qmin2 = Q2+(Mres-Mp)*(Mres-Mp);
+  double absp = sqrt(((Mp*Mp+Mres*Mres+Q2)*(Mp*Mp+Mres*Mres+Q2)/(4.*Mres*Mres))-Mp*Mp);
+
+  double result = ((2.*Q2*ecoupling(3,j,Q2)) + ((Mres-Mp)*absp*ecoupling(1,j,Q2)))/(Qmin2*Qplus*absp);
+  return (result*(Mres-Mp)*(Mres-Mp)*(Mres+Mp)/((Mres-Mp)*ecoupling(1,j,0.)));
+}
+
+/************************************************************************/
+
+/*! Parametrization using measured helicity amplitudes for S11(1535) 1/2^- resonance
+ * Dirac form factor
+ *
+ * = 0 in p(e,eK)Y, because transitioning (can be calculated if this is not the case)
+ *
+ */
+
+double measured_P11_1440_dirac(double Q2,double cutoff,double p2,double p3,
+		double p4,double p5,double p6,double p7,
+		double p8,double p9,double p10,double p11,
+		double p12,double p13,double p14,double p15) {return NULL;} // not implemented
+
+/*! Parametrization using measured helicity amplitudes for S11(1535) 1/2^- resonance
+ * cfr. Van Cauteren et al. Eur. Phys. J. A (2004) 20: 283. doi:10.1140/epja/i2003-10158-3
+ * Dirac form factor
+ *
+ * \verbatim
+ 
+          -1        / Q^2 |\  /|0               Mres + Mp |\  /|+              \
+   ________________ | ___ | \/ |        (Q^2) - _________ | \/ |         (Q^2) |
+          2         |     |    |1/2,1/2                   |    |1/2,-1/2       |
+   Qp(Q^2)  Qm(Q^2) \ |p|                           2                          /
+ = _____________________________________________________________________________
+
+                              Mres + Mp     |\  /|+ 
+                          _________________ | \/ |          (0)
+                                   2        |    |1/2,-1/2
+                          2 ( Qp(0)  Qm(0) )
+
+ where
+          ____________________
+   Qp = \/ Q^2 + (Mres + Mp)^2  ,
+          ____________________
+   Qm = \/ Q^2 + (Mres - Mp)^2  , 
+
+        / / Mp^2+Mres^2+Q^2 \2         \(1/2)
+  |p| = | | ______________  |   - Mp^2 |
+        \ \      2Mres      /          /
+
+ \endverbatim
+ *
+ * -> no parameters
+ */
+
+double measured_P11_1440_pauli(double Q2,double cutoff,double p2,double p3,
+		double p4,double p5,double p6,double p7,
+		double p8,double p9,double p10,double p11,
+		double p12,double p13,double p14,double p15)
+{
+  int j=20;
+  double Mp = 938.272;
+  double Mres = 1440.0;
+  double Qplus2 = Q2+(Mres+Mp)*(Mres+Mp);
+  double Qmin = sqrt(Q2+(Mres-Mp)*(Mres-Mp));
+  double absp = sqrt(((Mp*Mp+Mres*Mres+Q2)*(Mp*Mp+Mres*Mres+Q2)/(4.*Mres*Mres))-Mp*Mp);
+
+  double result = -1.*((2.*Q2*ecoupling(3,j,Q2)) - ((Mres+Mp)*absp*ecoupling(1,j,Q2)))/(Qplus2*Qmin*absp);
+  return (result*(Mres+Mp)*(Mres+Mp)*(Mres-Mp)/((Mres+Mp)*ecoupling(1,j,0.)));
+}
+
+/* Spin-3/2 Nucleon Resonance Parametrizations
+ * ------------------------------------------- */
+
+/*! Parametrization using measured helicity amplitudes for P11(1720) 3/2^+ resonance
+ * kappa_1 form factor
+ *
+ * \verbatim
+
+           1        /   ___ |\  /|+		   |\  /|+	       \
+   ________________ | \/ 3  | \/ |         (Q^2) + | \/ |	 (Q^2) |
+   |p(Q^2)| Qp(Q^2) \       |    |1/2,-1/2	   |    |3/2,1/2       /
+ = _____________________________________________________________________
+
+              1      /   ___ |\  /|+              |\  /|+          \
+        ____________ | \/ 3  | \/ |         (0) + | \/ |       (0) |
+                     |       |    |1/2,-1/2       |    |3/2,1/2    |
+        |p(0)| Qp(0) \				                   /
+   
+ where
+          ____________________
+   Qp = \/ Q^2 + (Mres + Mp)^2  ,
+
+        / / Mp^2+Mres^2+Q^2 \2        \(1/2)
+  |p| = | | _______________ |  - Mp^2 |
+        \ \      2Mres      /         /
+
+ \endverbatim
+ *
+ */
+
+double measured_P13_1720_1(double Q2,double cutoff,double p2,double p3,
+		double p4,double p5,double p6,double p7,
+		double p8,double p9,double p10,double p11,
+		double p12,double p13,double p14,double p15) 
+{ 
+  int j=17;
+  double Mp = 938.272;
+  double Mres = 1720.0;
+  double Qplus = sqrt(Q2+(Mres+Mp)*(Mres+Mp));
+  double absp = sqrt(((Mp*Mp+Mres*Mres+Q2)*(Mp*Mp+Mres*Mres+Q2)/(4.*Mres*Mres))-Mp*Mp);
+
+  double result = (sqrt(3.)*ecoupling(1,j,Q2) + ecoupling(2,j,Q2))/(Qplus*absp);
+  return (result*(Mres+Mp)*(Mres*Mres-Mp*Mp)) / (2.*Mres*(sqrt(3.)*ecoupling(1,j,0.) + ecoupling(2,j,0.)));
+}
+
+/*! Parametrization using measured helicity amplitudes for P13(1720) 3/2^+ resonance
+ * kappa_2 form factor
+ *
+ * \verbatim
+
+           1          /       |\  /|0		                       |\  /|+	           
+   __________________ | 6 Q^2 | \/ |       (Q^2) + 3 (Mp-Mres)|p(Q^2)| | \/ |	    (Q^2) 
+   |p(Q^2)|^3 Qm(Q^2) \       |    |1/2,1/2                            |    |1/2,-1/2      
+
+                                          ___ / Q^2 + Mp^2 - MpMres \          |\  /|+            \
+                                      - \/ 3  | ___________________ | |p(Q^2)| | \/ |       (Q^2) |
+                                              \         Mres        /          |    |3/2,1/2      /
+ = ________________________________________________________________________________________________
+
+              1       /             |\  /|+                ___  Mp            |\  /|+          \
+       ______________ | 3 (Mp-Mres) | \/ |         (0) - \/ 3  ____ (Mp-Mres) | \/ |       (0) |
+       |p(0)|^2 Qm(0) \             |    |1/2,-1/2             Mres           |    |3/2,1/2    /
+   
+ where
+          ____________________
+   Qm = \/ Q^2 + (Mres - Mp)^2  ,
+
+        / / Mp^2+Mres^2+Q^2 \2        \(1/2)
+  |p| = | | _______________ |  - Mp^2 |
+        \ \      2Mres      /         /
+
+ \endverbatim
+ *
+ */
+
+double measured_P13_1720_2(double Q2,double cutoff,double p2,double p3,
+		double p4,double p5,double p6,double p7,
+		double p8,double p9,double p10,double p11,
+		double p12,double p13,double p14,double p15)
+{ 
+  int j=17;
+  double Mp = 938.272;
+  double Mres = 1720.0;
+  double Qmin = sqrt(Q2+(Mres-Mp)*(Mres-Mp));
+  double absp = sqrt(((Mp*Mp+Mres*Mres+Q2)*(Mp*Mp+Mres*Mres+Q2)/(4.*Mres*Mres))-Mp*Mp);
+  double absp0 = (Mres*Mres-Mp*Mp)/(2.*Mres);
+
+  double result = (6.*Q2*ecoupling(3,j,Q2) + 3.*(Mp-Mres)*absp*ecoupling(1,j,Q2)-sqrt(3.)*(Q2+Mp*Mp-Mp*Mres)*absp*ecoupling(2,j,Q2)/Mres) / (absp*absp*absp*Qmin);
+  return (result * absp0*absp0*(Mres-Mp) / (3.*(Mp-Mres)*ecoupling(1,j,0.)-sqrt(3.)*Mp*(Mp-Mres)*ecoupling(2,j,0.)/Mres) );
+}
+
+/************************************************************************/
+
+/*! Parametrization using measured helicity amplitudes for D13(1520) 3/2^- resonance
+ * kappa_1 form factor
+ *
+ * \verbatim
+
+           1        /   ___ |\  /|+		   |\  /|+	       \
+   ________________ | \/ 3  | \/ |         (Q^2) - | \/ |	 (Q^2) |
+   |p(Q^2)| Qm(Q^2) \       |    |1/2,-1/2	   |    |3/2,1/2       /
+ = _____________________________________________________________________
+
+              1      /   ___ |\  /|+              |\  /|+          \
+        ____________ | \/ 3  | \/ |         (0) - | \/ |       (0) |
+                     |       |    |1/2,-1/2       |    |3/2,1/2    |
+        |p(0)| Qm(0) \				                   /
+   
+ where
+          ____________________
+   Qm = \/ Q^2 + (Mres - Mp)^2  ,
+
+        / / Mp^2+Mres^2+Q^2 \2        \(1/2)
+  |p| = | | _______________ |  - Mp^2 |
+        \ \      2Mres      /         /
+
+ \endverbatim
+ *
+ */
+
+double measured_D13_1520_1(double Q2,double cutoff,double p2,double p3,
+		double p4,double p5,double p6,double p7,
+		double p8,double p9,double p10,double p11,
+		double p12,double p13,double p14,double p15)
+{ 
+  int j=15;
+  double Mp = 938.272;
+  double Mres = 1520.0;
+  double Qmin = sqrt(Q2+(Mres-Mp)*(Mres-Mp));
+  double absp = sqrt(((Mp*Mp+Mres*Mres+Q2)*(Mp*Mp+Mres*Mres+Q2)/(4.*Mres*Mres))-Mp*Mp);
+
+  double result = (sqrt(3.)*ecoupling(1,j,Q2) - ecoupling(2,j,Q2))/(Qmin*absp);
+  return (result*(Mres-Mp)*(Mres*Mres-Mp*Mp)) / (2.*Mres*(sqrt(3.)*ecoupling(1,j,0.) - ecoupling(2,j,0.)));
+}
+
+/*! Parametrization using measured helicity amplitudes for D13(1520) 3/2^- resonance
+ * kappa_2 form factor
+ *
+ * \verbatim
+
+           1          /       |\  /|0		                       |\  /|+	           
+   __________________ | 6 Q^2 | \/ |       (Q^2) + 3 (Mp+Mres)|p(Q^2)| | \/ |	    (Q^2) 
+   |p(Q^2)|^3 Qp(Q^2) \       |    |1/2,1/2                            |    |1/2,-1/2      
+
+                                          ___ / Q^2 + Mp^2 + MpMres \          |\  /|+            \
+                                      - \/ 3  | ___________________ | |p(Q^2)| | \/ |       (Q^2) |
+                                              \         Mres        /          |    |3/2,1/2      /
+ = ________________________________________________________________________________________________
+
+              1       /             |\  /|+                ___  Mp            |\  /|+          \
+       ______________ | 3 (Mp+Mres) | \/ |         (0) - \/ 3  ____ (Mp+Mres) | \/ |       (0) |
+       |p(0)|^2 Qp(0) \             |    |1/2,-1/2             Mres           |    |3/2,1/2    /
+   
+ where
+          ____________________
+   Qp = \/ Q^2 + (Mres + Mp)^2  ,
+
+        / / Mp^2+Mres^2+Q^2 \2        \(1/2)
+  |p| = | | _______________ |  - Mp^2 |
+        \ \      2Mres      /         /
+
+ \endverbatim
+ *
+ */
+
+double measured_D13_1520_2(double Q2,double cutoff,double p2,double p3,
+		double p4,double p5,double p6,double p7,
+		double p8,double p9,double p10,double p11,
+		double p12,double p13,double p14,double p15)
+{ 
+  int j=15;
+  double Mp = 938.272;
+  double Mres = 1520.0;
+  double Qplus = sqrt(Q2+(Mres+Mp)*(Mres+Mp));
+  double absp = sqrt(((Mp*Mp+Mres*Mres+Q2)*(Mp*Mp+Mres*Mres+Q2)/(4.*Mres*Mres))-Mp*Mp);
+  double absp0 = (Mres*Mres-Mp*Mp)/(2.*Mres);
+
+  double result = (6.*Q2*ecoupling(3,j,Q2) + 3.*(Mp+Mres)*absp*ecoupling(1,j,Q2)-sqrt(3.)*(Q2+Mp*Mp+Mp*Mres)*absp*ecoupling(2,j,Q2)/Mres) / (absp*absp*absp*Qplus);
+  return (result * absp0*absp0*(Mres+Mp) / (3.*(Mp+Mres)*ecoupling(1,j,0.)-sqrt(3.)*Mp*(Mp+Mres)*ecoupling(2,j,0.)/Mres) );
+}
+
+/************************************************************************/
+
+/*! Parametrization using measured helicity amplitudes for F15(1685) 5/2^+ resonance
+ * kappa_1 form factor
+ *
+ * \verbatim
+
+            1         /   ___ |\  /|+		     |\  /|+	       \
+   __________________ | \/ 2  | \/ |         (Q^2) - | \/ |	 (Q^2) |
+   |p(Q^2)|^2 Qm(Q^2) \       |    |1/2,-1/2	     |    |3/2,1/2     /
+ = _____________________________________________________________________
+
+              1       /   ___ |\  /|+              |\  /|+          \
+       ______________ | \/ 2  | \/ |         (0) - | \/ |       (0) |
+                      |       |    |1/2,-1/2       |    |3/2,1/2    |
+       |p(0)|^2 Qm(0) \				                    /
+   
+ where
+          ____________________
+   Qm = \/ Q^2 + (Mres - Mp)^2  ,
+
+        / / Mp^2+Mres^2+Q^2 \2        \(1/2)
+  |p| = | | _______________ |  - Mp^2 |
+        \ \      2Mres      /         /
+
+ \endverbatim
+ *
+ */
+
+double measured_F15_1685_1(double Q2,double cutoff,double p2,double p3,
+		double p4,double p5,double p6,double p7,
+		double p8,double p9,double p10,double p11,
+		double p12,double p13,double p14,double p15)
+{ 
+  int j=6;
+  double Mp = 938.272;
+  double Mres = 1685.0;
+  double Qmin = sqrt(Q2+(Mres-Mp)*(Mres-Mp));
+  double absp = sqrt(((Mp*Mp+Mres*Mres+Q2)*(Mp*Mp+Mres*Mres+Q2)/(4.*Mres*Mres))-Mp*Mp);
+
+  double result = (sqrt(2.)*ecoupling(1,j,Q2) - ecoupling(2,j,Q2))/(Qmin*absp*absp);
+  return (result*(Mres-Mp)*(Mres*Mres-Mp*Mp)*(Mres*Mres-Mp*Mp)) / (4.*Mres*Mres*(sqrt(2.)*ecoupling(1,j,0.) - ecoupling(2,j,0.)));
+}
+
+/*! Parametrization using measured helicity amplitudes for F15(1685) 5/2^+ resonance
+ * kappa_2 form factor
+ *
+ * \verbatim
+
+           1          /       |\  /|0		                       |\  /|+	           
+   __________________ | 4 Q^2 | \/ |       (Q^2) + 2 (Mp+Mres)|p(Q^2)| | \/ |	    (Q^2) 
+   |p(Q^2)|^4 Qp(Q^2) \       |    |1/2,1/2                            |    |1/2,-1/2      
+
+                                          ___ / Q^2 + Mp^2 + MpMres \          |\  /|+            \
+                                      - \/ 2  | ___________________ | |p(Q^2)| | \/ |       (Q^2) |
+                                              \         Mres        /          |    |3/2,1/2      /
+ = ________________________________________________________________________________________________
+
+              1       /             |\  /|+                ___  Mp            |\  /|+          \
+       ______________ | 2 (Mp+Mres) | \/ |         (0) - \/ 2  ____ (Mp+Mres) | \/ |       (0) |
+       |p(0)|^3 Qp(0) \             |    |1/2,-1/2             Mres           |    |3/2,1/2    /
+   
+ where
+          ____________________
+   Qp = \/ Q^2 + (Mres + Mp)^2  ,
+
+        / / Mp^2+Mres^2+Q^2 \2        \(1/2)
+  |p| = | | _______________ |  - Mp^2 |
+        \ \      2Mres      /         /
+
+ \endverbatim
+ *
+ */
+
+double measured_F15_1685_2(double Q2,double cutoff,double p2,double p3,
+		double p4,double p5,double p6,double p7,
+		double p8,double p9,double p10,double p11,
+		double p12,double p13,double p14,double p15)
+{ 
+  int j=6;
+  double Mp = 938.272;
+  double Mres = 1685.0;
+  double Qplus = sqrt(Q2+(Mres+Mp)*(Mres+Mp));
+  double absp = sqrt(((Mp*Mp+Mres*Mres+Q2)*(Mp*Mp+Mres*Mres+Q2)/(4.*Mres*Mres))-Mp*Mp);
+  double absp0 = (Mres*Mres-Mp*Mp)/(2.*Mres);
+
+  double result = (4.*Q2*ecoupling(3,j,Q2) + 2.*(Mp+Mres)*absp*ecoupling(1,j,Q2)-sqrt(2.)*(Q2+Mp*Mp+Mp*Mres)*absp*ecoupling(2,j,Q2)/Mres) / (absp*absp*absp*absp*Qplus);
+  return (result * absp0*absp0*absp0*(Mres+Mp) / (2.*(Mp+Mres)*ecoupling(1,j,0.)-sqrt(2.)*Mp*(Mp+Mres)*ecoupling(2,j,0.)/Mres) );
+}

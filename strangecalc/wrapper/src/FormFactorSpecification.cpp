@@ -11,6 +11,7 @@
  * for the formfactors
  *
  * \author Pieter Vancraeyveld <pieter.vancraeyveld@ugent.be>
+ * \author Martijn Govers <martinus.govers@ugent.be>
  * 
  * \copyright
  * This program is free software; you can redistribute it and/or
@@ -213,7 +214,7 @@ int em_formfactor_specification(Observable* observ, Class particles[])
       
       // Store in begin_position where the info about formfactors begins
       int begin_position = ff_input.tellg();
-      
+      int external_ff_value;
       
       
       /* Loop over all diagrams and exchanged particles
@@ -229,6 +230,9 @@ int em_formfactor_specification(Observable* observ, Class particles[])
 	      /* Look for formfactor parametrization for specific particle
 	       * ********************************************************* */
 	      
+	      // Look for input parameters by external sources //:::ADDED BY MARTIJN:::
+	      external_ff_value = determineResonanceValue(particles[diagram].partic[particle].nickname);
+
 	      // position the stream to the beginning of the input file
 	      ff_input.seekg( begin_position );
 	      
@@ -428,6 +432,20 @@ int em_formfactor_specification(Observable* observ, Class particles[])
 		  exit(1);
 		  
 		} // end of switch(diagram)
+		
+		// if external_ff exists and wanted: change formfactorE to external one :::ADDED BY MARTIJN:::
+		  cout << "Diagram: " << diagram << ", Particle: " << particle << ": using external_ff_value: " << external_ff_value << " and use_external_emff = " << observ->mintmanager.use_external_emff << endl;
+		if (external_ff_value != -1 && observ->mintmanager.use_external_emff)
+		{
+		  FormFactor* tempFF;
+		  //tempFF = specify_external_ff(external_ff_value,0); 
+		  //if (tempFF != NULL) particles[diagram].partic[particle].formfactorE = tempFF;
+		  specify_external_ff(external_ff_value,1); 
+		  if (tempFF != NULL) particles[diagram].partic[particle].formfactorG = tempFF;
+		  specify_external_ff(external_ff_value,2); 
+		  if (tempFF != NULL) particles[diagram].partic[particle].formfactorH = tempFF;
+	          // :::ADDED BY MARTIJN:::
+		}
 	      
 	    } // end particle loop
 	} // end diagram loop
@@ -953,4 +971,168 @@ int release_formfactors(Class particles[])
     }
 
   return 0;
+}
+
+/* ************************************************************************************** */
+
+// EVERYTHING AFTER THIS IS :::ADDED BY MARTIJN:::
+
+/* ************************************************************************************** */
+
+/*! Specify the formfactor obtained from the measured helicity amplitudes for a certain resonance state.
+ * Returns NULL if and only if it should do nothing (for instance, if the parametrization is not measured)
+ */
+FormFactor* specify_external_ff(int resonanceValue, int formfactorType)
+{
+  ffCalculator ff_parametrization;
+  switch (resonanceValue)
+    {
+      case 18: // S11(1535)
+        if (formfactorType==0) // dirac
+          ff_parametrization = measured_ff_parametrizations[0][0];
+        else if (formfactorType==1) // pauli
+          ff_parametrization = measured_ff_parametrizations[0][1];
+        else // do nothing
+          return NULL;
+	break;
+      case 19: // S11(1650)
+        if (formfactorType==0) // dirac
+          ff_parametrization = measured_ff_parametrizations[1][0];
+        else if (formfactorType==1) // pauli
+          ff_parametrization = measured_ff_parametrizations[1][1];
+        else // do nothing
+          return NULL;
+	break;
+      case 20: // P11(1440)
+        if (formfactorType==0) // dirac
+          ff_parametrization = measured_ff_parametrizations[2][0];
+        else if (formfactorType==1) // pauli
+          ff_parametrization = measured_ff_parametrizations[2][1];
+        else // do nothing
+          return NULL;
+	break;
+      case 15: // D13(1520)
+        if (formfactorType==1) // kappa1
+          ff_parametrization = measured_ff_parametrizations[3][1];
+	else if (formfactorType==2) // kappa2
+          ff_parametrization = measured_ff_parametrizations[3][2];
+	else // do nothing
+          return NULL;
+	break;
+      case 17: // P13(1720)
+	if (formfactorType==1) // kappa1
+          ff_parametrization = measured_ff_parametrizations[4][1];
+	else if (formfactorType==2) // kappa2
+          ff_parametrization = measured_ff_parametrizations[4][2];
+	else // do nothing
+          return NULL;
+	break;
+      case 6: // F15(1685)
+	if (formfactorType==1) // kappa1
+          ff_parametrization = measured_ff_parametrizations[5][1];
+	else if (formfactorType==2) // kappa2
+          ff_parametrization = measured_ff_parametrizations[5][2];
+	else // do nothing
+          return NULL;
+	break;
+      case 21: // S31(1620)
+	cerr << "Measured EM Form Factor of S31(1620) exists but has not been implemented yet.\n\n";
+	//exit(1); :::DEBUG:::FIX:::!!!!
+	return NULL;
+      case 25: // P33(1232)
+	cerr << "Measured EM Form Factor of P33(1232) exists but has not been implemented yet.\n\n";
+	//exit(1); :::DEBUG:::FIX:::!!!!
+	return NULL;
+      case 13: // D33(1700)
+	cerr << "Measured EM Form Factor of D33(1700) exists but has not been implemented yet.\n\n";
+	//exit(1); :::DEBUG:::FIX:::!!!!
+	return NULL;
+      case 14: // P13 missing (1720)
+	cerr << "Measured EM Form Factor of P13 missing (1720) exists but has not been implemented yet.\n\n";
+	//exit(1); :::DEBUG:::FIX:::!!!!
+	return NULL;
+      default:
+	// the helicity amplitudes have not been measured yet. Do nothing
+	return NULL;
+    }
+  if (ff_parametrization==NULL)
+  {
+    cout << "Unexpected Error in recognizing parametrization of measured form factors.";
+    exit(1);
+  }
+
+  // Allocate some dynamic memory and create the correct FormFactor object
+  FormFactor* newformfactor = new FormFactor(ff_parametrization, 0., 0., 0.,
+						    0., 0., 0., 0., 0., 0.,
+						    0., 0., 0., 0., 0., 0.);
+    // Notify when something went wrong. If function returned NULL then nothing happened.
+  if (newformfactor==NULL)
+    {
+      cout << "Error in allocation of formfactor!" << endl << endl;
+      exit(1);
+    }
+
+  // change the passed pointer of the FormFactor to the correct FormFactor
+  return newformfactor;
+}
+
+/*!\brief Method determining the input parameter value for the Fortran code ecoupl
+ * \returns value if existing else -1 
+ */
+int determineResonanceValue(char* nickname)
+{
+/*
+Class  NickNam    Name            J^pi     Mass_(MeV)    Width_(MeV) 	Value
+-----  -------    ----            ----     ---------     ----------- 	-----
+							  
+ D        N1      N(1440)        1/2^+     1440.0        300.0      	20
+ I        N2      N(1520)        3/2^-     1520.0        115.0      	15
+ E        N3      N(1535)        1/2^-     1535.0        150.0       	18
+ E        N4      N(1650)        1/2^-     1650.0        150.0      	19
+ I        N5      N(1700)        3/2^-     1700.0        100.0      	 
+ D        N6      N(1710)        1/2^+     1710.0        100.0      	
+ H        N7      N(1720)        3/2^+     1720.0        150.0      	17
+ I        N8      m-D13(1895)    3/2^-     1895.0        200.0		 
+ H        N9      P13(1900)      3/2^+     1900.0        500.0		 
+ E        N10     m-S11(1895)	 1/2^-     1895.0        200.0		 
+ D        N11     m-P11(1895)  	 1/2^+     1895.0	 200.0		 
+ E        N12     S11_Capstick   1/2^-     1945.0	 595.0		
+ D        N13     P11_Capstick   1/2^+     1975.0         45.0      	
+ I        N14     D13_Capstick   3/2^-     1950.0        140.0		 
+ H	  N15	  P13_Capstick	 3/2^+     1960.0        535.0		 
+ I	  N19	  N(2050)	 3/2^-	   2050.0	 300.0		
+ H	  N20	  N(2050)	 3/2^+	   2050.0	 300.0		 
+ E	  N21	  N(2050)	 1/2^-	   2050.0	 300.0		 
+ D	  N22	  N(2050)	 1/2^+	   2050.0	 300.0		
+ M	  N23	  N(1680)	 5/2^+	   1685.0	 130.0		6
+ N	  N24	  N(1675)	 5/2^-	   1675.0	 150.0		
+ M	  N25	  N(2000)	 5/2^+	   2000.0	 140.0		 
+ N	  N26	  N(2200)	 5/2^-	   2200.0	 250.0		
+ E        N27     N(1690)_2010   1/2^-     1690.0         80.0           
+ H        N28     N(1920)_2010   3/2^+     1920.0        440.0	         
+ I        N29     N(2100)_2010   3/2^-     2100.0        200.0          
+ E        D1      Delta(1620)    1/2^-     1620.0        150.0    	21
+ E        D2      Delta(1900)    1/2^-     1900.0        200.0     	 
+ D        D3      Delta(1910)    1/2^+     1910.0        250.0     	
+ H        D4      Delta(1232)    3/2^+     1232.0        120.0      	25
+ H        D5      Delta(1600)    3/2^+     1600.0        350.0      	 
+ I        D6      Delta(1700)    3/2^-     1700.0        300.0      	13
+ H        D7      Delta(1920)    3/2^+     1920.0        200.0		 
+ I        D8      D33(1940)      3/2^-     1940.0        286.1		 
+ E        D9      D13(2150)      1/2^-     2150.0	 200.0		 
+ E        D10     S13(2150)-II   1/2^-     2150.0	 300.0		
+ M	  D11	  Delta(1905)	 5/2^+	   1890.0	 330.0		
+ N	  D12	  Delta(1930)	 5/2^-	   1960.0	 360.0		
+ M	  D13	  Delta(2000)	 5/2^+	   2000.0	 195.0		 
+*/
+  if (!strcmp(nickname,"N1")) return 20;
+  else if (!strcmp(nickname,"N2")) return 15;
+  else if (!strcmp(nickname,"N3")) return 18;
+  else if (!strcmp(nickname,"N4")) return 19;
+  else if (!strcmp(nickname,"N7")) return 17;
+  else if (!strcmp(nickname,"N23")) return 6;
+  else if (!strcmp(nickname,"D1")) return 21;
+  else if (!strcmp(nickname,"D4")) return 54;
+  else if (!strcmp(nickname,"D6")) return 13;
+  else return -1;
 }

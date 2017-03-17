@@ -99,6 +99,7 @@ class TStrangeModel : public TNamed
 
  public: //:::ADDED BY MARTIJN:::DEBUG:::DELETE:::
   Observable* GetObserv(){return (*fCalc).GetObserv();} //:::ADDED BY MARTIJN:::DEBUG:::DELETE:::
+  void UpdateEMFF(); //:::ADDED BY MARTIJN:::DEBUG:::DELETE???
 };
 
 

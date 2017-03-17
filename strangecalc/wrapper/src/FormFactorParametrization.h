@@ -862,4 +862,87 @@ const ffCalculator gic_ff_parametrizations[NrOfParametrizations][NrOfCC] =
       not_defined, not_defined, not_defined, not_defined}};
 
 
+//:::DEBUG:::EVERYTHING AFTER THIS IS:::ADDED BY MARTIJN:::
+
+//:::ADDED BY MARTIJN:::
+namespace external{ // build a safe zone around the fortran function
+  extern "C" {
+    /* call Fortran code for including measured helicity amplitudes from https://userweb.jlab.org/~isupov/couplings */
+    float ecoupl_(int &i, int &j, float &Q2);
+  }
+}
+
+double ecoupling(int i,int j, double Q2);
+
+double measured_S11_1535_dirac(double,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0);
+
+double measured_S11_1535_pauli(double,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0);
+
+double measured_S11_1650_dirac(double,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0);
+
+double measured_S11_1650_pauli(double,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0);
+
+double measured_P11_1440_dirac(double,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0);
+
+double measured_P11_1440_pauli(double,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0);
+
+double measured_P13_1720_1(double,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0);
+
+double measured_P13_1720_2(double,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0);
+
+double measured_D13_1520_1(double,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0);
+
+double measured_D13_1520_2(double,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0);
+
+double measured_F15_1685_1(double,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0);
+
+double measured_F15_1685_2(double,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0,
+			   double=0,double=0,double=0,double=0);
+
+const int NrOfResonances = 6;
+const int NrOfMeasuredCC = 3;
+//! EM Formfactors from measured helicity amplitudes
+const ffCalculator measured_ff_parametrizations[NrOfResonances][NrOfMeasuredCC] = 
+  { { not_defined , measured_S11_1535_pauli , not_defined },
+    { not_defined , measured_S11_1650_pauli , not_defined },
+    { not_defined , measured_P11_1440_pauli , not_defined },
+    { not_defined , measured_P13_1720_1 , measured_P13_1720_2 },
+    { not_defined , measured_D13_1520_1 , measured_D13_1520_2 },
+    { not_defined , measured_F15_1685_1 , measured_F15_1685_2 } };
+
 #endif

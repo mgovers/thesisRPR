@@ -1595,3 +1595,12 @@ double TStrangeModel::ChiSquared(const TString& isospins, const TString& dataset
 
   return chisquared;
 }
+
+void TStrangeModel::UpdateEMFF() //:::ADDED BY MARTIJN:::DEBUG:::DELETE? SO FAR NECESSARY FOR USING EMFF FROM MEASURED HELICITY AMPLITUDES
+{
+  Observable* observ = fCalc->GetObserv();
+  int temp = observ->electroprod;
+  observ->electroprod = 1;
+  em_formfactor_specification(observ,fCalc->GetParticles(observ->iso.iso_base));
+  observ->electroprod = temp;
+}

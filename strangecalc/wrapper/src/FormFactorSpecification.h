@@ -39,4 +39,8 @@ int update_strong_formfactor(Observable*,Class*);
 
 int release_formfactors(Class*);
 
+FormFactor* specify_external_ff(int resonanceValue, int formfactorType); //:::ADDED BY MARTIJN:::
+
+int determineResonanceValue(char* nickname); //:::ADDED BY MARTIJN:::
+
 #endif
