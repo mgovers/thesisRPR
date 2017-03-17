@@ -1,6 +1,12 @@
 # thesisRPR
 
 17/03/2017:
+   ecoupl_reson.f:
+	-Added file to directory
+   Makefile.am:
+	-Added a way to build Fortran code of ecoupl_reson.f
+
+17/03/2017:
    wrapper/share/models/ :
 	Added folder NewModelMartijn:
 	 	-Contains all code concerning EMFF from measured helicity amplitudes

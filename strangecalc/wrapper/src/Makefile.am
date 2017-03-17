@@ -8,6 +8,7 @@
 # WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
+
 if USE_INTEL_COMPILER
 AM_CXXFLAGS 	= 	-wd584 -wd161
 endif
@@ -18,6 +19,10 @@ EXTRA_DIST	=	version.h.in \
 INCLUDES 	= 	$(all_includes) \
 			-I@ROOTINCDIR@ \
 			@GSL_CFLAGS@
+
+F77		=	gfortran
+
+F77COMPILE		=	gfortran
 
 pkginclude_HEADERS 	=	Structures.h \
 				FormFactor.h \
@@ -123,7 +128,7 @@ libStrangecalc_la_LIBADD =  	@ROOTLIBS@ @ROOTAUXLIBS@ \
 
 bin_PROGRAMS 		 = 	strangecalc
 
-strangecalc_SOURCES = 	strangecalc.cpp
+strangecalc_SOURCES = 	strangecalc.cpp ecoupl_reson.f
 strangecalc_LDADD = 	libStrangecalc.la \
 			@GSL_LIBS@ \
 			-lm
