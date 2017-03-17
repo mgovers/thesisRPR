@@ -1,5 +1,33 @@
 # thesisRPR
 
+17/03/2017:
+   wrapper/share/models/ :
+	Added folder NewModelMartijn:
+	 	-Contains all code concerning EMFF from measured helicity amplitudes
+	-ecoupl_reson.f / .o:
+	 	-File containing the Fortran code of https://userweb.jlab.org/~isupov/couplings/
+	-ECoupl_ResonWrapper.h:
+	 	-File containing the inclusion code for running the Fortran code of ecoupl_reson.f in the
+	 	 	C++ code in safe mode with correct units and also for calculating the FF from the 
+		 	measured helicity amplitudes. Used as real cpp file instead of header file due to
+		 	inclusion problems during running of makefile (library assumes that .o file is included
+		 	but it is not included because unknown how to implement this while not removing
+		 	ecoupl_reson.o. I tried to fix this, but the straightforward way did not work.)
+	 	-external::ecoupl_(int &i, int &j, float &Q2):
+		 	Including fortran code (safe environment due to namespace): NOT EXPLICITLY CALLED
+		 	EXCEPT IN THE WRAPPER 
+	 	-ecoupling(int i,int j, double Q2):
+		 	Wrapper for external::ecoupl_(...)
+	 	-measured_*INSERT RESONANCE*_*INSERT FORMFACTOR TYPE*(double Q2):
+		 	Calculator of EMFF by using the ecoupling wrapper
+	 	-specify_external_ff(int resonanceValue, int formfactorType):
+		 	Initializer of measured_*INSERT RESONANCE*_*INSERT FORMFACTOR TYPE*(...): returns
+		 	currentFF to right EMFF (determined by resonanceValue and formfactorType)
+	 	-determineResonanceValue(char* nickname):
+		 	Method determining if the measured helicity amplitudes exist for certain resonance name
+		 	and which parameter is passed in the Fortran code. The returned value is also used
+		 	when initializing via specify_external_ff(...)
+
 08/03/2017:
    MERGE: RPR2011MintImplementation and RPR2011WorkDir1 merged together
 	@END OF PHOTOPRODUCTION
