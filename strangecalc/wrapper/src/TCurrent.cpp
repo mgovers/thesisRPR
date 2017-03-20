@@ -34,6 +34,7 @@
 #include <iostream>
 #include "Matrix.h"
 #include <numtoa.h>
+#include "FormFactorSpecification.h" //:::ADDED BY MARTIJN:::DEBUG:::DELETE AFTER IMPLEMENTATION OF MEASURED EMFF IN FORMFACTORSPECIFICATION:::
 using std::complex;
 using std::vector;
 using std::cout;
@@ -167,6 +168,18 @@ void TCurrent::DetermineCoefficients()
     // Loop over all exchanged fParticlesPtr for a specific diagram
     for ( int particle=0; particle<fParticlesPtr[diagram].particount; particle++ )
     {
+      
+      if ( fObservPtr->mintmanager.use_external_emff ) // :::ADDED BY MARTIJN:::DEBUG:::DELETE AND IMPLEMENT MEASURED EMFF IN FORMFACTORSPECIFICATION:::VERY UGLY WAY TO FIX THIS NOW
+      {
+        if (determineResonanceValue(fParticlesPtr[diagram].partic[particle].nickname)!=-1)
+        {
+          FormFactor *temp;
+          temp = specify_external_ff(determineResonanceValue(fParticlesPtr[diagram].partic[particle].nickname),1);
+          if (temp != NULL) fParticlesPtr[diagram].partic[particle].formfactorG = temp;
+          temp = specify_external_ff(determineResonanceValue(fParticlesPtr[diagram].partic[particle].nickname),2);
+          if (temp != NULL) fParticlesPtr[diagram].partic[particle].formfactorH = temp;
+        }
+      }
       AddDiagram ( diagram,fParticlesPtr[diagram].partic[particle]);
     } // particle loop
   } // diagram loop

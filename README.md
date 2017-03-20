@@ -1,5 +1,12 @@
 # thesisRPR
 
+20/03/2017:
+   TStrangeModel.h/.cpp:
+	-Removed UpdateEMFF() (last update did not work for some reason)
+   TCurrent.cpp:
+	-Implemented a (very ugly) way to force using the measured EMFF extracted from helicity amplitudes
+	TESTED VERSION
+
 17/03/2017:
    ecoupl_reson.f:
 	-Added file to directory
