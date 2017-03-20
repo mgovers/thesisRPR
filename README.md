@@ -1,6 +1,15 @@
 # thesisRPR
 
 20/03/2017:
+   Structures.h:
+	-Added global field external_emff_skip_amound which contains the size of mintmanager.tempskiparray
+	-In mintmanager:
+	 	added field int tempskiparray[external_emff_skip] to allow plotting switching measured EMFF
+	 		to Bonn (as in old model)
+   TCurrent.cpp:
+	-Implemented tempskiparray
+
+20/03/2017:
    TStrangeModel.h/.cpp:
 	-Removed UpdateEMFF() (last update did not work for some reason)
    TCurrent.cpp:

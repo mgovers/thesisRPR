@@ -150,6 +150,8 @@
 #define STRANGEUFLOW 1.0e-9
 
 
+#define external_emff_skip_amount 6 //! size of skip_external_emff :::ADDED BY MARTIJN:::DEBUG:::REMOVE
+
 /*!
  * Function to compare two doubles, a and b, within StrangeCalc's underflow
  */
@@ -503,6 +505,9 @@ typedef struct
   double f; /* paramater describing the strength of the 'f'-term in Mint */
   //:::DEBUG:::ADD A(s,t,Q^2) and B(s,t,Q^2) terms
   double xi; /*parameter describing the strength of the '\xi'-term in Mint. Can be a function => :::DEBUG:::MODIFY? */
+
+  double use_external_emff; /* should an external EMFF should be used (if exists) (ecouple_reson.f)? 1 or 0 */
+  int skip_external_emff[external_emff_skip_amount]; /* allows skipping certain resonance values when using measured EMFF extracted from helicity amplitudes. CURRENTLY VALID: 18, 19, 20, 15, 17, 6 */
 
   short noTchannelBornContribution; /* turn off the t-channel Born term */
   short noSchannelBornContribution; /* turn off the s-channel Born term */

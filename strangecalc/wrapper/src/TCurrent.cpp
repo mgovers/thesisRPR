@@ -171,13 +171,26 @@ void TCurrent::DetermineCoefficients()
       
       if ( fObservPtr->mintmanager.use_external_emff ) // :::ADDED BY MARTIJN:::DEBUG:::DELETE AND IMPLEMENT MEASURED EMFF IN FORMFACTORSPECIFICATION:::VERY UGLY WAY TO FIX THIS NOW
       {
-        if (determineResonanceValue(fParticlesPtr[diagram].partic[particle].nickname)!=-1)
-        {
-          FormFactor *temp;
-          temp = specify_external_ff(determineResonanceValue(fParticlesPtr[diagram].partic[particle].nickname),1);
-          if (temp != NULL) fParticlesPtr[diagram].partic[particle].formfactorG = temp;
-          temp = specify_external_ff(determineResonanceValue(fParticlesPtr[diagram].partic[particle].nickname),2);
-          if (temp != NULL) fParticlesPtr[diagram].partic[particle].formfactorH = temp;
+        int resVal = determineResonanceValue(fParticlesPtr[diagram].partic[particle].nickname);
+        if (resVal!=-1)// :::ADDED BY MARTIJN::: external EMFF exists
+        { 
+          int skip = 0;
+          for (int i=0;i<external_emff_skip_amount;i++) // :::ADDED BY MARTIJN:::test if should be skipped
+          {
+            if (fObservPtr->mintmanager.skip_external_emff[i] == resVal)
+            {
+              skip = 1;
+              break;
+            }
+          }
+          if (!skip) // :::ADDED BY MARTIJN:::if not skipped: use measured EMFF
+          {
+            FormFactor *temp;
+            temp = specify_external_ff(resVal,1);
+            if (temp != NULL) fParticlesPtr[diagram].partic[particle].formfactorG = temp;
+            temp = specify_external_ff(resVal,2);
+            if (temp != NULL) fParticlesPtr[diagram].partic[particle].formfactorH = temp;
+          }
         }
       }
       AddDiagram ( diagram,fParticlesPtr[diagram].partic[particle]);
