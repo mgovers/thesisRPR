@@ -508,6 +508,8 @@ typedef struct
 
   double use_external_emff; /* should an external EMFF should be used (if exists) (ecouple_reson.f)? 1 or 0 */
   int skip_external_emff[external_emff_skip_amount]; /* allows skipping certain resonance values when using measured EMFF extracted from helicity amplitudes. CURRENTLY VALID: 18, 19, 20, 15, 17, 6 */
+  int use_different_tchannel_emffs; /* should an alternative EMFF for the kaon exchanges? 1 or 0 */
+  FormFactor *tChannelFormFactor[5]; /* array containing the alternative EMFFs for the kaon exchanges (max. 3 trajectories) */
 
   short noTchannelBornContribution; /* turn off the t-channel Born term */
   short noSchannelBornContribution; /* turn off the s-channel Born term */

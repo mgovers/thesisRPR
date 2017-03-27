@@ -193,6 +193,19 @@ void TCurrent::DetermineCoefficients()
           }
         }
       }
+      if ( fObservPtr->mintmanager.use_different_tchannel_emffs ) // :::ADDED BY MARTIJN:::DEBUG:::DELETE
+							// Test if alternative kaon EMFFs have to be used
+      {
+	switch(diagram)
+        {
+	  case 1:
+	    if (fObservPtr->mintmanager.tChannelFormFactor[0]!=NULL) fParticlesPtr[diagram].partic[particle].formfactorE = fObservPtr->mintmanager.tChannelFormFactor[0];
+	    break;
+	  case 4:
+	    if (fObservPtr->mintmanager.tChannelFormFactor[1]!=NULL) fParticlesPtr[diagram].partic[particle].formfactorG = fObservPtr->mintmanager.tChannelFormFactor[1+particle];
+	    break;
+        }
+      }
       AddDiagram ( diagram,fParticlesPtr[diagram].partic[particle]);
     } // particle loop
   } // diagram loop
