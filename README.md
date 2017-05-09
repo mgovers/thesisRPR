@@ -3,7 +3,7 @@
 27/03/2017:
    Structures.h:
 	-In mintmanager:
-	 	added a field int use_different_tchannel_emffs: should an alternative EMFF for the kaon exchanges be used? 1 or 0
+	 	added a field int use_different_tchannel_emffs: should an alternative EMFF for the kaon exchanges? 1 or 0
   	 	added a field FormFactor *tChannelFormFactor[5]: an array containing the alternative EMFFs
 	 		for the kaon exchanges (max. 3 trajectories) 
 	 	both tested that reduces to Old if:
@@ -17,7 +17,7 @@
    Structures.h:
 	-Added global field external_emff_skip_amound which contains the size of mintmanager.tempskiparray
 	-In mintmanager:
-	 	added field int tempskiparray[external_emff_skip] to allow switching measured EMFF
+	 	added field int tempskiparray[external_emff_skip] to allow plotting switching measured EMFF
 	 		to Bonn (as in old model)
    TCurrent.cpp:
 	-Implemented tempskiparray
