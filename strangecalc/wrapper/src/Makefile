@@ -480,7 +480,6 @@ pkginclude_HEADERS = Structures.h \
 				version.h \
 				calcMatrixElement.h \
 				FormFactorParametrization.h \
-				ECoupl_ResonWrapper.h \
 				FormFactorSpecification.h \
 				TStrangeCalc.h \
 				TKinematics.h \
