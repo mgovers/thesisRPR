@@ -15,6 +15,7 @@
 
 
 # Copyright (C) 2012 Pieter Vancraeyveld <pieter.vancraeyveld@ugent.be>
+# 		2017 Martijn Govers <martinus.govers@ugent.be>
 #  
 # This file is free software; as a special exception the author gives
 # unlimited permission to copy and/or distribute it, with or without 
@@ -174,7 +175,7 @@ libStrangecalc_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_CXXFLAGS) $(CXXFLAGS) $(libStrangecalc_la_LDFLAGS) \
 	$(LDFLAGS) -o $@
 PROGRAMS = $(bin_PROGRAMS)
-am_strangecalc_OBJECTS = strangecalc.$(OBJEXT)
+am_strangecalc_OBJECTS = strangecalc.$(OBJEXT) ecoupl_reson.$(OBJEXT)
 strangecalc_OBJECTS = $(am_strangecalc_OBJECTS)
 strangecalc_DEPENDENCIES = libStrangecalc.la
 AM_V_P = $(am__v_P_$(V))
@@ -211,6 +212,20 @@ AM_V_CXXLD = $(am__v_CXXLD_$(V))
 am__v_CXXLD_ = $(am__v_CXXLD_$(AM_DEFAULT_VERBOSITY))
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
+LTF77COMPILE = $(LIBTOOL) $(AM_V_lt) $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(F77) $(AM_FFLAGS) $(FFLAGS)
+AM_V_F77 = $(am__v_F77_$(V))
+am__v_F77_ = $(am__v_F77_$(AM_DEFAULT_VERBOSITY))
+am__v_F77_0 = @echo "  F77     " $@;
+am__v_F77_1 = 
+F77LD = $(F77)
+F77LINK = $(LIBTOOL) $(AM_V_lt) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(F77LD) $(AM_FFLAGS) $(FFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
+AM_V_F77LD = $(am__v_F77LD_$(V))
+am__v_F77LD_ = $(am__v_F77LD_$(AM_DEFAULT_VERBOSITY))
+am__v_F77LD_0 = @echo "  F77LD   " $@;
+am__v_F77LD_1 = 
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
@@ -432,6 +447,8 @@ INCLUDES = $(all_includes) \
 			-I/usr/local/include \
 			-I/usr/include
 
+F77 = gfortran
+F77COMPILE = gfortran
 pkginclude_HEADERS = Structures.h \
 				FormFactor.h \
 				FourVector.h \
@@ -463,6 +480,7 @@ pkginclude_HEADERS = Structures.h \
 				version.h \
 				calcMatrixElement.h \
 				FormFactorParametrization.h \
+				ECoupl_ResonWrapper.h \
 				FormFactorSpecification.h \
 				TStrangeCalc.h \
 				TKinematics.h \
@@ -535,7 +553,7 @@ libStrangecalc_la_LDFLAGS = $(all_libraries) \
 libStrangecalc_la_LIBADD = -lCore -lRIO -lNet -lHist -lGraf -lGraf3d -lGpad -lTree -lRint -lPostscript -lMatrix -lPhysics -lMathCore -lThread -lMultiProc -pthread -lm -ldl -rdynamic \
 				-lMathMore
 
-strangecalc_SOURCES = strangecalc.cpp
+strangecalc_SOURCES = strangecalc.cpp ecoupl_reson.f
 strangecalc_LDADD = libStrangecalc.la \
 			-L/usr/lib/x86_64-linux-gnu -lgsl -lgslcblas -lm \
 			-lm
@@ -543,7 +561,7 @@ strangecalc_LDADD = libStrangecalc.la \
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .cc .cpp .lo .o .obj
+.SUFFIXES: .cc .cpp .f .lo .o .obj
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -760,6 +778,15 @@ include ./$(DEPDIR)/strangecalc.Po
 #	$(AM_V_CXX)source='$<' object='$@' libtool=yes \
 #	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) \
 #	$(AM_V_CXX_no)$(LTCXXCOMPILE) -c -o $@ $<
+
+.f.o:
+	$(AM_V_F77)$(F77COMPILE) -c -o $@ $<
+
+.f.obj:
+	$(AM_V_F77)$(F77COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+.f.lo:
+	$(AM_V_F77)$(LTF77COMPILE) -c -o $@ $<
 
 mostlyclean-libtool:
 	-rm -f *.lo
